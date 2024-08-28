@@ -1,0 +1,738 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>L'Alphabet Arabe | Apprenez l'Arabe avec Bah Boubacar</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-color: #1c6e8c;
+        --secondary-color: #274029;
+        --accent-color: #d4af37;
+        --background-color: #f5f5dc;
+        --text-color: #333;
+      }
+
+      body {
+        font-family: "Amiri", "Roboto", sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+      }
+
+      .navbar {
+        background-color: var(--primary-color);
+      }
+
+      .navbar-brand,
+      .nav-link {
+        color: white !important;
+      }
+
+      .hero-section {
+        background: linear-gradient(
+            rgba(28, 110, 140, 0.8),
+            rgba(28, 110, 140, 0.8)
+          ),
+          url("https://source.unsplash.com/1600x900/?arabic,calligraphy")
+            no-repeat center center;
+        background-size: cover;
+        color: white;
+        padding: 60px 0;
+        text-align: center;
+      }
+
+      .content-section {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-top: 30px;
+      }
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+
+      .btn-primary:hover {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+      }
+
+      footer {
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 40px 0;
+        margin-top: 50px;
+      }
+
+      .letter-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+      }
+
+      .letter-table td,
+      .letter-table th {
+        padding: 10px;
+        text-align: center;
+        vertical-align: middle;
+      }
+
+      .letter-form {
+        font-size: 2.5rem;
+        font-weight: bold;
+      }
+
+      .letter-name {
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      .letter-pronunciation {
+        font-style: italic;
+      }
+
+      #practice-area {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+
+      #letter-display {
+        font-size: 5rem;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      #letter-info {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .writing-canvas {
+        border: 1px solid #ccc;
+        background-color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/">Apprendre l'Arabe pour débutant</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="/">Accueil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pageCours.html">Cours</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="nomAllah.html">Les nom d'Allah</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="Priere.html">étape de la prière</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero-section">
+      <div class="container">
+        <h1 class="display-4">L'Alphabet Arabe</h1>
+        <p class="lead">
+          Découvrez les lettres arabes et leurs différentes formes
+        </p>
+      </div>
+    </header>
+
+    <main class="container mt-5">
+      <section class="content-section">
+        <h2 class="mb-4">Les Lettres de l'Alphabet Arabe</h2>
+        <p>
+          L'alphabet arabe se compose de 28 lettres consonnes. Chaque lettre
+          peut avoir jusqu'à quatre formes différentes, selon sa position dans
+          le mot : isolée, initiale, médiane ou finale.
+        </p>
+
+        <div class="table-responsive">
+          <table class="letter-table">
+            <thead>
+              <tr>
+                <th>Lettre</th>
+
+                <th>Prononciation</th>
+                <th>Début</th>
+                <th>Milieu</th>
+                <th>Fin</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="letter-name">Alif</td>
+                <td class="letter-form">ا</td>
+                <td class="letter-form">ا</td>
+                <td class="letter-form">ـا</td>
+                <td class="letter-form">ـا</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Ba</td>
+                <td class="letter-form">ب</td>
+                <td class="letter-form">بـ</td>
+                <td class="letter-form">ـبـ</td>
+                <td class="letter-form">ـب</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Ta</td>
+                <td class="letter-form">ت</td>
+                <td class="letter-form">تـ</td>
+                <td class="letter-form">ـتـ</td>
+                <td class="letter-form">ـت</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Tha</td>
+                <td class="letter-form">ث</td>
+                <td class="letter-form">ثـ</td>
+                <td class="letter-form">ـثـ</td>
+                <td class="letter-form">ـث</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Jim</td>
+                <td class="letter-form">ج</td>
+                <td class="letter-form">جـ</td>
+                <td class="letter-form">ـجـ</td>
+                <td class="letter-form">ـج</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Ha</td>
+                <td class="letter-form">ح</td>
+                <td class="letter-form">حـ</td>
+                <td class="letter-form">ـحـ</td>
+                <td class="letter-form">ـح</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Kha</td>
+                <td class="letter-form">خ</td>
+                <td class="letter-form">خـ</td>
+                <td class="letter-form">ـخـ</td>
+                <td class="letter-form">ـخ</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Dal</td>
+                <td class="letter-form">د</td>
+                <td class="letter-form">د</td>
+                <td class="letter-form">ـد</td>
+                <td class="letter-form">ـد</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Dhal</td>
+                <td class="letter-form">ذ</td>
+                <td class="letter-form">ذ</td>
+                <td class="letter-form">ـذ</td>
+                <td class="letter-form">ـذ</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Ra</td>
+                <td class="letter-form">ر</td>
+                <td class="letter-form">ر</td>
+                <td class="letter-form">ـر</td>
+                <td class="letter-form">ـر</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Zay</td>
+                <td class="letter-form">ز</td>
+                <td class="letter-form">ز</td>
+                <td class="letter-form">ـز</td>
+                <td class="letter-form">ـز</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Sin</td>
+                <td class="letter-form">س</td>
+                <td class="letter-form">سـ</td>
+                <td class="letter-form">ـسـ</td>
+                <td class="letter-form">ـس</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Shin</td>
+                <td class="letter-form">ش</td>
+                <td class="letter-form">شـ</td>
+                <td class="letter-form">ـشـ</td>
+                <td class="letter-form">ـش</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Sad</td>
+                <td class="letter-form">ص</td>
+                <td class="letter-form">صـ</td>
+                <td class="letter-form">ـصـ</td>
+                <td class="letter-form">ـص</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Dad</td>
+                <td class="letter-form">ض</td>
+                <td class="letter-form">ضـ</td>
+                <td class="letter-form">ـضـ</td>
+                <td class="letter-form">ـض</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Ta</td>
+                <td class="letter-form">ط</td>
+                <td class="letter-form">طـ</td>
+                <td class="letter-form">ـطـ</td>
+                <td class="letter-form">ـط</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Zha</td>
+                <td class="letter-form">ظ</td>
+                <td class="letter-form">ظـ</td>
+                <td class="letter-form">ـظـ</td>
+                <td class="letter-form">ـظ</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Ayn</td>
+                <td class="letter-form">ع</td>
+                <td class="letter-form">عـ</td>
+                <td class="letter-form">ـعـ</td>
+                <td class="letter-form">ـع</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Ghayn</td>
+                <td class="letter-form">غ</td>
+                <td class="letter-form">غـ</td>
+                <td class="letter-form">ـغـ</td>
+                <td class="letter-form">ـغ</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Fa</td>
+                <td class="letter-form">ف</td>
+                <td class="letter-form">فـ</td>
+                <td class="letter-form">ـفـ</td>
+                <td class="letter-form">ـف</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Qaf</td>
+                <td class="letter-form">ق</td>
+                <td class="letter-form">قـ</td>
+                <td class="letter-form">ـقـ</td>
+                <td class="letter-form">ـق</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Kaf</td>
+                <td class="letter-form">ك</td>
+                <td class="letter-form">كـ</td>
+                <td class="letter-form">ـكـ</td>
+                <td class="letter-form">ـك</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Lam</td>
+                <td class="letter-form">ل</td>
+                <td class="letter-form">لـ</td>
+                <td class="letter-form">ـلـ</td>
+                <td class="letter-form">ـل</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Mim</td>
+                <td class="letter-form">م</td>
+                <td class="letter-form">مـ</td>
+                <td class="letter-form">ـمـ</td>
+                <td class="letter-form">ـم</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Nun</td>
+                <td class="letter-form">ن</td>
+                <td class="letter-form">نـ</td>
+                <td class="letter-form">ـنـ</td>
+                <td class="letter-form">ـن</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Ha</td>
+                <td class="letter-form">ه</td>
+                <td class="letter-form">هـ</td>
+                <td class="letter-form">ـهـ</td>
+                <td class="letter-form">ـه</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Waw</td>
+                <td class="letter-form">و</td>
+                <td class="letter-form">و</td>
+                <td class="letter-form">ـو</td>
+                <td class="letter-form">ـو</td>
+              </tr>
+              <tr>
+                <td class="letter-name">Ya</td>
+                <td class="letter-form">ي</td>
+                <td class="letter-form">يـ</td>
+                <td class="letter-form">ـيـ</td>
+                <td class="letter-form">ـي</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="practice-area" class="mt-5">
+        <h3>Zone de Pratique</h3>
+        <div id="letter-display"></div>
+        <div id="letter-info"></div>
+        <canvas
+          id="writing-canvas"
+          class="writing-canvas"
+          width="400"
+          height="200"
+        ></canvas>
+        <div class="mt-3">
+          <button id="clear-canvas" class="btn btn-secondary">Effacer</button>
+          <button id="next-letter" class="btn btn-primary">
+            Lettre suivante
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h5>À propos</h5>
+            <p>
+              Apprenez l'arabe avec Bah Boubacar, votre guide pour maîtriser la
+              langue et la culture arabes.
+            </p>
+          </div>
+          <div class="col-md-4">
+            <h5>Liens rapides</h5>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link active" href="/">Accueil</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="pageCours.html">Cours</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="nomAllah.html">Les nom d'Allah</a>
+                </li>
+    
+                <li class="nav-item">
+                  <a class="nav-link" href="Priere.html">étape de la prière</a>
+                </li>
+              </ul>
+          </div>
+          <div class="col-md-4">
+            <h5>Contact</h5>
+            <p>boubacar.bah.zola@gmail.com</p>
+            <p>Téléphone: +1 234 567 890</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const arabicAlphabet = [
+        {
+          name: "Alif",
+          pronunciation: "a",
+          isolated: "ا",
+          initial: "ا",
+          medial: "ـا",
+          final: "ـا",
+        },
+        {
+          name: "Ba",
+          pronunciation: "b",
+          isolated: "ب",
+          initial: "بـ",
+          medial: "ـبـ",
+          final: "ـب",
+        },
+        {
+          name: "Ta",
+          pronunciation: "t",
+          isolated: "ت",
+          initial: "تـ",
+          medial: "ـتـ",
+          final: "ـت",
+        },
+        {
+          name: "Tha",
+          pronunciation: "th",
+          isolated: "ث",
+          initial: "ثـ",
+          medial: "ـثـ",
+          final: "ـث",
+        },
+        {
+          name: "Jim",
+          pronunciation: "j",
+          isolated: "ج",
+          initial: "جـ",
+          medial: "ـجـ",
+          final: "ـج",
+        },
+        {
+          name: "Ha",
+          pronunciation: "ḥ",
+          isolated: "ح",
+          initial: "حـ",
+          medial: "ـحـ",
+          final: "ـح",
+        },
+        {
+          name: "Kha",
+          pronunciation: "kh",
+          isolated: "خ",
+          initial: "خـ",
+          medial: "ـخـ",
+          final: "ـخ",
+        },
+        {
+          name: "Dal",
+          pronunciation: "d",
+          isolated: "د",
+          initial: "د",
+          medial: "ـد",
+          final: "ـد",
+        },
+        {
+          name: "Dhal",
+          pronunciation: "dh",
+          isolated: "ذ",
+          initial: "ذ",
+          medial: "ـذ",
+          final: "ـذ",
+        },
+        {
+          name: "Ra",
+          pronunciation: "r",
+          isolated: "ر",
+          initial: "ر",
+          medial: "ـر",
+          final: "ـر",
+        },
+        {
+          name: "Zay",
+          pronunciation: "z",
+          isolated: "ز",
+          initial: "ز",
+          medial: "ـز",
+          final: "ـز",
+        },
+        {
+          name: "Sin",
+          pronunciation: "s",
+          isolated: "س",
+          initial: "سـ",
+          medial: "ـسـ",
+          final: "ـس",
+        },
+        {
+          name: "Shin",
+          pronunciation: "sh",
+          isolated: "ش",
+          initial: "شـ",
+          medial: "ـشـ",
+          final: "ـش",
+        },
+        {
+          name: "Sad",
+          pronunciation: "ṣ",
+          isolated: "ص",
+          initial: "صـ",
+          medial: "ـصـ",
+          final: "ـص",
+        },
+        {
+          name: "Dad",
+          pronunciation: "ḍ",
+          isolated: "ض",
+          initial: "ضـ",
+          medial: "ـضـ",
+          final: "ـض",
+        },
+        {
+          name: "Ta",
+          pronunciation: "ṭ",
+          isolated: "ط",
+          initial: "طـ",
+          medial: "ـطـ",
+          final: "ـط",
+        },
+        {
+          name: "Zha",
+          pronunciation: "ẓ",
+          isolated: "ظ",
+          initial: "ظـ",
+          medial: "ـظـ",
+          final: "ـظ",
+        },
+        {
+          name: "Ayn",
+          pronunciation: "ʿ",
+          isolated: "ع",
+          initial: "عـ",
+          medial: "ـعـ",
+          final: "ـع",
+        },
+        {
+          name: "Ghayn",
+          pronunciation: "gh",
+          isolated: "غ",
+          initial: "غـ",
+          medial: "ـغـ",
+          final: "ـغ",
+        },
+        {
+          name: "Fa",
+          pronunciation: "f",
+          isolated: "ف",
+          initial: "فـ",
+          medial: "ـفـ",
+          final: "ـف",
+        },
+        {
+          name: "Qaf",
+          pronunciation: "q",
+          isolated: "ق",
+          initial: "قـ",
+          medial: "ـقـ",
+          final: "ـق",
+        },
+        {
+          name: "Kaf",
+          pronunciation: "k",
+          isolated: "ك",
+          initial: "كـ",
+          medial: "ـكـ",
+          final: "ـك",
+        },
+        {
+          name: "Lam",
+          pronunciation: "l",
+          isolated: "ل",
+          initial: "لـ",
+          medial: "ـلـ",
+          final: "ـل",
+        },
+        {
+          name: "Mim",
+          pronunciation: "m",
+          isolated: "م",
+          initial: "مـ",
+          medial: "ـمـ",
+          final: "ـم",
+        },
+        {
+          name: "Nun",
+          pronunciation: "n",
+          isolated: "ن",
+          initial: "نـ",
+          medial: "ـنـ",
+          final: "ـن",
+        },
+        {
+          name: "Ha",
+          pronunciation: "h",
+          isolated: "ه",
+          initial: "هـ",
+          medial: "ـهـ",
+          final: "ـه",
+        },
+        {
+          name: "Waw",
+          pronunciation: "w",
+          isolated: "و",
+          initial: "و",
+          medial: "ـو",
+          final: "ـو",
+        },
+        {
+          name: "Ya",
+          pronunciation: "y",
+          isolated: "ي",
+          initial: "يـ",
+          medial: "ـيـ",
+          final: "ـي",
+        },
+      ];
+
+      let currentLetterIndex = 0;
+
+      function displayLetter() {
+        const letter = arabicAlphabet[currentLetterIndex];
+        document.getElementById("letter-display").textContent = letter.isolated;
+        document.getElementById("letter-info").innerHTML = `
+                <p><strong>${letter.name}</strong> - Prononciation: ${letter.pronunciation}</p>
+                <p>Initiale: ${letter.initial} | Médiane: ${letter.medial} | Finale: ${letter.final}</p>
+            `;
+      }
+
+      function setupCanvas() {
+        const canvas = document.getElementById("writing-canvas");
+        const ctx = canvas.getContext("2d");
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        canvas.addEventListener("mousedown", startDrawing);
+        canvas.addEventListener("mousemove", draw);
+        canvas.addEventListener("mouseup", stopDrawing);
+        canvas.addEventListener("mouseout", stopDrawing);
+
+        function startDrawing(e) {
+          isDrawing = true;
+          [lastX, lastY] = [e.offsetX, e.offsetY];
+        }
+
+        function draw(e) {
+          if (!isDrawing) return;
+          ctx.beginPath();
+          ctx.moveTo(lastX, lastY);
+          ctx.lineTo(e.offsetX, e.offsetY);
+          ctx.stroke();
+          [lastX, lastY] = [e.offsetX, e.offsetY];
+        }
+
+        function stopDrawing() {
+          isDrawing = false;
+        }
+
+        document
+          .getElementById("clear-canvas")
+          .addEventListener("click", () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+          });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        displayLetter();
+        setupCanvas();
+
+        document.getElementById("next-letter").addEventListener("click", () => {
+          currentLetterIndex = (currentLetterIndex + 1) % arabicAlphabet.length;
+          displayLetter();
+        });
+      });
+    </script>
+  </body>
+</html>

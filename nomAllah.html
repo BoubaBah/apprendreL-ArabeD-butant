@@ -1,0 +1,644 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Les 99 Noms d'Allah | Apprenez l'Arabe avec Bah Boubacar</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-color: #1c6e8c;
+        --secondary-color: #274029;
+        --accent-color: #d4af37;
+        --background-color: #f5f5dc;
+        --text-color: #333;
+      }
+
+      body {
+        font-family: "Amiri", "Roboto", sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+      }
+
+      .navbar {
+        background-color: var(--primary-color);
+      }
+
+      .navbar-brand,
+      .nav-link {
+        color: white !important;
+      }
+
+      .hero-section {
+        background: linear-gradient(
+            rgba(28, 110, 140, 0.8),
+            rgba(28, 110, 140, 0.8)
+          ),
+          url("https://source.unsplash.com/1600x900/?islamic,calligraphy")
+            no-repeat center center;
+        background-size: cover;
+        color: white;
+        padding: 60px 0;
+        text-align: center;
+      }
+
+      .content-section {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-top: 30px;
+      }
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+
+      .btn-primary:hover {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+      }
+
+      footer {
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 40px 0;
+        margin-top: 50px;
+      }
+
+      .name-card {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+      }
+
+      .name-card:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: translateY(-5px);
+      }
+
+      .arabic-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--primary-color);
+      }
+
+      #searchInput {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/">Apprendre l'Arabe pour débutant</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="/">Accueil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pageCours.html">Cours</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="nomAllah.html">Les nom d'Allah</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="Priere.html">étape de la prière</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero-section">
+      <div class="container">
+        <h1 class="display-4">Les 99 Noms d'Allah</h1>
+        <p class="lead">
+          Découvrez et apprenez les 99 Noms d'Allah et leur signification.
+        </p>
+      </div>
+    </header>
+
+    <main class="container mt-5">
+      <section class="content-section" id="names-of-allah">
+        <h2 class="mb-4">Les 99 Noms d'Allah</h2>
+        <p>
+          Dans l'Islam, Allah possède 99 noms, également appelés les "Plus Beaux
+          Noms" ou "Attributs Divins". Chaque nom reflète un aspect de la nature
+          divine et de Sa perfection. Explorez-les ci-dessous :
+        </p>
+
+        <input
+          type="text"
+          id="searchInput"
+          class="form-control"
+          placeholder="Rechercher un nom..."
+        />
+
+        <div class="row" id="namesContainer">
+          <!-- Les noms seront ajoutés ici dynamiquement par JavaScript -->
+        </div>
+      </section>
+    </main>
+
+    <footer class="mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h5>À propos</h5>
+            <p>
+              Apprenez l'arabe avec Bah Boubacar, votre guide pour maîtriser la
+              langue et la culture arabes.
+            </p>
+          </div>
+          <div class="col-md-4">
+            <h5>Liens rapides</h5>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link active" href="/">Accueil</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="pageCours.html">Cours</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="nomAllah.html">Les nom d'Allah</a>
+                </li>
+    
+                <li class="nav-item">
+                  <a class="nav-link" href="Priere.html">étape de la prière</a>
+                </li>
+              </ul>
+          </div>
+          <div class="col-md-4">
+            <h5>Contact</h5>
+            <p>boubacar.bah.zola@gmail.com</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const namesOfAllah = [
+        { arabic: "الله", transliteration: "Allah", meaning: "Dieu" },
+        {
+          arabic: "الرحمن",
+          transliteration: "Ar-Rahman",
+          meaning: "Le Tout Miséricordieux",
+        },
+        {
+          arabic: "الرحيم",
+          transliteration: "Ar-Rahim",
+          meaning: "Le Très Miséricordieux",
+        },
+        {
+          arabic: "الملك",
+          transliteration: "Al-Malik",
+          meaning: "Le Souverain",
+        },
+        { arabic: "القدوس", transliteration: "Al-Quddus", meaning: "Le Saint" },
+        { arabic: "السلام", transliteration: "As-Salam", meaning: "La Paix" },
+        {
+          arabic: "المؤمن",
+          transliteration: "Al-Mu'min",
+          meaning: "Le Fidèle",
+        },
+        {
+          arabic: "المهيمن",
+          transliteration: "Al-Muhaymin",
+          meaning: "Le Vigilant",
+        },
+        {
+          arabic: "العزيز",
+          transliteration: "Al-Aziz",
+          meaning: "Le Tout Puissant",
+        },
+        {
+          arabic: "الجبار",
+          transliteration: "Al-Jabbar",
+          meaning: "Le Contraignant",
+        },
+        {
+          arabic: "المتكبر",
+          transliteration: "Al-Mutakabbir",
+          meaning: "Le Superbe",
+        },
+        {
+          arabic: "الخالق",
+          transliteration: "Al-Khaliq",
+          meaning: "Le Créateur",
+        },
+        {
+          arabic: "البارئ",
+          transliteration: "Al-Bari'",
+          meaning: "Le Producteur",
+        },
+        {
+          arabic: "المصور",
+          transliteration: "Al-Musawwir",
+          meaning: "Le Formateur",
+        },
+        {
+          arabic: "الغفار",
+          transliteration: "Al-Ghaffar",
+          meaning: "Le Pardonneur",
+        },
+        {
+          arabic: "القهار",
+          transliteration: "Al-Qahhar",
+          meaning: "Le Dominateur",
+        },
+        {
+          arabic: "الوهاب",
+          transliteration: "Al-Wahhab",
+          meaning: "Le Donateur",
+        },
+        {
+          arabic: "الرزاق",
+          transliteration: "Ar-Razzaq",
+          meaning: "Le Pourvoyeur",
+        },
+        {
+          arabic: "الفتاح",
+          transliteration: "Al-Fattah",
+          meaning: "Celui qui ouvre",
+        },
+        {
+          arabic: "العليم",
+          transliteration: "Al-Alim",
+          meaning: "L'Omniscient",
+        },
+        {
+          arabic: "القابض",
+          transliteration: "Al-Qabid",
+          meaning: "Celui qui resserre",
+        },
+        {
+          arabic: "الباسط",
+          transliteration: "Al-Basit",
+          meaning: "Celui qui étend",
+        },
+        {
+          arabic: "الخافض",
+          transliteration: "Al-Khafid",
+          meaning: "Celui qui abaisse",
+        },
+        {
+          arabic: "الرافع",
+          transliteration: "Ar-Rafi",
+          meaning: "Celui qui élève",
+        },
+        {
+          arabic: "المعز",
+          transliteration: "Al-Mu'izz",
+          meaning: "Celui qui honore",
+        },
+        {
+          arabic: "المذل",
+          transliteration: "Al-Muzil",
+          meaning: "Celui qui humilie",
+        },
+        {
+          arabic: "السميع",
+          transliteration: "As-Sami",
+          meaning: "Celui qui entend tout",
+        },
+        {
+          arabic: "البصير",
+          transliteration: "Al-Basir",
+          meaning: "Celui qui voit tout",
+        },
+        { arabic: "الحكم", transliteration: "Al-Hakam", meaning: "Le Juge" },
+        { arabic: "العدل", transliteration: "Al-Adl", meaning: "Le Juste" },
+        { arabic: "اللطيف", transliteration: "Al-Latif", meaning: "Le Subtil" },
+        {
+          arabic: "الخبير",
+          transliteration: "Al-Khabir",
+          meaning: "Le Parfaitement Connaisseur",
+        },
+        {
+          arabic: "الحليم",
+          transliteration: "Al-Halim",
+          meaning: "Le Longanime",
+        },
+        { arabic: "العظيم", transliteration: "Al-Azim", meaning: "L'Immense" },
+        {
+          arabic: "الغفور",
+          transliteration: "Al-Ghafur",
+          meaning: "Celui qui pardonne",
+        },
+        {
+          arabic: "الشكور",
+          transliteration: "Ash-Shakur",
+          meaning: "Le Reconnaissant",
+        },
+        { arabic: "العلي", transliteration: "Al-Ali", meaning: "Le Très-Haut" },
+        { arabic: "الكبير", transliteration: "Al-Kabir", meaning: "Le Grand" },
+        {
+          arabic: "الحفيظ",
+          transliteration: "Al-Hafiz",
+          meaning: "Le Gardien",
+        },
+        {
+          arabic: "المقيت",
+          transliteration: "Al-Muqit",
+          meaning: "Le Nourricier",
+        },
+        {
+          arabic: "الحسيب",
+          transliteration: "Al-Hasib",
+          meaning: "Celui qui tient compte",
+        },
+        {
+          arabic: "الجليل",
+          transliteration: "Al-Jalil",
+          meaning: "Le Majestueux",
+        },
+        {
+          arabic: "الكريم",
+          transliteration: "Al-Karim",
+          meaning: "Le Généreux",
+        },
+        {
+          arabic: "الرقيب",
+          transliteration: "Ar-Raqib",
+          meaning: "L'Observateur",
+        },
+        {
+          arabic: "المجيب",
+          transliteration: "Al-Mujib",
+          meaning: "Celui qui répond",
+        },
+        { arabic: "الواسع", transliteration: "Al-Wasi", meaning: "L'Immense" },
+        { arabic: "الحكيم", transliteration: "Al-Hakim", meaning: "Le Sage" },
+        {
+          arabic: "الودود",
+          transliteration: "Al-Wadud",
+          meaning: "Le Tout Aimant",
+        },
+        {
+          arabic: "المجيد",
+          transliteration: "Al-Majid",
+          meaning: "Le Glorieux",
+        },
+        {
+          arabic: "الباعث",
+          transliteration: "Al-Ba'ith",
+          meaning: "Le Ressusciteur",
+        },
+        {
+          arabic: "الشهيد",
+          transliteration: "Ash-Shahid",
+          meaning: "Le Témoin",
+        },
+        { arabic: "الحق", transliteration: "Al-Haqq", meaning: "La Vérité" },
+        { arabic: "الوكيل", transliteration: "Al-Wakil", meaning: "Le Gérant" },
+        { arabic: "القوي", transliteration: "Al-Qawiyy", meaning: "Le Fort" },
+        {
+          arabic: "المتين",
+          transliteration: "Al-Matin",
+          meaning: "L'Inébranlable",
+        },
+        {
+          arabic: "الولي",
+          transliteration: "Al-Waliyy",
+          meaning: "Le Protecteur",
+        },
+        {
+          arabic: "الحميد",
+          transliteration: "Al-Hamid",
+          meaning: "Le Digne de louange",
+        },
+        {
+          arabic: "المحصي",
+          transliteration: "Al-Muhsi",
+          meaning: "Celui qui dénombre tout",
+        },
+        {
+          arabic: "المبدئ",
+          transliteration: "Al-Mubdi",
+          meaning: "Celui qui commence",
+        },
+        {
+          arabic: "المعيد",
+          transliteration: "Al-Mu'id",
+          meaning: "Celui qui recommence",
+        },
+        {
+          arabic: "المحيي",
+          transliteration: "Al-Muhyi",
+          meaning: "Celui qui donne la vie",
+        },
+        {
+          arabic: "المميت",
+          transliteration: "Al-Mumit",
+          meaning: "Celui qui donne la mort",
+        },
+        { arabic: "الحي", transliteration: "Al-Hayy", meaning: "Le Vivant" },
+        {
+          arabic: "القيوم",
+          transliteration: "Al-Qayyum",
+          meaning: "Celui qui subsiste par lui-même",
+        },
+        { arabic: "الواجد", transliteration: "Al-Wajid", meaning: "L'Opulent" },
+        {
+          arabic: "الماجد",
+          transliteration: "Al-Majid",
+          meaning: "Le Glorieux",
+        },
+        { arabic: "الواحد", transliteration: "Al-Wahid", meaning: "L'Unique" },
+        { arabic: "الأحد", transliteration: "Al-Ahad", meaning: "L'Un" },
+        { arabic: "الصمد", transliteration: "As-Samad", meaning: "L'Absolu" },
+        {
+          arabic: "القادر",
+          transliteration: "Al-Qadir",
+          meaning: "Le Tout Puissant",
+        },
+        {
+          arabic: "المقتدر",
+          transliteration: "Al-Muqtadir",
+          meaning: "Le Puissant",
+        },
+        {
+          arabic: "المقدم",
+          transliteration: "Al-Muqaddim",
+          meaning: "Celui qui fait avancer",
+        },
+        {
+          arabic: "المؤخر",
+          transliteration: "Al-Mu'akhkhir",
+          meaning: "Celui qui fait reculer",
+        },
+        { arabic: "الأول", transliteration: "Al-Awwal", meaning: "Le Premier" },
+        { arabic: "الآخر", transliteration: "Al-Akhir", meaning: "Le Dernier" },
+        {
+          arabic: "الظاهر",
+          transliteration: "Az-Zahir",
+          meaning: "L'Apparent",
+        },
+        { arabic: "الباطن", transliteration: "Al-Batin", meaning: "Le Caché" },
+        {
+          arabic: "الوالي",
+          transliteration: "Al-Wali",
+          meaning: "Le Gouverneur",
+        },
+        {
+          arabic: "المتعالي",
+          transliteration: "Al-Muta'ali",
+          meaning: "Le Très-Haut",
+        },
+        {
+          arabic: "البر",
+          transliteration: "Al-Barr",
+          meaning: "Le Bienfaisant",
+        },
+        {
+          arabic: "التواب",
+          transliteration: "At-Tawwab",
+          meaning: "Celui qui accepte le repentir",
+        },
+        {
+          arabic: "المنتقم",
+          transliteration: "Al-Muntaqim",
+          meaning: "Le Vengeur",
+        },
+        {
+          arabic: "العفو",
+          transliteration: "Al-'Afuww",
+          meaning: "Celui qui efface les péchés",
+        },
+        {
+          arabic: "الرؤوف",
+          transliteration: "Ar-Ra'uf",
+          meaning: "Le Compatissant",
+        },
+        {
+          arabic: "مالك الملك",
+          transliteration: "Malik-ul-Mulk",
+          meaning: "Le Maître de la royauté",
+        },
+        {
+          arabic: "ذو الجلال والإكرام",
+          transliteration: "Dhul-Jalali wal-Ikram",
+          meaning: "Le Seigneur de majesté et de générosité",
+        },
+        {
+          arabic: "المقسط",
+          transliteration: "Al-Muqsit",
+          meaning: "L'Équitable",
+        },
+        {
+          arabic: "الجامع",
+          transliteration: "Al-Jami",
+          meaning: "Celui qui réunit",
+        },
+        { arabic: "الغني", transliteration: "Al-Ghani", meaning: "Le Riche" },
+        {
+          arabic: "المغني",
+          transliteration: "Al-Mughni",
+          meaning: "Celui qui enrichit",
+        },
+        {
+          arabic: "المانع",
+          transliteration: "Al-Mani",
+          meaning: "Celui qui empêche",
+        },
+        {
+          arabic: "الضار",
+          transliteration: "Ad-Darr",
+          meaning: "Celui qui afflige",
+        },
+        {
+          arabic: "النافع",
+          transliteration: "An-Nafi",
+          meaning: "Celui qui est utile",
+        },
+        { arabic: "النور", transliteration: "An-Nur", meaning: "La Lumière" },
+        {
+          arabic: "الهادي",
+          transliteration: "Al-Hadi",
+          meaning: "Celui qui guide",
+        },
+        {
+          arabic: "البديع",
+          transliteration: "Al-Badi",
+          meaning: "L'Incomparable",
+        },
+        { arabic: "الباقي", transliteration: "Al-Baqi", meaning: "L'Éternel" },
+        {
+          arabic: "الوارث",
+          transliteration: "Al-Warith",
+          meaning: "L'Héritier",
+        },
+        {
+          arabic: "الرشيد",
+          transliteration: "Ar-Rashid",
+          meaning: "Celui qui dirige",
+        },
+        {
+          arabic: "الصبور",
+          transliteration: "As-Sabur",
+          meaning: "Le Patient",
+        },
+      ];
+
+      function displayNames(names) {
+        const container = document.getElementById("namesContainer");
+        container.innerHTML = "";
+        names.forEach((name) => {
+          const nameCard = document.createElement("div");
+          nameCard.className = "col-md-4 col-sm-6";
+          nameCard.innerHTML = `
+                    <div class="name-card">
+                        <div class="arabic-name">${name.arabic}</div>
+                        <div><strong>${name.transliteration}</strong></div>
+                        <div>${name.meaning}</div>
+                    </div>
+                `;
+          container.appendChild(nameCard);
+        });
+      }
+
+      function setupSearch() {
+        const searchInput = document.getElementById("searchInput");
+        searchInput.addEventListener("input", (e) => {
+          const searchTerm = e.target.value.toLowerCase();
+          const filteredNames = namesOfAllah.filter(
+            (name) =>
+              name.arabic.includes(searchTerm) ||
+              name.transliteration.toLowerCase().includes(searchTerm) ||
+              name.meaning.toLowerCase().includes(searchTerm)
+          );
+          displayNames(filteredNames);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        displayNames(namesOfAllah);
+        setupSearch();
+      });
+    </script>
+  </body>
+</html>

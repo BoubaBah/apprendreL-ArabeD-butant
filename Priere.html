@@ -1,0 +1,325 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Les Étapes de la Prière | Apprenez l'Arabe avec Bah Boubacar</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-color: #1c6e8c;
+        --secondary-color: #274029;
+        --accent-color: #d4af37;
+        --background-color: #f5f5dc;
+        --text-color: #333;
+      }
+
+      body {
+        font-family: "Amiri", "Roboto", sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+      }
+
+      .navbar {
+        background-color: var(--primary-color);
+      }
+
+      .navbar-brand,
+      .nav-link {
+        color: white !important;
+      }
+
+      .hero-section {
+        background: linear-gradient(
+            rgba(28, 110, 140, 0.8),
+            rgba(28, 110, 140, 0.8)
+          ),
+          url("https://source.unsplash.com/1600x900/?mosque,prayer") no-repeat
+            center center;
+        background-size: cover;
+        color: white;
+        padding: 60px 0;
+        text-align: center;
+      }
+
+      .content-section {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-top: 30px;
+      }
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+
+      .btn-primary:hover {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+      }
+
+      footer {
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 40px 0;
+        margin-top: 50px;
+      }
+
+      .prayer-step {
+        margin-bottom: 30px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+      }
+
+      .prayer-step:last-child {
+        border-bottom: none;
+      }
+
+      .step-number {
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--primary-color);
+        margin-right: 10px;
+      }
+
+      .arabic-text {
+        font-size: 18px;
+        color: var(--accent-color);
+        margin-top: 10px;
+      }
+
+      .transliteration {
+        font-style: italic;
+        color: #666;
+      }
+
+      .step-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-top: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/">Apprendre l'Arabe pour débutant</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="/">Accueil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pageCours.html">Cours</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="nomAllah.html">Les nom d'Allah</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="Priere.html">étape de la prière</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero-section">
+      <div class="container">
+        <h1 class="display-4">Les Étapes de la Prière</h1>
+        <p class="lead">
+          Découvrez et apprenez les étapes essentielles de la prière islamique
+        </p>
+      </div>
+    </header>
+
+    <main class="container mt-5">
+      <section class="content-section" id="prayer-steps">
+        <h2 class="mb-4">Les Étapes de la Prière</h2>
+        <p>
+          La prière (As-Salah) est l'un des piliers fondamentaux de l'Islam.
+          Voici les étapes principales pour effectuer correctement la prière :
+        </p>
+
+        <div class="prayer-step mb-4">
+          <h3><span class="step-number">1.</span> L'intention (An-Niyyah)</h3>
+          <p>
+            Formulez l'intention de prier dans votre cœur. Il n'est pas
+            nécessaire de la prononcer à voix haute.
+          </p>
+          <div class="arabic-text">نويت أن أصلي</div>
+          <div class="transliteration">Nawaitu an usalli</div>
+        </div>
+
+        <div class="prayer-step">
+          <h3>
+            <span class="step-number">2.</span> Takbir d'ouverture (Takbirat
+            al-Ihram)
+          </h3>
+          <p>Levez les mains au niveau des oreilles et dites :</p>
+          <div class="arabic-text">الله أكبر</div>
+          <div class="transliteration">Allahu Akbar</div>
+          <p>Signification : Allah est le plus grand</p>
+          
+        </div>
+
+        <div class="prayer-step">
+          <h3><span class="step-number">3.</span> Position debout (Qiyam)</h3>
+          <p>
+            Placez votre main droite sur votre main gauche sur la poitrine et
+            récitez l'ouverture (Al-Fatihah) et une autre sourate du Coran.
+          </p>
+          
+        </div>
+
+        <div class="prayer-step">
+          <h3><span class="step-number">4.</span> Inclinaison (Ruku)</h3>
+          <p>Inclinez-vous en disant :</p>
+          <div class="arabic-text">سبحان ربي العظيم</div>
+          <div class="transliteration">Subhana Rabbiya l-'Adheem</div>
+          <p>Signification : Gloire à mon Seigneur le Très Grand</p>
+          
+        </div>
+
+        <div class="prayer-step">
+          <h3>
+            <span class="step-number">5.</span> Retour à la position debout
+          </h3>
+          <p>Redressez-vous en disant :</p>
+          <div class="arabic-text">سمع الله لمن حمده</div>
+          <div class="transliteration">Sami'a Allahu liman hamidah</div>
+          <p>Signification : Allah entend celui qui Le loue</p>
+        </div>
+
+        <div class="prayer-step">
+          <h3><span class="step-number">6.</span> Prosternation (Sujud)</h3>
+          <p>Prosternez-vous en disant :</p>
+          <div class="arabic-text">سبحان ربي الأعلى</div>
+          <div class="transliteration">Subhana Rabbiya l-A'la</div>
+          <p>Signification : Gloire à mon Seigneur le Très Haut</p>
+          
+        </div>
+
+        <div class="prayer-step">
+          <h3>
+            <span class="step-number">7.</span> Position assise entre les deux
+            prosternations
+          </h3>
+          <p>Asseyez-vous entre les deux prosternations en disant :</p>
+          <div class="arabic-text">رب اغفر لي</div>
+          <div class="transliteration">Rabbi ghfir li</div>
+          <p>Signification : Seigneur, pardonne-moi</p>
+        </div>
+
+        <div class="prayer-step">
+          <h3><span class="step-number">8.</span> Deuxième prosternation</h3>
+          <p>Répétez la prosternation comme à l'étape 6.</p>
+        </div>
+
+        <div class="prayer-step">
+          <h3><span class="step-number">9.</span> Tashahud</h3>
+          <p>
+            Il y a deux tachahoud ; le premier tachahoud se fait après la
+            deuxième rakaat (unité de prière), pendant que le second tachahoud
+            se récite après la dernière rakaat juste avant de faire les
+            salutations finales.. <br /><br />
+            Comment faire le tachahoud ? Lors de la prière, l’index de la main
+            droite doit être pointé vers la qibla, et notre regard doit le
+            fixer. Il est recommandé également de bouger son doigt doucement en
+            le remontant du bas vers le haut. Il est reporté que cheikh El
+            Albani (rahimahullah) bougeait à peine son doigt au point où on
+            avait l’impression qu’il ne le bougeait pas. <br /><br />
+            La première formule : La formule la plus connue du tachahoud est
+            celle rapportée par Al Boukhari d’après Ibn Mas’oud : « التحيات لله،
+            والصلوات، والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته،
+            السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله، وأشهد
+            أن محمداً عبده ورسوله ». <br /><br />
+
+            Transcription phonétique : At-tahiyyatoulillah, wa as-salawatou wa
+            tayyibat, assalamou ‘alayka ayyouha nabiyyou wa rahmatoullahi wa
+            barakatouh, assalamou ‘alayna wa ‘ala ‘ibadillahi assalihin,
+            ashhadou an la ilaha illallah wa ashhadou anna mouhammadan ‘abdouhou
+            wa rasoulouh. <br /><br />
+
+            Version française : « Les salutations sont pour Allah, ainsi que les
+            prières et les bonnes oeuvres. Que la paix soit sur le prophète
+            ainsi que la miséricorde d’Allah et Sa bénédiction. Que la paix soit
+            sur nous et sur les pieux serviteurs d’Allah. J’atteste qu’il n’y a
+            pas de divinité autre qu’Allah, et j’atteste que Mouhammed est Son
+            serviteur et Son messager. » <br /><br />
+            Deuxième partie <br /><br />
+
+            Phonétique: "allahoumma salli 'ala mohammadin wa'ala èli mohamed
+            kama sallayta 'ala Ibrahim innaka hamidum majid, Allahoumma barik
+            ala mouhammadin wa 'ala èli mohammadin kama barakta 'ala Ibrahima wa
+            'ala èli Ibrahima innaka hamidoun majid" <br /><br />
+
+            Traduction: ô Seigneur prie sur Mohamed et sur la famille de
+            Mohamed, comme tu prias sur la famille d'Ibrahim car en vérité tu es
+            digne de Louange et la Gloire te revient et répends tes bénédictions
+            à Mohamed et à la famille de Mohamed comme tu répandis tes
+            bénédistions sur la famille d'Ibrahim en vérité tu es digne de
+            Louange et la gloire te revient.
+          </p>
+        </div>
+
+        <div class="prayer-step">
+          <h3>
+            <span class="step-number">10.</span> Salutations finales (Taslim)
+          </h3>
+          <p>
+            Terminez la prière en tournant la tête à droite puis à gauche en
+            disant :
+          </p>
+          <div class="arabic-text">السلام عليكم ورحمة الله</div>
+          <div class="transliteration">As-salamu 'alaykum wa rahmatullah</div>
+          <p>
+            Signification : Que la paix et la miséricorde d'Allah soient sur
+            vous
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h5>À propos</h5>
+            <p>
+              Apprenez l'arabe avec Bah Boubacar, votre guide pour maîtriser la
+              langue et la culture arabes.
+            </p>
+          </div>
+
+          <div class="col-md-4">
+            <h5>Contact</h5>
+            <p>boubacar.bah.zola@gmail.com</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
