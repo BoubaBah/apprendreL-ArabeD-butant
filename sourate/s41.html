@@ -1,0 +1,404 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Sourate Fussilat (Les Versets Détaillés) - Exploration Interactive
+    </title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #e8f6ff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      #fussilat-canvas {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .reflection-section {
+        background-color: #e8f8f5;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #16a085;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Fussilat (Les Versets Détaillés)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/041.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Fussilat - سورة فصلت</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <canvas id="fussilat-canvas"></canvas>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate</h2>
+        <div class="interactive-item" onclick="showReflection('revelation')">
+          <h3>1. La révélation du Coran</h3>
+          <p>L'importance et les caractéristiques de la révélation divine.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('creation')">
+          <h3>2. La création de l'univers</h3>
+          <p>Description de la création des cieux et de la terre.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('signes')">
+          <h3>3. Les signes de la puissance d'Allah</h3>
+          <p>
+            Réflexions sur les preuves de l'existence et de l'unicité d'Allah.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('attitude')">
+          <h3>4. L'attitude des incroyants</h3>
+          <p>Réactions des non-croyants face au message de l'Islam.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('recompense')">
+          <h3>5. La récompense et le châtiment</h3>
+          <p>Le sort des croyants et des incroyants dans l'au-delà.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section fade-in">
+        <h2 class="reflection-title">Réflexions sur Fussilat</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Fussilat.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s40.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s42.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+        const canvas = document.getElementById("fussilat-canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Set canvas size
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        // Fussilat animation
+        function drawFussilat() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // Draw background
+          const gradient = ctx.createLinearGradient(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+          gradient.addColorStop(0, "#3498db");
+          gradient.addColorStop(1, "#2c3e50");
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          // Draw "detailed verses" representation
+          const verseCount = 54; // Fussilat has 54 verses
+          const circleRadius = Math.min(canvas.width, canvas.height) / 4;
+          const centerX = canvas.width / 2;
+          const centerY = canvas.height / 2;
+
+          for (let i = 0; i < verseCount; i++) {
+            const angle = (i / verseCount) * Math.PI * 2;
+            const x = centerX + Math.cos(angle) * circleRadius;
+            const y = centerY + Math.sin(angle) * circleRadius;
+
+            ctx.beginPath();
+            ctx.arc(x, y, 5, 0, Math.PI * 2);
+            ctx.fillStyle = "white";
+            ctx.fill();
+
+            // Draw connecting lines
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(x, y);
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.3)";
+            ctx.stroke();
+          }
+
+          // Draw pulsating central circle
+          const time = Date.now() * 0.001;
+          const pulseSize = Math.sin(time) * 10 + 20;
+
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, pulseSize, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+          ctx.fill();
+
+          requestAnimationFrame(drawFussilat);
+        }
+
+        drawFussilat();
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Fussilat a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Fussilat a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Fussilat est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/41"),
+              axios.get("https://api.alquran.cloud/v1/surah/41/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "revelation":
+            reflectionContent.innerHTML =
+              "La sourate Fussilat met l'accent sur l'importance de la révélation du Coran. Elle souligne que le Coran est une révélation détaillée, claire et compréhensible, envoyée comme guide et miséricorde pour l'humanité. La sourate invite à réfléchir sur la sagesse divine derrière cette révélation et son rôle dans la guidance de l'humanité.";
+            break;
+          case "creation":
+            reflectionContent.innerHTML =
+              "Fussilat offre une description fascinante de la création de l'univers. Elle mentionne la création des cieux et de la terre en six jours, illustrant la puissance et la sagesse d'Allah. Cette narration invite à contempler la grandeur de la création et à reconnaître le Créateur à travers Ses œuvres.";
+            break;
+          case "signes":
+            reflectionContent.innerHTML =
+              "La sourate attire l'attention sur les nombreux signes de la puissance d'Allah dans l'univers. Elle mentionne des phénomènes naturels comme la pluie, la croissance des plantes, et l'alternance du jour et de la nuit. Ces signes sont présentés comme des preuves de l'existence et de l'unicité d'Allah, invitant à la réflexion et à la reconnaissance.";
+            break;
+          case "attitude":
+            reflectionContent.innerHTML =
+              "Fussilat décrit les différentes attitudes des gens face au message de l'Islam. Elle montre comment certains rejettent le message par arrogance ou ignorance, tandis que d'autres l'acceptent avec humilité. La sourate encourage à adopter une attitude d'ouverture et de réflexion face à la vérité, plutôt que de la rejeter sans considération.";
+            break;
+          case "recompense":
+            reflectionContent.innerHTML =
+              "La sourate aborde le thème de la récompense et du châtiment dans l'au-delà. Elle décrit le sort des croyants qui seront récompensés pour leur foi et leurs bonnes actions, ainsi que celui des incroyants qui feront face aux conséquences de leur rejet. Cette partie sert d'avertissement et d'encouragement, invitant à la réflexion sur les conséquences de nos choix dans cette vie.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Fussilat.";
+        }
+      }
+    </script>
+  </body>
+</html>

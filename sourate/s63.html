@@ -1,0 +1,386 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Sourate Al-Munafiqun (Les Hypocrites) - Exploration Interactive
+    </title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Munafiqun (Les Hypocrites)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/063.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Munafiqun - سورة المنافقون</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #87ceeb; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #e6e6fa; stop-opacity: 1" />
+          </linearGradient>
+          <filter id="shadow">
+            <feDropShadow
+              dx="0.2"
+              dy="0.4"
+              stdDeviation="0.2"
+              flood-opacity="0.3"
+            />
+          </filter>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="100" height="100" fill="url(#sky)" />
+
+        <!-- Sun -->
+        <circle cx="80" cy="20" r="8" fill="#FFD700">
+          <animate
+            attributeName="cy"
+            values="20;18;20"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Mosque silhouette -->
+        <path d="M10 70 Q25 50 40 70 T70 70 V100 H10 Z" fill="#2c3e50" />
+        <path d="M40 70 Q55 40 70 70 V100 H40 Z" fill="#34495e" />
+        <rect x="48" y="80" width="4" height="20" fill="#ecf0f1" />
+        <circle cx="50" cy="50" r="8" fill="#3498db" />
+
+        <!-- Figures representing hypocrites -->
+        <g id="hypocrites" filter="url(#shadow)">
+          <circle cx="30" cy="85" r="5" fill="#e74c3c" />
+          <circle cx="50" cy="85" r="5" fill="#e67e22" />
+          <circle cx="70" cy="85" r="5" fill="#f1c40f" />
+          <animate
+            attributeName="opacity"
+            values="1;0.5;1"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </g>
+
+        <!-- Arabic text for "Al-Munafiqun" -->
+        <text
+          x="50"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#ecf0f1"
+          text-anchor="middle"
+        >
+          المنافقون
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Munafiqun</h2>
+        <div class="interactive-item" onclick="showReflection('hypocrisy')">
+          <h3>1. L'hypocrisie et ses dangers</h3>
+          <p>
+            Description des caractéristiques des hypocrites et leurs effets
+            néfastes sur la communauté.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('sincerity')">
+          <h3>2. L'importance de la sincérité</h3>
+          <p>L'appel à la sincérité dans la foi et les actions.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('wealth')">
+          <h3>3. L'attachement aux biens matériels</h3>
+          <p>
+            Mise en garde contre l'amour excessif des richesses et la négligence
+            des devoirs envers Allah.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('charity')">
+          <h3>4. L'encouragement à la charité</h3>
+          <p>
+            L'importance de dépenser dans la voie d'Allah avant qu'il ne soit
+            trop tard.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('remembrance')">
+          <h3>5. Le rappel d'Allah</h3>
+          <p>
+            L'importance de se souvenir d'Allah et de ne pas se laisser
+            distraire par les affaires mondaines.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Munafiqun</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Munafiqun.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s62.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s64.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Munafiqun a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Munafiqun a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Munafiqun est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/63"),
+              axios.get("https://api.alquran.cloud/v1/surah/63/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "hypocrisy":
+            reflectionContent.innerHTML =
+              "La sourate Al-Munafiqun met en lumière le danger de l'hypocrisie dans la communauté musulmane. Elle décrit les hypocrites comme ceux qui prétendent croire mais dont les cœurs sont vides de foi véritable. Leurs paroles sont douces mais leurs actions trahissent leur véritable nature. Cette sourate nous invite à réfléchir sur l'importance de l'authenticité dans notre foi et nos actions. Elle nous encourage à examiner nos propres cœurs et à nous assurer que nos actes sont en accord avec nos paroles. Dans un monde où les apparences peuvent souvent tromper, cette sourate nous rappelle la valeur de la sincérité et de l'intégrité dans notre relation avec Allah et avec les autres.";
+            break;
+          case "sincerity":
+            reflectionContent.innerHTML =
+              "La sourate Al-Munafiqun met l'accent sur l'importance cruciale de la sincérité dans la foi. Elle contraste la fausseté des hypocrites avec la véritable foi des croyants sincères. Cette sourate nous invite à cultiver une foi authentique, enracinée dans une conviction profonde et manifestée par des actions cohérentes. Elle nous encourage à aligner nos pensées, nos paroles et nos actes avec les principes de l'Islam. La sincérité est présentée non seulement comme une vertu personnelle, mais aussi comme un élément essentiel pour la force et l'unité de la communauté musulmane. Cette réflexion nous pousse à examiner régulièrement nos intentions et à purifier nos cœurs, en cherchant constamment à plaire à Allah plutôt qu'aux hommes.";
+            break;
+          case "wealth":
+            reflectionContent.innerHTML =
+              "La sourate Al-Munafiqun met en garde contre les dangers de l'attachement excessif aux biens matériels. Elle nous rappelle que les richesses et les enfants peuvent devenir une source de distraction et nous détourner de notre devoir envers Allah. Cette sourate nous invite à réfléchir sur notre relation avec les possessions mondaines. Elle nous encourage à voir nos biens comme un moyen de servir Allah et la communauté, plutôt que comme une fin en soi. L'accent est mis sur l'importance de maintenir un équilibre entre nos responsabilités mondaines et nos obligations spirituelles. Cette réflexion nous pousse à reconsidérer nos priorités et à nous assurer que notre quête de succès matériel ne nous fait pas négliger notre croissance spirituelle et notre préparation pour l'au-delà.";
+            break;
+          case "charity":
+            reflectionContent.innerHTML =
+              "La sourate Al-Munafiqun souligne l'importance de la charité et encourage les croyants à dépenser dans la voie d'Allah avant qu'il ne soit trop tard. Elle nous rappelle que nos ressources sont un don d'Allah et que nous avons la responsabilité de les utiliser de manière bénéfique. Cette sourate nous invite à réfléchir sur la nature éphémère de la vie et l'importance de saisir les opportunités de faire le bien tant que nous le pouvons. Elle met en lumière le concept de 'sadaqa jariya' (charité continue), encourageant les actes de générosité qui continuent à bénéficier aux autres même après notre mort. Cette réflexion nous pousse à être proactifs dans notre générosité, à chercher activement des moyens de soutenir notre communauté et à voir la charité non pas comme un fardeau, mais comme une opportunité de purification et de croissance spirituelle.";
+            break;
+          case "remembrance":
+            reflectionContent.innerHTML =
+              "La sourate Al-Munafiqun met l'accent sur l'importance du rappel constant d'Allah (dhikr) et nous met en garde contre le fait de se laisser distraire par les affaires mondaines au point de négliger nos devoirs spirituels. Elle nous rappelle que le véritable succès et la satisfaction ne viennent pas de l'accumulation de richesses ou de statut social, mais de notre connexion avec Allah. Cette sourate nous invite à intégrer le souvenir d'Allah dans tous les aspects de notre vie quotidienne. Elle nous encourage à trouver un équilibre entre nos responsabilités mondaines et notre quête spirituelle, en faisant du dhikr une partie intégrante de notre routine quotidienne. Cette réflexion nous pousse à réévaluer nos priorités, à cultiver une conscience constante de la présence divine, et à chercher la paix et la contentement à travers notre relation avec Allah plutôt que dans les pursuits matérielles transitoires.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Munafiqun.";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,394 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Sourate Al-Ikhlas (Le Monothéisme pur) - Expérience Interactive
+    </title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f8ff;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #1e90ff;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(30, 144, 255, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #4169e1;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 400px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #87cefa;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #1e90ff;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #4169e1;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #1e90ff;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #1e90ff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #4169e1;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #e6f2ff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(30, 144, 255, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #1e90ff;
+      }
+      .reflection-section {
+        background-color: #e6f2ff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #1e90ff;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #4169e1;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Ikhlas (Le Monothéisme pur)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/112.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Ikhlas - سورة الإخلاص</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <radialGradient
+            id="sky-gradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #4169e1; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #1e90ff; stop-opacity: 1" />
+          </radialGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="400" height="200" fill="url(#sky-gradient)" />
+
+        <!-- Stars -->
+        <g id="stars"></g>
+
+        <!-- Crescent moon -->
+        <path
+          d="M300,50 A40,40 0 1,1 300,130 A30,30 0 1,0 300,50"
+          fill="#ffffff"
+        />
+
+        <!-- Arabic text -->
+        <text
+          x="200"
+          y="100"
+          font-family="Scheherazade"
+          font-size="36"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          قُلْ هُوَ ٱللَّهُ أَحَدٌ
+        </text>
+
+        <!-- Light rays -->
+        <g id="light-rays"></g>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Al-Ikhlas</h2>
+        <div class="theme-item" onclick="showReflection('unity')">
+          <h3>1. L'Unicité d'Allah</h3>
+          <p>Le concept fondamental du monothéisme pur en Islam.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('attributes')">
+          <h3>2. Les attributs d'Allah</h3>
+          <p>Description des qualités essentielles d'Allah.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('rejection')">
+          <h3>3. Rejet du polythéisme</h3>
+          <p>
+            Affirmation contre toute forme d'association ou de pluralité divine.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('importance')">
+          <h3>4. Importance de la sourate</h3>
+          <p>
+            La place unique de cette sourate dans la foi et la pratique
+            islamiques.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('simplicity')">
+          <h3>5. Simplicité et profondeur</h3>
+          <p>La concision et la portée profonde du message de la sourate.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Ikhlas</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Al-Ikhlas.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s111.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s113.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        // Create stars
+        const starsGroup = document.getElementById("stars");
+        for (let i = 0; i < 50; i++) {
+          const star = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+          star.setAttribute("cx", Math.random() * 400);
+          star.setAttribute("cy", Math.random() * 200);
+          star.setAttribute("r", Math.random() * 1.5);
+          star.setAttribute("fill", "#ffffff");
+          starsGroup.appendChild(star);
+        }
+
+        // Create light rays
+        const lightRaysGroup = document.getElementById("light-rays");
+        for (let i = 0; i < 12; i++) {
+          const ray = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
+          );
+          const angle = (i * 30 * Math.PI) / 180;
+          const x1 = 200 + 80 * Math.cos(angle);
+          const y1 = 100 + 80 * Math.sin(angle);
+          const x2 = 200 + 100 * Math.cos(angle);
+          const y2 = 100 + 100 * Math.sin(angle);
+          ray.setAttribute("x1", x1);
+          ray.setAttribute("y1", y1);
+          ray.setAttribute("x2", x2);
+          ray.setAttribute("y2", y2);
+          ray.setAttribute("stroke", "#ffffff");
+          ray.setAttribute("stroke-width", "1");
+          ray.setAttribute("opacity", "0.5");
+          lightRaysGroup.appendChild(ray);
+        }
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Ikhlas a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Ikhlas a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Ikhlas est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/112"),
+              axios.get("https://api.alquran.cloud/v1/surah/112/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "unity":
+            reflectionContent.innerHTML =
+              "La sourate Al-Ikhlas est une affirmation puissante et concise de l'unicité d'Allah (Tawhid). Elle souligne que Dieu est Un, sans partenaire ni égal. Ce concept est au cœur de la foi islamique et rejette toute forme de polythéisme ou d'association. La sourate nous invite à réfléchir sur la nature absolue et indivisible de Dieu, encourageant une relation directe et pure avec le Créateur.";
+            break;
+          case "attributes":
+            reflectionContent.innerHTML =
+              "Cette sourate décrit certains des attributs essentiels d'Allah. Elle Le présente comme 'As-Samad', c'est-à-dire l'Absolu, Celui qui se suffit à Lui-même et dont tout dépend. Elle nie également toute notion de filiation ou de génération divine, soulignant la transcendance d'Allah au-delà des concepts humains de procréation ou de descendance. Ces attributs nous aident à comprendre la nature incomparable et autosuffisante de Dieu.";
+            break;
+          case "rejection":
+            reflectionContent.innerHTML =
+              "Al-Ikhlas rejette catégoriquement toute forme de polythéisme ou d'association à Allah. En affirmant qu'Allah est Un et qu'Il n'a pas engendré et n'a pas été engendré, la sourate réfute les croyances qui attribuent des partenaires ou des enfants à Dieu. Cette clarification est cruciale pour purifier la conception de Dieu de toute influence anthropomorphique ou mythologique.";
+            break;
+          case "importance":
+            reflectionContent.innerHTML =
+              "La sourate Al-Ikhlas occupe une place unique dans l'Islam. Le Prophète Muhammad a déclaré qu'elle équivaut à un tiers du Coran, soulignant son importance fondamentale. Elle est souvent récitée dans les prières quotidiennes et est considérée comme une protection spirituelle. Sa brièveté et sa profondeur en font un résumé puissant de la foi islamique, facilement mémorisable et applicable dans la vie quotidienne des croyants.";
+            break;
+          case "simplicity":
+            reflectionContent.innerHTML =
+              "Malgré sa brièveté, Al-Ikhlas contient une profondeur théologique remarquable. En seulement quatre versets courts, elle transmet l'essence du monothéisme islamique. Cette combinaison de simplicité et de profondeur la rend accessible à tous, tout en offrant un sujet de méditation inépuisable pour les théologiens et les philosophes. Elle démontre l'éloquence du Coran, capable de transmettre des vérités complexes de manière concise et mémorable.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Al-Ikhlas.";
+        }
+      }
+    </script>
+  </body>
+</html>

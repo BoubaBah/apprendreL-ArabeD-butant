@@ -1,0 +1,389 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Sourate Al-Muddaththir (L'Enveloppé) - Exploration Interactive
+    </title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Muddaththir (L'Enveloppé)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/074.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Muddaththir - سورة المدثر</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #1a237e; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #3949ab; stop-opacity: 1" />
+          </linearGradient>
+          <filter id="glowEffect">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+            <feComposite in="blur" in2="SourceGraphic" operator="over" />
+          </filter>
+        </defs>
+
+        <!-- Background -->
+        <rect width="100" height="100" fill="url(#skyGradient)" />
+
+        <!-- Stars -->
+        <g id="stars">
+          <circle cx="10" cy="15" r="0.5" fill="#ffffff" />
+          <circle cx="25" cy="10" r="0.3" fill="#ffffff" />
+          <circle cx="40" cy="20" r="0.4" fill="#ffffff" />
+          <circle cx="60" cy="15" r="0.3" fill="#ffffff" />
+          <circle cx="75" cy="25" r="0.4" fill="#ffffff" />
+          <circle cx="90" cy="10" r="0.3" fill="#ffffff" />
+        </g>
+
+        <!-- Mountain silhouette -->
+        <path
+          d="M0 70 L20 40 L40 60 L60 30 L80 50 L100 20 L100 100 L0 100 Z"
+          fill="#1a1a1a"
+        />
+
+        <!-- Figure wrapped in cloak -->
+        <g transform="translate(50, 50) scale(0.6)">
+          <path d="M0,0 Q25,-25 50,0 Q25,25 0,0 Z" fill="#34495e" />
+          <path d="M0,0 Q25,-20 50,0 Q25,20 0,0 Z" fill="#2c3e50" />
+          <circle cx="20" cy="-5" r="3" fill="#ecf0f1" />
+          <circle cx="30" cy="-5" r="3" fill="#ecf0f1" />
+        </g>
+
+        <!-- Glowing effect around the figure -->
+        <circle
+          cx="50"
+          cy="50"
+          r="25"
+          fill="none"
+          stroke="#f39c12"
+          stroke-width="2"
+          filter="url(#glowEffect)"
+          opacity="0.7"
+        />
+
+        <!-- Arabic text for "Al-Muddaththir" -->
+        <text
+          x="50"
+          y="90"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          المدثر
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Muddaththir</h2>
+        <div
+          class="interactive-item"
+          onclick="showReflection('call-to-action')"
+        >
+          <h3>1. L'Appel à l'Action</h3>
+          <p>L'ordre donné au Prophète de se lever et d'avertir.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('purification')">
+          <h3>2. La Purification</h3>
+          <p>L'importance de la purification spirituelle et physique.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('day-of-judgment')"
+        >
+          <h3>3. Le Jour du Jugement</h3>
+          <p>Description du Jour du Jugement et ses terreurs.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('opposition')">
+          <h3>4. L'Opposition au Message</h3>
+          <p>La réaction des incroyants face au message de l'Islam.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('reflection')">
+          <h3>5. La Réflexion et la Responsabilité</h3>
+          <p>
+            L'importance de la réflexion et de la responsabilité individuelle.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">
+          Réflexions sur la sourate Al-Muddaththir
+        </h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Muddaththir.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s73.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s75.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Muddaththir a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Muddaththir a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log(
+            "La récitation de la sourate Al-Muddaththir est terminée"
+          );
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/74"),
+              axios.get("https://api.alquran.cloud/v1/surah/74/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "call-to-action":
+            reflectionContent.innerHTML =
+              "La sourate Al-Muddaththir s'ouvre sur un appel puissant à l'action adressé au Prophète Muhammad (paix soit sur lui). L'ordre divin 'Lève-toi et avertis' marque le début de sa mission publique. Ce verset nous rappelle l'importance de l'action et de la responsabilité dans la propagation du message de l'Islam. Il nous invite à réfléchir sur notre propre rôle dans la société et sur notre devoir de partager la vérité et la guidance avec les autres. Cette injonction divine nous encourage à sortir de notre zone de confort, à surmonter nos peurs et nos hésitations, et à assumer pleinement notre rôle de témoins de la foi.";
+            break;
+          case "purification":
+            reflectionContent.innerHTML =
+              "La purification, tant spirituelle que physique, est un thème central de cette sourate. L'ordre de purifier ses vêtements est interprété non seulement au sens littéral, mais aussi comme une métaphore de la purification de l'âme. Cette emphase sur la pureté nous rappelle l'importance de maintenir un état de propreté physique et morale dans notre vie quotidienne. Elle souligne le lien intrinsèque entre la pureté extérieure et intérieure dans l'Islam. Cette notion de purification nous invite à examiner régulièrement nos actions, nos intentions et nos pensées, en cherchant constamment à nous améliorer et à nous rapprocher d'Allah.";
+            break;
+          case "day-of-judgment":
+            reflectionContent.innerHTML =
+              "La sourate Al-Muddaththir offre une description saisissante du Jour du Jugement, mettant en avant ses terreurs et son inéluctabilité. Ces versets servent de rappel puissant de la réalité de l'au-delà et de la responsabilité ultime de chaque individu devant Allah. La description vivide de ce jour nous invite à réfléchir sur la nature transitoire de cette vie et l'importance de nos actions dans la perspective de l'éternité. Elle nous encourage à vivre chaque jour avec la conscience de notre retour à Allah et à orienter nos actions vers ce qui plaît à notre Créateur. Cette réflexion sur le Jour du Jugement devrait nous motiver à mener une vie vertueuse et à nous préparer constamment pour notre rencontre avec Allah.";
+            break;
+          case "opposition":
+            reflectionContent.innerHTML =
+              "La sourate aborde la réaction des incroyants face au message de l'Islam, illustrant les différentes formes d'opposition et de rejet auxquelles le Prophète (paix soit sur lui) et les premiers musulmans ont été confrontés. Cette partie de la sourate nous rappelle que la vérité peut souvent rencontrer de la résistance et que la foi peut être mise à l'épreuve face à l'adversité. Elle nous enseigne l'importance de la persévérance dans la foi, même face à l'opposition ou au ridicule. Ces versets nous invitent également à réfléchir sur nos propres réactions face aux vérités qui nous dérangent ou nous remettent en question, nous encourageant à adopter une attitude d'ouverture et de réflexion critique plutôt que de rejet immédiat.";
+            break;
+          case "reflection":
+            reflectionContent.innerHTML =
+              "La sourate Al-Muddaththir met l'accent sur l'importance de la réflexion et de la responsabilité individuelle. Elle invite chacun à méditer sur les signes d'Allah et à prendre conscience de sa propre responsabilité devant son Créateur. Cette invitation à la réflexion nous rappelle que la foi n'est pas une adhésion aveugle, mais un engagement conscient et réfléchi. Elle nous encourage à utiliser notre intellect pour comprendre les signes d'Allah dans la création et dans Sa révélation. De plus, l'accent mis sur la responsabilité individuelle souligne que chacun est responsable de ses propres actions et choix. Cette notion nous invite à prendre au sérieux notre rôle d'intendants sur terre et à agir avec conscience et sagesse dans tous les aspects de notre vie.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Muddaththir.";
+        }
+      }
+    </script>
+  </body>
+</html>

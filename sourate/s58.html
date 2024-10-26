@@ -1,0 +1,401 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Mujadila (La Discussion) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Mujadila (La Discussion)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/058.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Mujadila - سورة المجادلة</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color: #3498db; stop-opacity: 0.2" />
+            <stop
+              offset="100%"
+              style="stop-color: #2c3e50; stop-opacity: 0.1"
+            />
+          </linearGradient>
+        </defs>
+
+        <!-- Background -->
+        <rect x="0" y="0" width="100" height="100" fill="url(#bgGradient)" />
+
+        <!-- Symbolic representation of discussion -->
+        <g id="discussionGroup" transform="translate(50, 50)">
+          <circle cx="-20" cy="0" r="15" fill="#3498db" opacity="0.8">
+            <animate
+              attributeName="r"
+              values="15;17;15"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="20" cy="0" r="15" fill="#e74c3c" opacity="0.8">
+            <animate
+              attributeName="r"
+              values="15;17;15"
+              dur="3s"
+              repeatCount="indefinite"
+              begin="1.5s"
+            />
+          </circle>
+
+          <!-- Speech bubbles -->
+          <path
+            d="M-15,-15 Q-25,-25 -35,-15 L-40,-17 L-38,-12 Q-45,-5 -38,2 Q-25,15 -15,5 Z"
+            fill="#fff"
+          >
+            <animateTransform
+              attributeName="transform"
+              type="scale"
+              values="1;1.1;1"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </path>
+          <path
+            d="M15,-15 Q25,-25 35,-15 L40,-17 L38,-12 Q45,-5 38,2 Q25,15 15,5 Z"
+            fill="#fff"
+          >
+            <animateTransform
+              attributeName="transform"
+              type="scale"
+              values="1;1.1;1"
+              dur="3s"
+              repeatCount="indefinite"
+              begin="1.5s"
+            />
+          </path>
+        </g>
+
+        <!-- Arabic text for "Al-Mujadila" -->
+        <text
+          x="50"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#2c3e50"
+          text-anchor="middle"
+        >
+          المجادلة
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Mujadila</h2>
+        <div class="interactive-item" onclick="showReflection('womens_rights')">
+          <h3>1. Les droits des femmes</h3>
+          <p>La discussion sur le Zihar et la défense des droits des femmes.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('social_etiquette')"
+        >
+          <h3>2. L'étiquette sociale</h3>
+          <p>
+            Les règles de conduite dans les assemblées et les conversations
+            privées.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('divine_knowledge')"
+        >
+          <h3>3. La connaissance divine</h3>
+          <p>L'omniscience d'Allah et Son contrôle sur toutes choses.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('loyalty')">
+          <h3>4. La loyauté envers Allah</h3>
+          <p>
+            L'importance de choisir le bon camp et de ne pas s'allier aux
+            ennemis d'Allah.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('charity')">
+          <h3>5. La charité et la purification</h3>
+          <p>
+            L'encouragement à la charité comme moyen de purification
+            spirituelle.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Mujadila</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Mujadila.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s57.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s59.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Mujadila a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Mujadila a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Mujadila est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/58"),
+              axios.get("https://api.alquran.cloud/v1/surah/58/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "womens_rights":
+            reflectionContent.innerHTML =
+              "La sourate Al-Mujadila s'ouvre sur l'histoire d'une femme qui vient plaider sa cause auprès du Prophète Muhammad (paix sur lui) concernant son mari qui l'a répudiée par Zihar (une forme de divorce préislamique). Cette révélation divine en réponse à sa plainte souligne l'importance que l'Islam accorde aux droits des femmes et à leur dignité. Allah écoute directement la plainte de cette femme, montrant ainsi que les préoccupations des femmes sont entendues et prises au sérieux. Ce passage établit également de nouvelles règles concernant le Zihar, offrant protection et justice aux femmes face à cette pratique injuste.";
+            break;
+          case "social_etiquette":
+            reflectionContent.innerHTML =
+              "La sourate aborde plusieurs aspects de l'étiquette sociale, notamment comment se comporter dans les assemblées et lors de conversations privées. Elle enseigne aux croyants à faire de la place aux autres dans les assemblées, à ne pas tenir de conversations secrètes qui pourraient causer de l'anxiété ou de la suspicion, et à se saluer de manière appropriée. Ces enseignements visent à créer une société harmonieuse et respectueuse, où la confiance et la bienveillance prévalent. La sourate souligne également l'importance de l'obéissance à Allah et à Son Messager dans ces questions d'étiquette sociale.";
+            break;
+          case "divine_knowledge":
+            reflectionContent.innerHTML =
+              "Un thème récurrent dans la sourate Al-Mujadila est l'omniscience d'Allah. La sourate rappelle à plusieurs reprises qu'Allah est conscient de tout ce qui se passe, qu'il s'agisse de conversations secrètes ou d'actions apparentes. Cette emphase sur la connaissance divine sert à rappeler aux croyants qu'ils sont constamment sous le regard d'Allah, les encourageant ainsi à agir avec droiture et sincérité en tout temps. Elle souligne également que rien n'échappe à Allah, renforçant ainsi la notion de responsabilité personnelle et de jugement divin.";
+            break;
+          case "loyalty":
+            reflectionContent.innerHTML =
+              "La sourate met l'accent sur l'importance de la loyauté envers Allah et Son Messager. Elle met en garde contre l'amitié ou l'alliance avec ceux qui s'opposent à Allah et à Son Messager, même s'il s'agit de proches parents. Ce message souligne la primauté de la foi sur les liens familiaux ou tribaux, un concept révolutionnaire dans le contexte de la société arabe de l'époque. La sourate promet le succès et la satisfaction à ceux qui choisissent le parti d'Allah, renforçant ainsi l'importance de maintenir une foi forte et une loyauté inébranlable envers les principes divins.";
+            break;
+          case "charity":
+            reflectionContent.innerHTML =
+              "La sourate Al-Mujadila encourage la pratique de la charité, notamment dans le contexte de l'expiation pour certaines transgressions. Elle mentionne spécifiquement l'acte de donner en charité avant d'avoir une conversation privée avec le Prophète, comme un moyen de purification et de démonstration de sincérité. Bien que cette règle spécifique ait été par la suite abrogée, le principe général de la charité comme moyen de purification spirituelle et d'expiation des péchés reste un enseignement important. La sourate souligne ainsi le lien entre la générosité matérielle et la croissance spirituelle.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Mujadila.";
+        }
+      }
+    </script>
+  </body>
+</html>

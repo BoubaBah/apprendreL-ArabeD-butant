@@ -1,0 +1,356 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Ash-Shu'ara (Les Poètes) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .key-themes {
+        margin-top: 30px;
+        background-color: #ecf0f1;
+        padding: 20px;
+        border-radius: 10px;
+      }
+      .theme {
+        margin-bottom: 15px;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+      .theme:hover {
+        transform: translateY(-5px);
+      }
+      .theme h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .poets-meaning {
+        background-color: #27ae60;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 30px;
+        text-align: center;
+      }
+      .prophets-stories {
+        margin-top: 30px;
+      }
+      .prophet-story {
+        background-color: #f9f9f9;
+        border-left: 5px solid #3498db;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .fade-in {
+        animation: fadeIn 1s ease-in;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Ash-Shu'ara (الشعراء)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/026.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Ash-Shu'ara (Les Poètes) - سورة الشعراء</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <div class="poets-meaning fade-in">
+        <h3>Signification d'Ash-Shu'ara</h3>
+        <p>
+          "Ash-Shu'ara" signifie "Les Poètes". Cette sourate tire son nom du
+          verset 224, où il est fait mention des poètes. Elle aborde le rôle de
+          la poésie et des poètes dans la société arabe de l'époque, tout en
+          soulignant la différence entre la révélation divine et la poésie
+          humaine.
+        </p>
+      </div>
+
+      <div class="key-themes">
+        <h2>Thèmes clés de la sourate</h2>
+        <div class="theme fade-in">
+          <h3>Histoires des prophètes</h3>
+          <p>
+            La sourate relate les histoires de plusieurs prophètes, mettant en
+            lumière leurs luttes et leurs messages.
+          </p>
+        </div>
+        <div class="theme fade-in">
+          <h3>Unicité d'Allah</h3>
+          <p>
+            Elle réaffirme le message central de l'Islam : l'unicité d'Allah et
+            l'appel à Son adoration exclusive.
+          </p>
+        </div>
+        <div class="theme fade-in">
+          <h3>Nature de la révélation</h3>
+          <p>
+            La sourate souligne la nature divine du Coran et son rôle de guide
+            pour l'humanité.
+          </p>
+        </div>
+        <div class="theme fade-in">
+          <h3>Réflexion sur la création</h3>
+          <p>
+            Elle invite à méditer sur les signes de la création d'Allah comme
+            preuves de Sa puissance.
+          </p>
+        </div>
+        <div class="theme fade-in">
+          <h3>Poésie et révélation</h3>
+          <p>
+            La sourate établit une distinction claire entre la poésie humaine et
+            la révélation divine.
+          </p>
+        </div>
+      </div>
+
+      <div class="prophets-stories">
+        <h2>Histoires des prophètes mentionnées</h2>
+        <div class="prophet-story fade-in">
+          <h3>Moïse (Musa)</h3>
+          <p>
+            Son histoire avec Pharaon et la libération des enfants d'Israël.
+          </p>
+        </div>
+        <div class="prophet-story fade-in">
+          <h3>Abraham (Ibrahim)</h3>
+          <p>Son appel à son peuple à abandonner l'idolâtrie.</p>
+        </div>
+        <div class="prophet-story fade-in">
+          <h3>Noé (Nuh)</h3>
+          <p>Son avertissement à son peuple et le déluge.</p>
+        </div>
+        <div class="prophet-story fade-in">
+          <h3>Hud</h3>
+          <p>Son message au peuple d'Ad.</p>
+        </div>
+        <div class="prophet-story fade-in">
+          <h3>Salih</h3>
+          <p>Son appel au peuple de Thamud.</p>
+        </div>
+        <div class="prophet-story fade-in">
+          <h3>Lot (Lut)</h3>
+          <p>Son avertissement à son peuple contre l'immoralité.</p>
+        </div>
+        <div class="prophet-story fade-in">
+          <h3>Shu'ayb</h3>
+          <p>Son message au peuple de Madyan.</p>
+        </div>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s25.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s27.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Ash-Shu'ara a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Ash-Shu'ara a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Ash-Shu'ara est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/26"),
+              axios.get("https://api.alquran.cloud/v1/surah/26/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer pour l'animation des éléments
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.style.opacity = 1;
+                entry.target.style.transform = "translateY(0)";
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".theme, .prophet-story")
+          .forEach((element) => {
+            element.style.opacity = 0;
+            element.style.transform = "translateY(20px)";
+            element.style.transition = "opacity 0.5s, transform 0.5s";
+            observer.observe(element);
+          });
+      });
+    </script>
+  </body>
+</html>

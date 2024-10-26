@@ -1,0 +1,383 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate As-Saff (Le Rang) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate As-Saff (Le Rang)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/061.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate As-Saff - سورة الصف</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #87ceeb; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #e6e6fa; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="100" height="100" fill="url(#sky)" />
+
+        <!-- Sun -->
+        <circle cx="80" cy="20" r="8" fill="#FFD700">
+          <animate
+            attributeName="cy"
+            values="20;18;20"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Desert landscape -->
+        <path d="M0 70 Q25 60 50 70 T100 70 V100 H0 Z" fill="#D2B48C" />
+
+        <!-- Symbolic representation of a rank or line -->
+        <g id="rank">
+          <line
+            x1="10"
+            y1="80"
+            x2="90"
+            y2="80"
+            stroke="#2c3e50"
+            stroke-width="2"
+          />
+          <circle cx="20" cy="80" r="3" fill="#3498db" />
+          <circle cx="40" cy="80" r="3" fill="#3498db" />
+          <circle cx="60" cy="80" r="3" fill="#3498db" />
+          <circle cx="80" cy="80" r="3" fill="#3498db" />
+          <animateTransform
+            attributeName="transform"
+            attributeType="XML"
+            type="translate"
+            values="0,0; 0,-2; 0,0"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+        </g>
+
+        <!-- Arabic text for "As-Saff" -->
+        <text
+          x="50"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#2c3e50"
+          text-anchor="middle"
+        >
+          الصف
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate As-Saff</h2>
+        <div class="interactive-item" onclick="showReflection('unity')">
+          <h3>1. Unité et cohésion</h3>
+          <p>
+            L'importance de l'unité parmi les croyants, symbolisée par un rang
+            solide.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('faith_action')">
+          <h3>2. Foi et action</h3>
+          <p>L'appel à aligner ses actions avec sa foi et ses paroles.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('prophets')">
+          <h3>3. Les prophètes et leurs missions</h3>
+          <p>
+            Mentions de Moïse et Jésus, et leur rôle dans la guidance divine.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('struggle')">
+          <h3>4. La lutte pour la cause d'Allah</h3>
+          <p>
+            L'encouragement à s'engager dans l'effort et le sacrifice pour la
+            foi.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('victory')">
+          <h3>5. La promesse de victoire</h3>
+          <p>
+            L'assurance divine de succès pour ceux qui persistent dans la foi et
+            les bonnes actions.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate As-Saff</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate As-Saff.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s60.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s62.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate As-Saff a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate As-Saff a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate As-Saff est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/61"),
+              axios.get("https://api.alquran.cloud/v1/surah/61/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "unity":
+            reflectionContent.innerHTML =
+              "La sourate As-Saff met en avant l'importance de l'unité et de la cohésion parmi les croyants. Le titre même de la sourate, 'Le Rang', évoque l'image de croyants alignés en rangs serrés, symbolisant leur force et leur unité. Cette métaphore militaire souligne l'importance de la solidarité et de l'organisation dans la communauté musulmane. La sourate nous rappelle que l'unité n'est pas seulement une question de proximité physique, mais aussi d'harmonie dans les cœurs et les actions. Elle nous invite à réfléchir sur la façon dont nous pouvons renforcer notre cohésion en tant que communauté et travailler ensemble vers des objectifs communs.";
+            break;
+          case "faith_action":
+            reflectionContent.innerHTML =
+              "Un thème central de la sourate As-Saff est l'appel à aligner ses actions avec sa foi et ses paroles. La sourate critique sévèrement ceux qui disent une chose mais en font une autre, soulignant l'importance de l'intégrité et de la cohérence entre les croyances et les actes. Ce message nous encourage à examiner notre propre vie et à nous demander si nos actions reflètent véritablement nos convictions. Il nous rappelle que la foi véritable se manifeste non seulement dans les paroles, mais surtout dans les actes concrets et les comportements quotidiens. Cette réflexion nous pousse à vivre notre foi de manière plus authentique et cohérente.";
+            break;
+          case "prophets":
+            reflectionContent.innerHTML =
+              "La sourate As-Saff fait référence à plusieurs prophètes, notamment Moïse et Jésus, soulignant leur rôle dans la guidance divine. Ces mentions établissent une continuité dans le message divin à travers les différentes époques et révélations. La sourate rappelle les difficultés rencontrées par ces prophètes, notamment le rejet et l'opposition de leur peuple. Cela sert à réconforter le Prophète Muhammad et les croyants, en montrant que les difficultés font partie de la mission prophétique. Ces récits nous invitent à réfléchir sur notre propre relation avec la guidance divine et sur la façon dont nous recevons et transmettons le message de l'Islam dans notre contexte actuel.";
+            break;
+          case "struggle":
+            reflectionContent.innerHTML =
+              "La sourate As-Saff met l'accent sur l'importance de la lutte et du sacrifice pour la cause d'Allah. Elle encourage les croyants à s'engager activement dans la défense et la propagation de leur foi, non pas par la force, mais par la conviction et l'action juste. Cette lutte (jihad) est présentée comme un 'commerce' bénéfique avec Allah, où les efforts sincères sont récompensés par le pardon et le Paradis. La sourate nous invite à réfléchir sur notre propre engagement envers notre foi et nos valeurs. Elle nous pousse à nous demander ce que nous sommes prêts à sacrifier pour nos convictions et comment nous pouvons contribuer positivement à notre communauté et à la société en général.";
+            break;
+          case "victory":
+            reflectionContent.innerHTML =
+              "La sourate As-Saff se termine sur une note d'espoir et d'optimisme, avec la promesse divine de victoire pour ceux qui persistent dans la foi et les bonnes actions. Cette promesse de succès n'est pas nécessairement liée à des victoires matérielles immédiates, mais plutôt à un triomphe ultime de la vérité et de la justice. La sourate encourage les croyants à persévérer malgré les difficultés, en gardant confiance en la promesse d'Allah. Cette assurance divine nous invite à réfléchir sur notre perception du succès et de la victoire dans notre vie spirituelle. Elle nous rappelle que la vraie réussite réside dans la satisfaction d'Allah et dans la constance de notre foi et de nos bonnes actions, quelles que soient les circonstances extérieures.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate As-Saff.";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,425 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-A'la (Le Très-Haut) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #1a1a2e;
+        color: #e0e0e0;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #16c79a;
+        text-align: center;
+      }
+      .container {
+        background-color: #16213e;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #b2b2b2;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #2c3e50;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #16c79a;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #b2b2b2;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #b2b2b2;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #16c79a;
+        color: #1a1a2e;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #13a984;
+      }
+      .interactive-section {
+        background-color: #0f3460;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #1e4d7b;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #16c79a;
+      }
+      .reflection-section {
+        background-color: #0f3460;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #16c79a;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #b2b2b2;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #16c79a;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-A'la (Le Très-Haut)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/087.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-A'la - سورة الأعلى</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 200 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #0f3460; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #16213e; stop-opacity: 1" />
+          </linearGradient>
+          <radialGradient
+            id="sun-gradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #fff5b7; stop-opacity: 1" />
+            <stop
+              offset="100%"
+              style="stop-color: #ffd23f; stop-opacity: 0.8"
+            />
+          </radialGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="200" height="100" fill="url(#sky-gradient)" />
+
+        <!-- Mountains -->
+        <path
+          d="M0 70 L40 30 L70 60 L100 20 L130 50 L160 10 L200 80 L200 100 L0 100 Z"
+          fill="#0a2351"
+        />
+        <path
+          d="M0 80 L30 50 L60 70 L90 40 L120 60 L150 30 L180 60 L200 50 L200 100 L0 100 Z"
+          fill="#061b3d"
+        />
+
+        <!-- Sun (representing Al-A'la, The Most High) -->
+        <circle cx="100" cy="30" r="15" fill="url(#sun-gradient)">
+          <animate
+            attributeName="r"
+            values="15;17;15"
+            dur="4s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Sun rays -->
+        <g stroke="#ffd23f" stroke-width="0.5">
+          <line x1="100" y1="15" x2="100" y2="5">
+            <animate
+              attributeName="y2"
+              values="5;3;5"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </line>
+          <line x1="115" y1="30" x2="125" y2="30">
+            <animate
+              attributeName="x2"
+              values="125;127;125"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </line>
+          <line x1="85" y1="30" x2="75" y2="30">
+            <animate
+              attributeName="x2"
+              values="75;73;75"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </line>
+          <line x1="110" y1="20" x2="117" y2="13">
+            <animate
+              attributeName="x2"
+              values="117;119;117"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y2"
+              values="13;11;13"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </line>
+          <line x1="90" y1="20" x2="83" y2="13">
+            <animate
+              attributeName="x2"
+              values="83;81;83"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y2"
+              values="13;11;13"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </line>
+        </g>
+
+        <!-- Arabic text for "Al-A'la" -->
+        <text
+          x="100"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#16c79a"
+          text-anchor="middle"
+        >
+          الأعلى
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-A'la</h2>
+        <div class="interactive-item" onclick="showReflection('glorification')">
+          <h3>1. Glorification d'Allah</h3>
+          <p>L'importance de glorifier et louer Allah, le Très-Haut.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('creation')">
+          <h3>2. La Création et la Destinée</h3>
+          <p>Réflexions sur le rôle d'Allah dans la création et la destinée.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('revelation')">
+          <h3>3. La Révélation et le Rappel</h3>
+          <p>L'importance du Coran et du rappel dans la vie du croyant.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('purification')">
+          <h3>4. La Purification et le Succès</h3>
+          <p>Le lien entre la purification de l'âme et le succès spirituel.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('afterlife')">
+          <h3>5. La Vie Future</h3>
+          <p>L'importance de se rappeler de l'au-delà et de s'y préparer.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-A'la</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-A'la.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s86.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s88.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-A'la a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-A'la a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-A'la est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/87"),
+              axios.get("https://api.alquran.cloud/v1/surah/87/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "glorification":
+            reflectionContent.innerHTML =
+              "La sourate Al-A'la s'ouvre sur l'injonction de glorifier le nom du Seigneur, le Très-Haut. Cette glorification est au cœur de la foi islamique et rappelle l'importance de reconnaître la grandeur et la perfection d'Allah dans tous les aspects de la vie. En glorifiant Allah, le croyant affirme sa position de serviteur et reconnaît la souveraineté absolue du Créateur. Cette pratique aide à cultiver l'humilité et à renforcer le lien spirituel avec le divin.";
+            break;
+          case "creation":
+            reflectionContent.innerHTML =
+              "La sourate met en lumière le rôle d'Allah dans la création et la détermination de la destinée. Elle mentionne qu'Allah est Celui qui a créé et façonné toutes choses, qui a déterminé leur destin et les a guidées. Cette réflexion sur la création invite à contempler la sagesse et la puissance divines manifestées dans l'univers. Elle rappelle également que notre existence et notre parcours de vie sont intrinsèquement liés à la volonté d'Allah, encourageant ainsi la confiance en Sa sagesse et Son plan.";
+            break;
+          case "revelation":
+            reflectionContent.innerHTML =
+              "Al-A'la souligne l'importance de la révélation et du rappel. Elle mentionne qu'Allah fera se rappeler le Prophète, sauf ce qu'Il veut qu'il oublie. Cette référence à la révélation divine et à la mémoire prophétique met en évidence le rôle crucial du Coran et des enseignements prophétiques dans la guidance de l'humanité. Le rappel constant des vérités divines est présenté comme un moyen de rester sur le droit chemin et de cultiver une conscience spirituelle aiguë.";
+            break;
+          case "purification":
+            reflectionContent.innerHTML =
+              "La sourate établit un lien direct entre la purification de l'âme et le succès spirituel. Elle affirme que celui qui se purifie réussira. Cette purification implique non seulement la propreté physique, mais surtout la purification morale et spirituelle. Elle encourage les croyants à se débarrasser des vices, à cultiver les vertus et à s'efforcer constamment d'améliorer leur caractère. Ce processus de purification est présenté comme la clé du véritable succès, qui est ultimement le salut dans l'au-delà.";
+            break;
+          case "afterlife":
+            reflectionContent.innerHTML =
+              "Al-A'la met l'accent sur l'importance de se rappeler de la vie future et de s'y préparer. Elle affirme que la vie de l'au-delà est meilleure et plus durable que la vie présente. Cette perspective eschatologique invite les croyants à réfléchir sur la nature transitoire de ce monde et à orienter leurs actions vers ce qui a une valeur éternelle. En rappelant la réalité de l'au-delà, la sourate encourage à vivre avec un sens des responsabilités et à faire des choix qui contribueront au bonheur éternel.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-A'la.";
+        }
+      }
+    </script>
+  </body>
+</html>

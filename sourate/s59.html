@@ -1,0 +1,442 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Hashr (L'Exode) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Hashr (L'Exode)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/059.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Hashr - سورة الحشر</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #87ceeb; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #e6e6fa; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="100" height="100" fill="url(#sky)" />
+
+        <!-- Sun -->
+        <circle cx="80" cy="20" r="8" fill="#FFD700">
+          <animate
+            attributeName="cy"
+            values="20;18;20"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Desert dunes -->
+        <path d="M0 70 Q25 60 50 70 T100 70 V100 H0 Z" fill="#D2B48C" />
+        <path d="M0 80 Q35 70 70 80 T100 80 V100 H0 Z" fill="#DEB887" />
+
+        <!-- People in exodus -->
+        <g id="people">
+          <circle cx="20" cy="75" r="2" fill="#000" />
+          <line
+            x1="20"
+            y1="77"
+            x2="20"
+            y2="85"
+            stroke="#000"
+            stroke-width="1"
+          />
+          <line
+            x1="20"
+            y1="81"
+            x2="17"
+            y2="87"
+            stroke="#000"
+            stroke-width="1"
+          />
+          <line
+            x1="20"
+            y1="81"
+            x2="23"
+            y2="87"
+            stroke="#000"
+            stroke-width="1"
+          />
+
+          <circle cx="30" cy="77" r="2" fill="#000" />
+          <line
+            x1="30"
+            y1="79"
+            x2="30"
+            y2="87"
+            stroke="#000"
+            stroke-width="1"
+          />
+          <line
+            x1="30"
+            y1="83"
+            x2="27"
+            y2="89"
+            stroke="#000"
+            stroke-width="1"
+          />
+          <line
+            x1="30"
+            y1="83"
+            x2="33"
+            y2="89"
+            stroke="#000"
+            stroke-width="1"
+          />
+
+          <circle cx="40" cy="76" r="2" fill="#000" />
+          <line
+            x1="40"
+            y1="78"
+            x2="40"
+            y2="86"
+            stroke="#000"
+            stroke-width="1"
+          />
+          <line
+            x1="40"
+            y1="82"
+            x2="37"
+            y2="88"
+            stroke="#000"
+            stroke-width="1"
+          />
+          <line
+            x1="40"
+            y1="82"
+            x2="43"
+            y2="88"
+            stroke="#000"
+            stroke-width="1"
+          />
+
+          <animateTransform
+            attributeName="transform"
+            type="translate"
+            from="0 0"
+            to="60 0"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </g>
+
+        <!-- Arabic text for "Al-Hashr" -->
+        <text
+          x="50"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#2c3e50"
+          text-anchor="middle"
+        >
+          الحشر
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Hashr</h2>
+        <div class="interactive-item" onclick="showReflection('exile')">
+          <h3>1. L'exil des Banu Nadir</h3>
+          <p>Le contexte historique de l'exil d'une tribu juive de Médine.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('divine_power')">
+          <h3>2. La puissance divine</h3>
+          <p>
+            La manifestation de la puissance d'Allah dans les événements
+            historiques.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('distribution')">
+          <h3>3. La distribution du butin</h3>
+          <p>Les règles de répartition des biens acquis sans combat.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('hypocrites')">
+          <h3>4. Les hypocrites</h3>
+          <p>La dénonciation du comportement des hypocrites.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('divine_names')">
+          <h3>5. Les noms et attributs d'Allah</h3>
+          <p>La conclusion de la sourate avec les beaux noms d'Allah.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Hashr</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Hashr.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s58.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s60.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Hashr a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Hashr a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Hashr est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/59"),
+              axios.get("https://api.alquran.cloud/v1/surah/59/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "exile":
+            reflectionContent.innerHTML =
+              "La sourate Al-Hashr s'ouvre sur le récit de l'exil des Banu Nadir, une tribu juive de Médine. Cet événement historique sert de point de départ pour des enseignements plus larges sur la puissance divine et les conséquences de s'opposer à Allah et Son Messager. L'exil des Banu Nadir est présenté comme une manifestation de la volonté d'Allah, montrant que même les plans les mieux élaborés ne peuvent réussir contre la volonté divine. Cette narration souligne l'importance de la foi et de l'obéissance à Allah, tout en mettant en garde contre les alliances avec ceux qui s'opposent à la vérité.";
+            break;
+          case "divine_power":
+            reflectionContent.innerHTML =
+              "Tout au long de la sourate, la puissance d'Allah est mise en évidence. Que ce soit dans l'exil des Banu Nadir ou dans la description de la création, la sourate rappelle constamment aux croyants la toute-puissance d'Allah. Les versets décrivent comment Allah peut inspirer la crainte dans les cœurs de ceux qui s'opposent à Lui, et comment Il peut accorder la victoire aux croyants même face à des adversaires apparemment plus forts. Cette emphase sur la puissance divine sert à renforcer la foi des croyants et à les encourager à placer leur confiance en Allah dans toutes les situations.";
+            break;
+          case "distribution":
+            reflectionContent.innerHTML =
+              "La sourate Al-Hashr établit des principes importants concernant la distribution du butin, en particulier celui acquis sans combat (fay'). Elle souligne l'importance d'une répartition équitable des ressources au sein de la communauté, en donnant la priorité aux plus nécessiteux. Ces versets mettent l'accent sur la responsabilité sociale et économique dans la communauté islamique, encourageant la générosité et la solidarité. Ils servent également à prévenir la concentration des richesses entre les mains de quelques-uns, promouvant ainsi une société plus juste et équilibrée.";
+            break;
+          case "hypocrites":
+            reflectionContent.innerHTML =
+              "La sourate aborde le comportement des hypocrites, en particulier leur relation avec les gens du Livre qui ont été expulsés. Elle met en lumière la nature trompeuse des promesses faites par les hypocrites et leur manque de loyauté. Ce passage sert d'avertissement aux croyants pour qu'ils soient vigilants face à la duplicité et rappelle l'importance de la sincérité dans la foi. Il souligne également que la véritable fraternité et la loyauté ne peuvent être fondées que sur une foi sincère et des principes partagés.";
+            break;
+          case "divine_names":
+            reflectionContent.innerHTML =
+              "La sourate se termine par une magnifique série de noms et d'attributs d'Allah. Ces versets, souvent récités pour leurs vertus spirituelles, offrent une profonde réflexion sur la nature d'Allah. Ils décrivent Allah comme le Souverain, le Saint, le Pacifique, le Fidèle, le Prédominant, le Tout Puissant, le Superbe, le Créateur, Celui qui donne un commencement à toute chose, Celui qui donne une forme à toute chose. Cette conclusion invite les croyants à méditer sur la grandeur et la perfection d'Allah, renforçant ainsi leur connexion spirituelle et leur compréhension du divin.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Hashr.";
+        }
+      }
+    </script>
+  </body>
+</html>

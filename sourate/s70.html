@@ -1,0 +1,453 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Sourate Al-Ma'arij (Les Voies d'Ascension) - Exploration Interactive
+    </title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Ma'arij (Les Voies d'Ascension)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/070.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Ma'arij - سورة المعارج</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #1a237e; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #3f51b5; stop-opacity: 1" />
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="1.5" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="100" height="100" fill="url(#skyGradient)" />
+
+        <!-- Stars -->
+        <g id="stars">
+          <circle cx="10" cy="10" r="0.5" fill="#ffffff" />
+          <circle cx="20" cy="15" r="0.5" fill="#ffffff" />
+          <circle cx="30" cy="5" r="0.5" fill="#ffffff" />
+          <circle cx="40" cy="20" r="0.5" fill="#ffffff" />
+          <circle cx="50" cy="10" r="0.5" fill="#ffffff" />
+          <circle cx="60" cy="15" r="0.5" fill="#ffffff" />
+          <circle cx="70" cy="5" r="0.5" fill="#ffffff" />
+          <circle cx="80" cy="20" r="0.5" fill="#ffffff" />
+          <circle cx="90" cy="10" r="0.5" fill="#ffffff" />
+        </g>
+
+        <!-- Ascension paths -->
+        <path
+          d="M10,100 Q50,50 90,0"
+          stroke="#ffd700"
+          stroke-width="0.5"
+          fill="none"
+          opacity="0.6"
+        >
+          <animate
+            attributeName="d"
+            values="M10,100 Q50,50 90,0;M10,100 Q50,40 90,0;M10,100 Q50,50 90,0"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </path>
+        <path
+          d="M30,100 Q50,30 70,0"
+          stroke="#ffd700"
+          stroke-width="0.5"
+          fill="none"
+          opacity="0.4"
+        >
+          <animate
+            attributeName="d"
+            values="M30,100 Q50,30 70,0;M30,100 Q50,20 70,0;M30,100 Q50,30 70,0"
+            dur="12s"
+            repeatCount="indefinite"
+          />
+        </path>
+        <path
+          d="M50,100 Q50,50 50,0"
+          stroke="#ffd700"
+          stroke-width="0.5"
+          fill="none"
+          opacity="0.8"
+        >
+          <animate
+            attributeName="d"
+            values="M50,100 Q50,50 50,0;M50,100 Q45,50 50,0;M50,100 Q55,50 50,0;M50,100 Q50,50 50,0"
+            dur="15s"
+            repeatCount="indefinite"
+          />
+        </path>
+
+        <!-- Arabic text for "Al-Ma'arij" -->
+        <text
+          x="50"
+          y="50"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#ffffff"
+          text-anchor="middle"
+          dominant-baseline="middle"
+          filter="url(#glow)"
+        >
+          المعارج
+        </text>
+
+        <!-- Animated ascending souls -->
+        <g id="souls">
+          <circle cx="20" cy="80" r="1" fill="#ffffff" opacity="0.7">
+            <animate
+              attributeName="cy"
+              from="100"
+              to="0"
+              dur="15s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="40" cy="90" r="1" fill="#ffffff" opacity="0.7">
+            <animate
+              attributeName="cy"
+              from="100"
+              to="0"
+              dur="12s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="60" cy="85" r="1" fill="#ffffff" opacity="0.7">
+            <animate
+              attributeName="cy"
+              from="100"
+              to="0"
+              dur="18s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="80" cy="95" r="1" fill="#ffffff" opacity="0.7">
+            <animate
+              attributeName="cy"
+              from="100"
+              to="0"
+              dur="20s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        </g>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Ma'arij</h2>
+        <div class="interactive-item" onclick="showReflection('ascension')">
+          <h3>1. Les Voies d'Ascension</h3>
+          <p>La signification des "ma'arij" et leur symbolisme spirituel.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('judgment')">
+          <h3>2. Le Jour du Jugement</h3>
+          <p>
+            Description des événements et de l'atmosphère du Jour de la
+            Résurrection.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('human-nature')">
+          <h3>3. La Nature Humaine</h3>
+          <p>Réflexions sur les faiblesses et les forces de l'être humain.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('patience')">
+          <h3>4. La Patience et la Persévérance</h3>
+          <p>
+            L'importance de la patience face aux difficultés et aux moqueries.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('accountability')"
+        >
+          <h3>5. La Responsabilité Individuelle</h3>
+          <p>
+            Chacun sera responsable de ses propres actions le Jour du Jugement.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Ma'arij</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Ma'arij.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s69.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s71.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Ma'arij a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Ma'arij a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Ma'arij est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/70"),
+              axios.get("https://api.alquran.cloud/v1/surah/70/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "ascension":
+            reflectionContent.innerHTML =
+              "La sourate Al-Ma'arij tire son nom du concept des 'voies d'ascension' mentionné dans le verset 3. Ces 'ma'arij' symbolisent les moyens par lesquels les anges et l'esprit s'élèvent vers Allah. Cette image puissante évoque l'idée de l'élévation spirituelle et de la proximité avec le divin. Elle nous rappelle que notre quête spirituelle est un voyage ascendant, une élévation continue vers une compréhension et une relation plus profondes avec notre Créateur. Cette réflexion nous encourage à chercher constamment à nous élever au-dessus de nos préoccupations mondaines et à aspirer à des idéaux plus élevés.";
+            break;
+          case "judgment":
+            reflectionContent.innerHTML =
+              "La sourate Al-Ma'arij offre une description vivante du Jour du Jugement, présentant une image saisissante de ce moment crucial. Elle décrit un jour où le ciel sera comme du métal fondu et les montagnes comme de la laine cardée, soulignant la transformation radicale de notre réalité connue. L'atmosphère de ce jour est dépeinte comme intense et grave, où chaque individu sera préoccupé par son propre sort. Cette description sert de rappel puissant de l'inévitabilité du jugement et de l'importance de nos actions dans cette vie. Elle nous incite à vivre avec conscience et responsabilité, sachant que chacun de nos actes aura des conséquences dans l'au-delà.";
+            break;
+          case "human-nature":
+            reflectionContent.innerHTML =
+              "La sourate offre une réflexion profonde sur la nature humaine, mettant en lumière à la fois ses faiblesses et ses forces. Elle décrit l'homme comme étant 'créé inquiet', facilement découragé face à l'adversité et avare lorsqu'il est dans l'aisance. Cependant, la sourate mentionne également les qualités positives des croyants, telles que la constance dans la prière et la compassion envers les nécessiteux. Cette dualité nous rappelle notre potentiel de croissance et d'amélioration. En reconnaissant nos faiblesses inhérentes, nous sommes encouragés à cultiver activement les vertus qui nous élèvent et nous rapprochent de notre idéal spirituel.";
+            break;
+          case "patience":
+            reflectionContent.innerHTML =
+              "La patience et la persévérance sont des thèmes centraux de la sourate Al-Ma'arij. Le Prophète Muhammad (saw) est exhorté à faire preuve de 'belle patience' face aux moqueries et au rejet. Cette notion de patience n'est pas passive, mais active et résiliente. Elle implique de maintenir sa foi et son intégrité face à l'adversité, sans céder au désespoir ou à la colère. Cette leçon s'étend à tous les croyants, nous rappelant l'importance de la constance dans notre foi et nos pratiques, même lorsque nous sommes confrontés à des défis ou à l'opposition. La patience est présentée comme une vertu clé pour naviguer dans les épreuves de la vie et pour atteindre le succès spirituel.";
+            break;
+          case "accountability":
+            reflectionContent.innerHTML =
+              "La sourate Al-Ma'arij met l'accent sur la responsabilité individuelle, en particulier dans le contexte du Jour du Jugement. Elle affirme que chaque âme sera otage de ce qu'elle aura accompli, soulignant que nos actions et nos choix dans cette vie auront des conséquences directes dans l'au-delà. Cette notion de responsabilité personnelle est un rappel puissant que nous sommes les architectes de notre propre destin spirituel. Elle nous encourage à être vigilants dans nos actions, à faire des choix éthiques et à nous efforcer constamment d'améliorer notre caractère et notre comportement. Cette réflexion sur la responsabilité individuelle nous incite à vivre avec intention et conscience, sachant que chaque acte, grand ou petit, sera pris en compte.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Ma'arij.";
+        }
+      }
+    </script>
+  </body>
+</html>

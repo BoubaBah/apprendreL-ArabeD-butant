@@ -1,0 +1,400 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Ad-Dukhan (La Fumée) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #e8f6f3;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #16a085;
+      }
+      #smoke-canvas {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .reflection-section {
+        background-color: #f9e79f;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #d35400;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Ad-Dukhan (La Fumée)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/044.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Ad-Dukhan - سورة الدخان</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <canvas id="smoke-canvas"></canvas>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate</h2>
+        <div class="interactive-item" onclick="showReflection('smoke')">
+          <h3>1. La fumée et l'avertissement</h3>
+          <p>Le signe de la fumée comme avertissement divin.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('revelation')">
+          <h3>2. La révélation et la nuit bénie</h3>
+          <p>L'importance de la nuit où le Coran a été révélé.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('punishment')">
+          <h3>3. Le châtiment des transgresseurs</h3>
+          <p>Les conséquences pour ceux qui rejettent le message divin.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('paradise')">
+          <h3>4. Les délices du Paradis</h3>
+          <p>Description des récompenses pour les croyants vertueux.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('moses')">
+          <h3>5. L'histoire de Moïse</h3>
+          <p>Rappel de l'épreuve de Moïse et de son peuple.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section fade-in">
+        <h2 class="reflection-title">Réflexions sur Ad-Dukhan</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Ad-Dukhan.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s43.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s45.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+        const canvas = document.getElementById("smoke-canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Set canvas size
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        // Smoke animation
+        let particles = [];
+
+        function Particle(x, y) {
+          this.x = x;
+          this.y = y;
+          this.size = Math.random() * 5 + 2;
+          this.speedY = -Math.random() * 1 - 0.5;
+          this.color = `rgba(${Math.random() * 50 + 200}, ${
+            Math.random() * 50 + 200
+          }, ${Math.random() * 50 + 200}, ${Math.random() * 0.3 + 0.2})`;
+        }
+
+        Particle.prototype.update = function () {
+          this.y += this.speedY;
+          this.size -= 0.05;
+          if (this.size < 0) this.size = 0;
+        };
+
+        Particle.prototype.draw = function () {
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        };
+
+        function createSmoke() {
+          for (let i = 0; i < 5; i++) {
+            const x = Math.random() * canvas.width;
+            const y = canvas.height;
+            particles.push(new Particle(x, y));
+          }
+        }
+
+        function animateSmoke() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          createSmoke();
+
+          for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+
+            if (particles[i].size <= 0) {
+              particles.splice(i, 1);
+              i--;
+            }
+          }
+
+          requestAnimationFrame(animateSmoke);
+        }
+
+        animateSmoke();
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Ad-Dukhan a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Ad-Dukhan a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Ad-Dukhan est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/44"),
+              axios.get("https://api.alquran.cloud/v1/surah/44/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "smoke":
+            reflectionContent.innerHTML =
+              "La sourate Ad-Dukhan tire son nom du signe de la fumée mentionné au début. Cette fumée est présentée comme un avertissement divin, symbolisant peut-être les difficultés et les épreuves qui surviennent lorsqu'on s'éloigne du droit chemin. Elle invite à réfléchir sur les signes divins qui nous entourent et à prendre conscience de notre responsabilité spirituelle. Ce thème nous rappelle l'importance d'être attentif aux avertissements et aux signes que Dieu nous envoie dans notre vie quotidienne.";
+            break;
+          case "revelation":
+            reflectionContent.innerHTML =
+              "Ad-Dukhan met l'accent sur l'importance de la nuit bénie durant laquelle le Coran a commencé à être révélé. Cette nuit, connue sous le nom de Laylat al-Qadr (La Nuit du Destin), est décrite comme une période où les décrets divins sont établis. La sourate souligne ainsi la valeur de la révélation coranique et son rôle crucial dans la guidance de l'humanité. Elle nous invite à apprécier la sagesse et la miséricorde divines manifestées à travers la révélation du Coran.";
+            break;
+          case "punishment":
+            reflectionContent.innerHTML =
+              "La sourate évoque le châtiment qui attend ceux qui persistent dans le rejet du message divin. Ces passages servent d'avertissement et d'appel à la réflexion. Ils nous rappellent que nos actions ont des conséquences, tant dans ce monde que dans l'au-delà. Cependant, la sourate souligne également la miséricorde d'Allah, offrant toujours une opportunité de repentir et de retour vers le droit chemin. Ce thème nous encourage à évaluer constamment nos actions et nos intentions.";
+            break;
+          case "paradise":
+            reflectionContent.innerHTML =
+              "Ad-Dukhan offre une description vivante des récompenses qui attendent les croyants vertueux dans le Paradis. Ces passages servent à la fois d'encouragement et de motivation pour ceux qui s'efforcent de mener une vie pieuse. La description des délices du Paradis nous rappelle que les plaisirs de ce monde sont éphémères comparés aux récompenses éternelles de l'au-délà. Ce thème nous incite à garder une perspective à long terme dans nos actions et nos choix quotidiens.";
+            break;
+          case "moses":
+            reflectionContent.innerHTML =
+              "La sourate fait référence à l'histoire de Moïse et de son peuple, rappelant leur libération de l'oppression de Pharaon. Cette narration sert d'exemple historique de la manière dont Allah soutient ceux qui croient et persévèrent face à l'adversité. Elle nous rappelle également que l'arrogance et l'oppression ont toujours des conséquences néfastes. L'histoire de Moïse dans Ad-Dukhan nous encourage à rester fermes dans notre foi et nos principes, même face à de grands défis.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Ad-Dukhan.";
+        }
+      }
+    </script>
+  </body>
+</html>

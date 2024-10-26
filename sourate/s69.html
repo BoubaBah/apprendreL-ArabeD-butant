@@ -1,0 +1,420 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Sourate Al-Haqqah (Celle qui montre la vérité) - Exploration Interactive
+    </title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Haqqah (Celle qui montre la vérité)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/069.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Haqqah - سورة الحاقة</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #4a90e2; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #81c3fd; stop-opacity: 1" />
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="100" height="100" fill="url(#skyGradient)" />
+
+        <!-- Sun -->
+        <circle cx="50" cy="25" r="15" fill="#ffd700" filter="url(#glow)">
+          <animate
+            attributeName="r"
+            values="15;16;15"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Mountains -->
+        <path d="M0,100 L25,60 L50,80 L75,50 L100,100 Z" fill="#34495e" />
+        <path
+          d="M0,100 L20,70 L40,85 L60,65 L80,80 L100,100 Z"
+          fill="#2c3e50"
+        />
+
+        <!-- Arabic text for "Al-Haqqah" -->
+        <text
+          x="50"
+          y="45"
+          font-family="Scheherazade"
+          font-size="12"
+          fill="#ffffff"
+          text-anchor="middle"
+          dominant-baseline="middle"
+          filter="url(#glow)"
+        >
+          الحاقة
+        </text>
+
+        <!-- Animated clouds -->
+        <g id="cloud1" fill="#ffffff" opacity="0.8">
+          <ellipse cx="10" cy="20" rx="10" ry="5" />
+          <ellipse cx="15" cy="18" rx="8" ry="4" />
+          <animate
+            attributeName="cx"
+            from="-20"
+            to="120"
+            dur="30s"
+            repeatCount="indefinite"
+          />
+        </g>
+        <g id="cloud2" fill="#ffffff" opacity="0.6">
+          <ellipse cx="80" cy="30" rx="12" ry="6" />
+          <ellipse cx="85" cy="28" rx="10" ry="5" />
+          <animate
+            attributeName="cx"
+            from="120"
+            to="-20"
+            dur="25s"
+            repeatCount="indefinite"
+          />
+        </g>
+
+        <!-- Animated stars (representing the truth being revealed) -->
+        <g id="stars">
+          <circle cx="20" cy="15" r="1" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="80" cy="10" r="1" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="40" cy="5" r="1" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        </g>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Haqqah</h2>
+        <div class="interactive-item" onclick="showReflection('judgement')">
+          <h3>1. Le Jour du Jugement</h3>
+          <p>La réalité inévitable du Jour du Jugement et ses événements.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('punishment')">
+          <h3>2. Le châtiment des peuples rebelles</h3>
+          <p>Les conséquences de la désobéissance et du rejet des prophètes.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('accountability')"
+        >
+          <h3>3. La responsabilité individuelle</h3>
+          <p>Chacun sera jugé selon ses actes et ses croyances.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('revelation')">
+          <h3>4. La vérité de la révélation</h3>
+          <p>
+            L'authenticité du Coran et la mission du Prophète Muhammad (saw).
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('afterlife')">
+          <h3>5. La description de l'au-delà</h3>
+          <p>Les récompenses du Paradis et les châtiments de l'Enfer.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Haqqah</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Haqqah.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s68.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s70.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Haqqah a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Haqqah a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Haqqah est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/69"),
+              axios.get("https://api.alquran.cloud/v1/surah/69/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "judgement":
+            reflectionContent.innerHTML =
+              "La sourate Al-Haqqah met l'accent sur la réalité inévitable du Jour du Jugement, appelé 'Al-Haqqah' (Celle qui montre la vérité). Elle décrit de manière vivante les événements qui se produiront ce jour-là, soulignant son importance et sa gravité. La sourate nous rappelle que ce jour est une certitude absolue, où toutes les actions et croyances seront exposées et jugées. Cette réflexion sur le Jugement Dernier est destinée à éveiller la conscience des croyants, les encourageant à vivre leur vie dans la droiture et la piété, conscients de leur responsabilité devant Allah.";
+            break;
+          case "punishment":
+            reflectionContent.innerHTML =
+              "La sourate Al-Haqqah rappelle le sort des peuples qui ont rejeté les messagers d'Allah dans le passé. Elle mentionne spécifiquement les 'Ad, les Thamud, et le peuple de Pharaon, qui ont tous été détruits pour leur désobéissance et leur arrogance. Ces récits servent d'avertissement et de leçon pour les générations futures. Ils illustrent que le rejet de la guidance divine et la persistance dans le mal conduisent inévitablement à la destruction. Cette réflexion encourage les croyants à tirer des leçons de l'histoire et à éviter de répéter les erreurs des générations passées.";
+            break;
+          case "accountability":
+            reflectionContent.innerHTML =
+              "Un thème central de la sourate Al-Haqqah est la responsabilité individuelle. Elle décrit comment, le Jour du Jugement, chaque personne recevra le livre de ses actes, soit dans sa main droite (signe de salut), soit dans sa main gauche (signe de condamnation). Cette image puissante souligne que chaque individu sera jugé selon ses propres actions et croyances, sans qu'aucun intercesseur ne puisse le sauver s'il a mal agi. Cette réflexion sur la responsabilité personnelle encourage les croyants à être vigilants dans leurs actions quotidiennes, sachant qu'ils devront en rendre compte devant Allah.";
+            break;
+          case "revelation":
+            reflectionContent.innerHTML =
+              "La sourate Al-Haqqah affirme avec force l'authenticité du Coran et la véracité de la mission du Prophète Muhammad (saw). Elle réfute les accusations selon lesquelles le Prophète serait un poète ou un devin, soulignant que le Coran est une révélation du Seigneur des mondes. La sourate met en garde contre les conséquences graves de falsifier ou d'attribuer faussement des paroles à Allah. Cette affirmation de la vérité de la révélation renforce la foi des croyants et les encourage à s'attacher fermement aux enseignements du Coran et du Prophète.";
+            break;
+          case "afterlife":
+            reflectionContent.innerHTML =
+              "La sourate Al-Haqqah offre des descriptions vivantes de l'au-delà, à la fois du Paradis et de l'Enfer. Elle décrit les récompenses qui attendent les croyants vertueux au Paradis, où ils jouiront d'une vie de félicité éternelle. En contraste, elle dépeint également les châtiments sévères qui attendent les mécréants en Enfer. Ces descriptions de l'au-delà servent à motiver les croyants à rechercher le bien et à éviter le mal dans cette vie, sachant que leurs actions auront des conséquences éternelles. Cette réflexion sur l'au-delà encourage une perspective à long terme et une vie orientée vers la recherche de la satisfaction d'Allah.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Haqqah.";
+        }
+      }
+    </script>
+  </body>
+</html>

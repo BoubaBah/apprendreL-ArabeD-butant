@@ -1,0 +1,1125 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Le Noble Coran - Index Interactif</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f8ff;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #1a237e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(26, 35, 126, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 1000px;
+      }
+      .info {
+        text-align: center;
+        color: #303f9f;
+        margin-bottom: 20px;
+      }
+      .surah-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+      }
+      .surah-item {
+        background-color: #e8eaf6;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .surah-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(26, 35, 126, 0.2);
+      }
+      .surah-number {
+        font-weight: bold;
+        color: #1a237e;
+        font-size: 1.2em;
+      }
+      .surah-name {
+        margin-top: 10px;
+        font-weight: bold;
+      }
+      .surah-name-arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 1.5em;
+        margin-top: 5px;
+      }
+      .search-container {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      #search-input {
+        width: 80%;
+        max-width: 400px;
+        padding: 10px;
+        border: 2px solid #3f51b5;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+      .filter-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      .filter-button {
+        background-color: #3f51b5;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        margin: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .filter-button:hover {
+        background-color: #1a237e;
+      }
+      .filter-button.active {
+        background-color: #1a237e;
+      }
+      #quran-visual {
+        width: 100%;
+        height: 300px;
+        margin-bottom: 30px;
+      }
+      .surah-select-container {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      #surah-select {
+        width: 80%;
+        max-width: 400px;
+        padding: 10px;
+        border: 2px solid #3f51b5;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: #fff;
+        color: #333;
+      }
+      #surah-select:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(63, 81, 181, 0.5);
+      }
+      @media (max-width: 600px) {
+        .surah-grid {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Le Noble Coran</h1>
+    <div class="container">
+      <div class="info">
+        <p>Explorez les 114 sourates du Coran</p>
+        <p
+          class="arabic"
+          style="font-family: 'Scheherazade', serif; font-size: 24px"
+        >
+          بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        </p>
+      </div>
+
+      <div class="surah-select-container">
+        <select id="surah-select">
+          <option value="">Choisir une sourate</option>
+        </select>
+      </div>
+
+      <svg
+        id="quran-visual"
+        viewBox="0 0 1000 300"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color: #1a237e; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #3f51b5; stop-opacity: 1" />
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <rect width="1000" height="300" fill="url(#bg-gradient)" />
+        <path
+          d="M200,150 Q500,50 800,150"
+          stroke="#ffffff"
+          stroke-width="2"
+          fill="none"
+        />
+        <text
+          x="500"
+          y="180"
+          font-family="Scheherazade"
+          font-size="40"
+          fill="#ffffff"
+          text-anchor="middle"
+          filter="url(#glow)"
+        >
+          القرآن الكريم
+        </text>
+        <g id="stars"></g>
+      </svg>
+
+      <div class="search-container">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Rechercher une sourate..."
+        />
+      </div>
+
+      <div class="filter-container">
+        <button class="filter-button active" data-filter="all">Toutes</button>
+        <button class="filter-button" data-filter="meccan">Mecquoises</button>
+        <button class="filter-button" data-filter="medinan">Médinoises</button>
+      </div>
+
+      <div class="surah-grid" id="surah-container">
+        <!-- Les sourates seront ajoutées ici dynamiquement -->
+      </div>
+    </div>
+
+    <script>
+      const surahs = [
+        {
+          number: 1,
+          name: "Al-Fatihah",
+          nameArabic: "الفاتحة",
+          translation: "L'Ouverture",
+          type: "meccan",
+         url : "sourate/1Fatiha.html"
+        },
+        {
+          number: 2,
+          name: "Al-Baqarah",
+          nameArabic: "البقرة",
+          translation: "La Vache",
+          type: "medinan",
+        },
+        {
+          number: 3,
+          name: "Ali 'Imran",
+          nameArabic: "آل عمران",
+          translation: "La Famille d'Imran",
+          type: "medinan",
+        },
+        {
+          number: 4,
+          name: "An-Nisa",
+          nameArabic: "النساء",
+          translation: "Les Femmes",
+          type: "medinan",
+        },
+        {
+          number: 5,
+          name: "Al-Ma'idah",
+          nameArabic: "المائدة",
+          translation: "La Table Servie",
+          type: "medinan",
+        },
+        {
+          number: 6,
+          name: "Al-An'am",
+          nameArabic: "الأنعام",
+          translation: "Les Bestiaux",
+          type: "meccan",
+        },
+        {
+          number: 7,
+          name: "Al-A'raf",
+          nameArabic: "الأعراف",
+          translation: "Les Murailles",
+          type: "meccan",
+        },
+        {
+          number: 8,
+          name: "Al-Anfal",
+          nameArabic: "الأنفال",
+          translation: "Le Butin",
+          type: "medinan",
+        },
+        {
+          number: 9,
+          name: "At-Tawbah",
+          nameArabic: "التوبة",
+          translation: "Le Repentir",
+          type: "medinan",
+        },
+        {
+          number: 10,
+          name: "Yunus",
+          nameArabic: "يونس",
+          translation: "Jonas",
+          type: "meccan",
+        },
+        {
+          number: 11,
+          name: "Hud",
+          nameArabic: "هود",
+          translation: "Hud",
+          type: "meccan",
+        },
+        {
+          number: 12,
+          name: "Yusuf",
+          nameArabic: "يوسف",
+          translation: "Joseph",
+          type: "meccan",
+        },
+        {
+          number: 13,
+          name: "Ar-Ra'd",
+          nameArabic: "الرعد",
+          translation: "Le Tonnerre",
+          type: "medinan",
+        },
+        {
+          number: 14,
+          name: "Ibrahim",
+          nameArabic: "ابراهيم",
+          translation: "Abraham",
+          type: "meccan",
+        },
+        {
+          number: 15,
+          name: "Al-Hijr",
+          nameArabic: "الحجر",
+          translation: "Al-Hijr",
+          type: "meccan",
+        },
+        {
+          number: 16,
+          name: "An-Nahl",
+          nameArabic: "النحل",
+          translation: "Les Abeilles",
+          type: "meccan",
+        },
+        {
+          number: 17,
+          name: "Al-Isra",
+          nameArabic: "الإسراء",
+          translation: "Le Voyage Nocturne",
+          type: "meccan",
+        },
+        {
+          number: 18,
+          name: "Al-Kahf",
+          nameArabic: "الكهف",
+          translation: "La Caverne",
+          type: "meccan",
+        },
+        {
+          number: 19,
+          name: "Maryam",
+          nameArabic: "مريم",
+          translation: "Marie",
+          type: "meccan",
+        },
+        {
+          number: 20,
+          name: "Ta-Ha",
+          nameArabic: "طه",
+          translation: "Ta-Ha",
+          type: "meccan",
+        },
+        {
+          number: 21,
+          name: "Al-Anbiya",
+          nameArabic: "الأنبياء",
+          translation: "Les Prophètes",
+          type: "meccan",
+        },
+        {
+          number: 22,
+          name: "Al-Hajj",
+          nameArabic: "الحج",
+          translation: "Le Pèlerinage",
+          type: "medinan",
+        },
+        {
+          number: 23,
+          name: "Al-Mu'minun",
+          nameArabic: "المؤمنون",
+          translation: "Les Croyants",
+          type: "meccan",
+        },
+        {
+          number: 24,
+          name: "An-Nur",
+          nameArabic: "النور",
+          translation: "La Lumière",
+          type: "medinan",
+        },
+        {
+          number: 25,
+          name: "Al-Furqan",
+          nameArabic: "الفرقان",
+          translation: "Le Discernement",
+          type: "meccan",
+        },
+        {
+          number: 26,
+          name: "Ash-Shu'ara",
+          nameArabic: "الشعراء",
+          translation: "Les Poètes",
+          type: "meccan",
+        },
+        {
+          number: 27,
+          name: "An-Naml",
+          nameArabic: "النمل",
+          translation: "Les Fourmis",
+          type: "meccan",
+        },
+        {
+          number: 28,
+          name: "Al-Qasas",
+          nameArabic: "القصص",
+          translation: "Le Récit",
+          type: "meccan",
+        },
+        {
+          number: 29,
+          name: "Al-'Ankabut",
+          nameArabic: "العنكبوت",
+          translation: "L'Araignée",
+          type: "meccan",
+        },
+        {
+          number: 30,
+          name: "Ar-Rum",
+          nameArabic: "الروم",
+          translation: "Les Romains",
+          type: "meccan",
+        },
+        {
+          number: 31,
+          name: "Luqman",
+          nameArabic: "لقمان",
+          translation: "Luqman",
+          type: "meccan",
+        },
+        {
+          number: 32,
+          name: "As-Sajdah",
+          nameArabic: "السجدة",
+          translation: "La Prosternation",
+          type: "meccan",
+        },
+        {
+          number: 33,
+          name: "Al-Ahzab",
+          nameArabic: "الأحزاب",
+          translation: "Les Coalisés",
+          type: "medinan",
+        },
+        {
+          number: 34,
+          name: "Saba",
+          nameArabic: "سبإ",
+          translation: "Saba",
+          type: "meccan",
+        },
+        {
+          number: 35,
+          name: "Fatir",
+          nameArabic: "فاطر",
+          translation: "Le Créateur",
+          type: "meccan",
+        },
+        {
+          number: 36,
+          name: "Ya-Sin",
+          nameArabic: "يس",
+          translation: "Ya-Sin",
+          type: "meccan",
+        },
+        {
+          number: 37,
+          name: "As-Saffat",
+          nameArabic: "الصافات",
+          translation: "Les Rangés",
+          type: "meccan",
+        },
+        {
+          number: 38,
+          name: "Sad",
+          nameArabic: "ص",
+          translation: "Sad",
+          type: "meccan",
+        },
+        {
+          number: 39,
+          name: "Az-Zumar",
+          nameArabic: "الزمر",
+          translation: "Les Groupes",
+          type: "meccan",
+        },
+        {
+          number: 40,
+          name: "Ghafir",
+          nameArabic: "غافر",
+          translation: "Le Pardonneur",
+          type: "meccan",
+        },
+        {
+          number: 41,
+          name: "Fussilat",
+          nameArabic: "فصلت",
+          translation: "Les Versets Détaillés",
+          type: "meccan",
+        },
+        {
+          number: 42,
+          name: "Ash-Shura",
+          nameArabic: "الشورى",
+          translation: "La Consultation",
+          type: "meccan",
+        },
+        {
+          number: 43,
+          name: "Az-Zukhruf",
+          nameArabic: "الزخرف",
+          translation: "L'Ornement",
+          type: "meccan",
+        },
+        {
+          number: 44,
+          name: "Ad-Dukhan",
+          nameArabic: "الدخان",
+          translation: "La Fumée",
+          type: "meccan",
+        },
+        {
+          number: 45,
+          name: "Al-Jathiyah",
+          nameArabic: "الجاثية",
+          translation: "L'Agenouillée",
+          type: "meccan",
+        },
+        {
+          number: 46,
+          name: "Al-Ahqaf",
+          nameArabic: "الأحقاف",
+          translation: "Al-Ahqaf",
+          type: "meccan",
+        },
+        {
+          number: 47,
+          name: "Muhammad",
+          nameArabic: "محمد",
+          translation: "Muhammad",
+          type: "medinan",
+        },
+        {
+          number: 48,
+          name: "Al-Fath",
+          nameArabic: "الفتح",
+          translation: "La Victoire",
+          type: "medinan",
+        },
+        {
+          number: 49,
+          name: "Al-Hujurat",
+          nameArabic: "الحجرات",
+          translation: "Les Appartements",
+          type: "medinan",
+        },
+        {
+          number: 50,
+          name: "Qaf",
+          nameArabic: "ق",
+          translation: "Qaf",
+          type: "meccan",
+        },
+        {
+          number: 51,
+          name: "Adh-Dhariyat",
+          nameArabic: "الذاريات",
+          translation: "Qui éparpillent",
+          type: "meccan",
+        },
+        {
+          number: 52,
+          name: "At-Tur",
+          nameArabic: "الطور",
+          translation: "Le Mont",
+          type: "meccan",
+        },
+        {
+          number: 53,
+          name: "An-Najm",
+          nameArabic: "النجم",
+          translation: "L'Étoile",
+          type: "meccan",
+        },
+        {
+          number: 54,
+          name: "Al-Qamar",
+          nameArabic: "القمر",
+          translation: "La Lune",
+          type: "meccan",
+        },
+        {
+          number: 55,
+          name: "Ar-Rahman",
+          nameArabic: "الرحمن",
+          translation: "Le Tout Miséricordieux",
+          type: "medinan",
+        },
+        {
+          number: 56,
+          name: "Al-Waqi'ah",
+          nameArabic: "الواقعة",
+          translation: "L'Événement",
+          type: "meccan",
+        },
+        {
+          number: 57,
+          name: "Al-Hadid",
+          nameArabic: "الحديد",
+          translation: "Le Fer",
+          type: "medinan",
+        },
+        {
+          number: 58,
+          name: "Al-Mujadilah",
+          nameArabic: "المجادلة",
+          translation: "La Discussion",
+          type: "medinan",
+        },
+        {
+          number: 59,
+          name: "Al-Hashr",
+          nameArabic: "الحشر",
+          translation: "L'Exode",
+          type: "medinan",
+        },
+        {
+          number: 60,
+          name: "Al-Mumtahanah",
+          nameArabic: "الممتحنة",
+          translation: "L'Éprouvée",
+          type: "medinan",
+        },
+        {
+          number: 61,
+          name: "As-Saff",
+          nameArabic: "الصف",
+          translation: "Le Rang",
+          type: "medinan",
+        },
+        {
+          number: 62,
+          name: "Al-Jumu'ah",
+          nameArabic: "الجمعة",
+          translation: "Le Vendredi",
+          type: "medinan",
+        },
+        {
+          number: 63,
+          name: "Al-Munafiqun",
+          nameArabic: "المنافقون",
+          translation: "Les Hypocrites",
+          type: "medinan",
+        },
+        {
+          number: 64,
+          name: "At-Taghabun",
+          nameArabic: "التغابن",
+          translation: "La Grande Perte",
+          type: "medinan",
+        },
+        {
+          number: 65,
+          name: "At-Talaq",
+          nameArabic: "الطلاق",
+          translation: "Le Divorce",
+          type: "medinan",
+        },
+        {
+          number: 66,
+          name: "At-Tahrim",
+          nameArabic: "التحريم",
+          translation: "L'Interdiction",
+          type: "medinan",
+        },
+        {
+          number: 67,
+          name: "Al-Mulk",
+          nameArabic: "الملك",
+          translation: "La Royauté",
+          type: "meccan",
+        },
+        {
+          number: 68,
+          name: "Al-Qalam",
+          nameArabic: "القلم",
+          translation: "La Plume",
+          type: "meccan",
+        },
+        {
+          number: 69,
+          name: "Al-Haqqah",
+          nameArabic: "الحاقة",
+          translation: "Celle qui montre la Vérité",
+          type: "meccan",
+        },
+        {
+          number: 70,
+          name: "Al-Ma'arij",
+          nameArabic: "المعارج",
+          translation: "Les Voies d'Ascension",
+          type: "meccan",
+        },
+        {
+          number: 71,
+          name: "Nuh",
+          nameArabic: "نوح",
+          translation: "Noé",
+          type: "meccan",
+        },
+        {
+          number: 72,
+          name: "Al-Jinn",
+          nameArabic: "الجن",
+          translation: "Les Djinns",
+          type: "meccan",
+        },
+        {
+          number: 73,
+          name: "Al-Muzzammil",
+          nameArabic: "المزمل",
+          translation: "L'Enveloppé",
+          type: "meccan",
+        },
+        {
+          number: 74,
+          name: "Al-Muddaththir",
+          nameArabic: "المدثر",
+          translation: "Le Revêtu d'un manteau",
+          type: "meccan",
+        },
+        {
+          number: 75,
+          name: "Al-Qiyamah",
+          nameArabic: "القيامة",
+          translation: "La Résurrection",
+          type: "meccan",
+        },
+        {
+          number: 76,
+          name: "Al-Insan",
+          nameArabic: "الانسان",
+          translation: "L'Homme",
+          type: "medinan",
+        },
+        {
+          number: 77,
+          name: "Al-Mursalat",
+          nameArabic: "المرسلات",
+          translation: "Les Envoyés",
+          type: "meccan",
+        },
+        {
+          number: 78,
+          name: "An-Naba",
+          nameArabic: "النبإ",
+          translation: "La Nouvelle",
+          type: "meccan",
+        },
+        {
+          number: 79,
+          name: "An-Nazi'at",
+          nameArabic: "النازعات",
+          translation: "Les Anges qui arrachent",
+          type: "meccan",
+        },
+        {
+          number: 80,
+          name: "'Abasa",
+          nameArabic: "عبس",
+          translation: "Il s'est renfrogné",
+          type: "meccan",
+        },
+        {
+          number: 81,
+          name: "At-Takwir",
+          nameArabic: "التكوير",
+          translation: "L'Obscurcissement",
+          type: "meccan",
+        },
+        {
+          number: 82,
+          name: "Al-Infitar",
+          nameArabic: "الإنفطار",
+          translation: "La Rupture",
+          type: "meccan",
+        },
+        {
+          number: 83,
+          name: "Al-Mutaffifin",
+          nameArabic: "المطففين",
+          translation: "Les Fraudeurs",
+          type: "meccan",
+        },
+        {
+          number: 84,
+          name: "Al-Inshiqaq",
+          nameArabic: "الإنشقاق",
+          translation: "La Déchirure",
+          type: "meccan",
+        },
+        {
+          number: 85,
+          name: "Al-Buruj",
+          nameArabic: "البروج",
+          translation: "Les Constellations",
+          type: "meccan",
+        },
+        {
+          number: 86,
+          name: "At-Tariq",
+          nameArabic: "الطارق",
+          translation: "L'Astre Nocturne",
+          type: "meccan",
+        },
+        {
+          number: 87,
+          name: "Al-A'la",
+          nameArabic: "الأعلى",
+          translation: "Le Très-Haut",
+          type: "meccan",
+        },
+        {
+          number: 88,
+          name: "Al-Ghashiyah",
+          nameArabic: "الغاشية",
+          translation: "L'Enveloppante",
+          type: "meccan",
+        },
+        {
+          number: 89,
+          name: "Al-Fajr",
+          nameArabic: "الفجر",
+          translation: "L'Aube",
+          type: "meccan",
+        },
+        {
+          number: 90,
+          name: "Al-Balad",
+          nameArabic: "البلد",
+          translation: "La Cité",
+          type: "meccan",
+        },
+        {
+          number: 91,
+          name: "Ash-Shams",
+          nameArabic: "الشمس",
+          translation: "Le Soleil",
+          type: "meccan",
+        },
+        {
+          number: 92,
+          name: "Al-Layl",
+          nameArabic: "الليل",
+          translation: "La Nuit",
+          type: "meccan",
+        },
+        {
+          number: 93,
+          name: "Ad-Duha",
+          nameArabic: "الضحى",
+          translation: "Le Jour Montant",
+          type: "meccan",
+        },
+        {
+          number: 94,
+          name: "Ash-Sharh",
+          nameArabic: "الشرح",
+          translation: "L'Ouverture",
+          type: "meccan",
+        },
+        {
+          number: 95,
+          name: "At-Tin",
+          nameArabic: "التين",
+          translation: "Le Figuier",
+          type: "meccan",
+        },
+        {
+          number: 96,
+          name: "Al-'Alaq",
+          nameArabic: "العلق",
+          translation: "L'Adhérence",
+          type: "meccan",
+        },
+        {
+          number: 97,
+          name: "Al-Qadr",
+          nameArabic: "القدر",
+          translation: "La Destinée",
+          type: "meccan",
+        },
+        {
+          number: 98,
+          name: "Al-Bayyinah",
+          nameArabic: "البينة",
+          translation: "La Preuve",
+          type: "medinan",
+        },
+        {
+          number: 99,
+          name: "Az-Zalzalah",
+          nameArabic: "الزلزلة",
+          translation: "La Secousse",
+          type: "medinan",
+        },
+        {
+          number: 100,
+          name: "Al-'Adiyat",
+          nameArabic: "العاديات",
+          translation: "Les Coursiers",
+          type: "meccan",
+        },
+        {
+          number: 101,
+          name: "Al-Qari'ah",
+          nameArabic: "القارعة",
+          translation: "Le Fracas",
+          type: "meccan",
+        },
+        {
+          number: 102,
+          name: "At-Takathur",
+          nameArabic: "التكاثر",
+          translation: "La Course aux Richesses",
+          type: "meccan",
+        },
+        {
+          number: 103,
+          name: "Al-'Asr",
+          nameArabic: "العصر",
+          translation: "Le Temps",
+          type: "meccan",
+        },
+        {
+          number: 104,
+          name: "Al-Humazah",
+          nameArabic: "الهمزة",
+          translation: "Les Calomniateurs",
+          type: "meccan",
+        },
+        {
+          number: 105,
+          name: "Al-Fil",
+          nameArabic: "الفيل",
+          translation: "L'Éléphant",
+          type: "meccan",
+        },
+        {
+          number: 106,
+          name: "Quraysh",
+          nameArabic: "قريش",
+          translation: "Les Quraysh",
+          type: "meccan",
+        },
+        {
+          number: 107,
+          name: "Al-Ma'un",
+          nameArabic: "الماعون",
+          translation: "L'Ustensile",
+          type: "meccan",
+        },
+        {
+          number: 108,
+          name: "Al-Kawthar",
+          nameArabic: "الكوثر",
+          translation: "L'Abondance",
+          type: "meccan",
+        },
+        {
+          number: 109,
+          name: "Al-Kafirun",
+          nameArabic: "الكافرون",
+          translation: "Les Infidèles",
+          type: "meccan",
+        },
+        {
+          number: 110,
+          name: "An-Nasr",
+          nameArabic: "النصر",
+          translation: "Les Secours",
+          type: "medinan",
+        },
+        {
+          number: 111,
+          name: "Al-Masad",
+          nameArabic: "المسد",
+          translation: "Les Fibres",
+          type: "meccan",
+        },
+        {
+          number: 112,
+          name: "Al-Ikhlas",
+          nameArabic: "الإخلاص",
+          translation: "Le Monothéisme pur",
+          type: "meccan",
+        },
+        {
+          number: 113,
+          name: "Al-Falaq",
+          nameArabic: "الفلق",
+          translation: "L'Aube naissante",
+          type: "meccan",
+        },
+        {
+          number: 114,
+          name: "An-Nas",
+          nameArabic: "الناس",
+          translation: "Les Hommes",
+          type: "meccan",
+        },
+      ];
+      function redirectToPage(surahNumber) {
+  
+ 
+  const surah = surahs.find(s => s.number === surahNumber);
+    
+   
+  if (surah && surah.url) {
+      window.location.href = surah.url; // Redirige vers l'URL de la surah
+    } else {
+      
+     
+  console.log('Surah non trouvée ou URL manquante.');
+    }
+  }
+      
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const surahContainer = document.getElementById("surah-container");
+        const searchInput = document.getElementById("search-input");
+        const filterButtons = document.querySelectorAll(".filter-button");
+        const surahSelect = document.getElementById("surah-select");
+
+        const starsGroup = document.getElementById("stars");
+        for (let i = 0; i < 50; i++) {
+          const star = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+          star.setAttribute("cx", Math.random() * 1000);
+          star.setAttribute("cy", Math.random() * 300);
+          star.setAttribute("r", Math.random() * 2 + 1);
+          star.setAttribute("fill", "#ffffff");
+          star.setAttribute("opacity", Math.random() * 0.5 + 0.5);
+          starsGroup.appendChild(star);
+        }
+
+        function createSurahElement(surah) {
+          const surahElement = document.createElement("div");
+          surahElement.className = "surah-item";
+          surahElement.setAttribute("data-type", surah.type);
+          surahElement.innerHTML = `
+                <span class="surah-number">${surah.number}</span>
+                <div class="surah-name">${surah.name}</div>
+                <div class="surah-name-arabic">${surah.nameArabic}</div>
+                <div>${surah.translation}</div>
+            `;
+          surahElement.addEventListener("click", () => {
+            window.location.href = `https://websim.ai/quran/${surah.name
+              .toLowerCase()
+              .replace(/\s+/g, "-")}/`;
+          });
+          return surahElement;
+        }
+
+        function displaySurahs(surahsToDisplay) {
+          surahContainer.innerHTML = "";
+          surahsToDisplay.forEach((surah) => {
+            surahContainer.appendChild(createSurahElement(surah));
+          });
+        }
+
+        function filterSurahs(filter) {
+          return surahs.filter((surah) => {
+            if (filter === "all") return true;
+            return surah.type === filter;
+          });
+        }
+
+        function populateSurahSelect() {
+          surahs.forEach((surah) => {
+            const option = document.createElement("option");
+            option.value = surah.name.toLowerCase().replace(/\s+/g, "-");
+            option.textContent = `${surah.number}. ${surah.name} (${surah.translation})`;
+            surahSelect.appendChild(option);
+          });
+        }
+
+        surahSelect.addEventListener("change", function () {
+          if (this.value) {
+            window.location.href = `https://websim.ai/quran/${this.value}/`;
+          }
+        });
+
+        displaySurahs(surahs);
+        populateSurahSelect();
+
+        searchInput.addEventListener("input", function () {
+          const searchTerm = this.value.toLowerCase();
+          const filteredSurahs = surahs.filter(
+            (surah) =>
+              surah.name.toLowerCase().includes(searchTerm) ||
+              surah.translation.toLowerCase().includes(searchTerm) ||
+              surah.number.toString().includes(searchTerm)
+          );
+          displaySurahs(filteredSurahs);
+        });
+
+        filterButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            filterButtons.forEach((btn) => btn.classList.remove("active"));
+            this.classList.add("active");
+            const filter = this.getAttribute("data-filter");
+            displaySurahs(filterSurahs(filter));
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,418 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Sourate Al-Mutaffifin (Les Fraudeurs) - Exploration Interactive
+    </title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Mutaffifin (Les Fraudeurs)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/083.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Mutaffifin - سورة المطففين</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 200 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #3498db; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #2c3e50; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+
+        <!-- Background -->
+        <rect width="200" height="100" fill="url(#bg-gradient)" />
+
+        <!-- Scale symbol -->
+        <g transform="translate(100, 50) scale(0.4)">
+          <path
+            d="M-50,-50 L50,-50 L0,0 Z"
+            fill="#ecf0f1"
+            stroke="#bdc3c7"
+            stroke-width="5"
+          >
+            <animate
+              attributeName="d"
+              values="M-50,-50 L50,-50 L0,0 Z;
+                                     M-50,-40 L50,-60 L0,10 Z;
+                                     M-50,-50 L50,-50 L0,0 Z"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </path>
+          <line
+            x1="-60"
+            y1="0"
+            x2="60"
+            y2="0"
+            stroke="#bdc3c7"
+            stroke-width="5"
+          />
+        </g>
+
+        <!-- Fraud representation -->
+        <g id="coins" opacity="0.7">
+          <circle cx="30" cy="80" r="5" fill="#f1c40f">
+            <animate
+              attributeName="cy"
+              values="80;75;80"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="45" cy="80" r="5" fill="#f1c40f">
+            <animate
+              attributeName="cy"
+              values="80;75;80"
+              dur="2s"
+              repeatCount="indefinite"
+              begin="0.5s"
+            />
+          </circle>
+          <circle cx="60" cy="80" r="5" fill="#f1c40f">
+            <animate
+              attributeName="cy"
+              values="80;75;80"
+              dur="2s"
+              repeatCount="indefinite"
+              begin="1s"
+            />
+          </circle>
+        </g>
+
+        <!-- Arabic text for "Al-Mutaffifin" -->
+        <text
+          x="100"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#FFFFFF"
+          text-anchor="middle"
+        >
+          المطففين
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Mutaffifin</h2>
+        <div class="interactive-item" onclick="showReflection('fraud')">
+          <h3>1. La condamnation de la fraude</h3>
+          <p>
+            Critique sévère de ceux qui trichent dans les mesures et les poids.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('day_of_judgment')"
+        >
+          <h3>2. Le Jour du Jugement</h3>
+          <p>
+            Rappel de l'inévitabilité du Jour où tous seront jugés pour leurs
+            actions.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('book_of_deeds')">
+          <h3>3. Le Livre des actions</h3>
+          <p>
+            Mention du registre où sont consignées toutes les actions des
+            hommes.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('fate_of_sinners')"
+        >
+          <h3>4. Le sort des pécheurs</h3>
+          <p>
+            Description du châtiment qui attend ceux qui persistent dans le mal.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('reward_of_righteous')"
+        >
+          <h3>5. La récompense des justes</h3>
+          <p>
+            Évocation des délices qui attendent les croyants vertueux au
+            Paradis.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">
+          Réflexions sur la sourate Al-Mutaffifin
+        </h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Mutaffifin.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s82.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s84.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Mutaffifin a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Mutaffifin a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Mutaffifin est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/83"),
+              axios.get("https://api.alquran.cloud/v1/surah/83/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "fraud":
+            reflectionContent.innerHTML =
+              "La sourate Al-Mutaffifin s'ouvre sur une condamnation sévère de la fraude, en particulier dans les transactions commerciales. Elle met en lumière l'importance de l'honnêteté et de l'intégrité dans toutes nos interactions. Cette critique nous invite à réfléchir sur nos propres pratiques et à examiner si nous sommes toujours justes et équitables dans nos échanges avec les autres. Elle nous rappelle que même les petites tricheries sont graves aux yeux d'Allah et qu'elles auront des conséquences le Jour du Jugement.";
+            break;
+          case "day_of_judgment":
+            reflectionContent.innerHTML =
+              "La sourate rappelle l'inévitabilité du Jour du Jugement, un jour où tous les hommes seront rassemblés devant leur Seigneur pour rendre compte de leurs actions. Cette réalité devrait nous inciter à vivre chaque jour avec la conscience que nos actions ont des conséquences éternelles. Elle nous encourage à réfléchir sur la façon dont nous utilisons notre temps et nos ressources, et à nous efforcer constamment de faire ce qui est agréable à Allah.";
+            break;
+          case "book_of_deeds":
+            reflectionContent.innerHTML =
+              "Al-Mutaffifin mentionne le Livre des actions, un registre où toutes nos actions sont consignées. Cette image puissante nous rappelle que rien n'échappe à la connaissance d'Allah, et que chacune de nos actions, paroles et intentions est enregistrée. Cette réflexion devrait nous encourager à être vigilants dans notre comportement, à purifier nos intentions et à nous efforcer de remplir nos pages de bonnes actions qui nous réjouiront le Jour du Jugement.";
+            break;
+          case "fate_of_sinners":
+            reflectionContent.innerHTML =
+              "La sourate décrit le sort terrible qui attend ceux qui persistent dans le péché et rejettent la vérité. Ces versets servent d'avertissement sévère et nous invitent à réfléchir sur les conséquences de nos choix. Ils nous encouragent à nous repentir sincèrement de nos erreurs, à chercher le pardon d'Allah et à nous efforcer de nous améliorer constamment. Cette réflexion souligne l'importance de la responsabilité personnelle et de la nécessité de se préparer pour l'au-delà.";
+            break;
+          case "reward_of_righteous":
+            reflectionContent.innerHTML =
+              "En contraste avec le sort des pécheurs, la sourate évoque les délices qui attendent les croyants vertueux au Paradis. Cette description des récompenses célestes sert d'encouragement pour ceux qui s'efforcent de vivre une vie droite et pieuse. Elle nous rappelle que chaque acte de bonté, chaque lutte contre nos désirs négatifs, et chaque effort pour plaire à Allah seront amplement récompensés. Cette réflexion devrait nous motiver à persévérer dans le bien, même face aux difficultés de ce monde.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Mutaffifin.";
+        }
+      }
+    </script>
+  </body>
+</html>

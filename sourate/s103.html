@@ -1,0 +1,397 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-'Asr (Le Temps) - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #3498db;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #3498db;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-'Asr (Le Temps)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/103.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-'Asr - سورة العصر</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #3498db; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #2c3e50; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="400" height="200" fill="url(#sky-gradient)" />
+
+        <!-- Sun/Moon -->
+        <circle id="celestial-body" cx="200" cy="100" r="30" fill="#f1c40f">
+          <animate
+            attributeName="cy"
+            values="100;30;100"
+            dur="20s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="fill"
+            values="#f1c40f;#ecf0f1;#f1c40f"
+            dur="20s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Hourglass -->
+        <path
+          id="hourglass"
+          d="M180 40 L220 40 L205 100 L220 160 L180 160 L195 100 Z"
+          fill="none"
+          stroke="#ecf0f1"
+          stroke-width="2"
+        >
+          <animate
+            attributeName="stroke-dasharray"
+            values="0,1000;1000,0"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </path>
+
+        <!-- Sand particles -->
+        <g id="sand-particles"></g>
+
+        <!-- Arabic text for "Al-'Asr" -->
+        <text
+          x="200"
+          y="180"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          العصر
+        </text>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Al-'Asr</h2>
+        <div class="theme-item" onclick="showReflection('time')">
+          <h3>1. L'importance du temps</h3>
+          <p>
+            La valeur du temps dans la vie humaine et son utilisation
+            judicieuse.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('loss')">
+          <h3>2. La perte existentielle</h3>
+          <p>
+            Le concept de perte universelle pour l'humanité, sauf exceptions.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('faith')">
+          <h3>3. La foi et les bonnes actions</h3>
+          <p>L'importance de la croyance et des actes vertueux dans la vie.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('truth')">
+          <h3>4. La recommandation de la vérité</h3>
+          <p>L'importance de s'attacher à la vérité et de la promouvoir.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('patience')">
+          <h3>5. La patience et la persévérance</h3>
+          <p>La valeur de l'endurance face aux difficultés de la vie.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-'Asr</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Al-'Asr.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s102.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s104.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        // Create sand particles
+        const sandParticlesGroup = document.getElementById("sand-particles");
+        for (let i = 0; i < 50; i++) {
+          const particle = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+          particle.setAttribute("cx", 200 + (Math.random() * 40 - 20));
+          particle.setAttribute("cy", 100);
+          particle.setAttribute("r", 1);
+          particle.setAttribute("fill", "#f1c40f");
+          sandParticlesGroup.appendChild(particle);
+
+          // Animate sand particle
+          const animate = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "animate"
+          );
+          animate.setAttribute("attributeName", "cy");
+          animate.setAttribute("values", "100;160;100");
+          animate.setAttribute("dur", `${5 + Math.random() * 5}s`);
+          animate.setAttribute("repeatCount", "indefinite");
+          particle.appendChild(animate);
+        }
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-'Asr a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-'Asr a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-'Asr est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/103"),
+              axios.get("https://api.alquran.cloud/v1/surah/103/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "time":
+            reflectionContent.innerHTML =
+              "La sourate Al-'Asr commence par un serment sur le temps, soulignant son importance cruciale dans la vie humaine. Cette emphase sur le temps nous invite à réfléchir sur la façon dont nous utilisons cette ressource précieuse et limitée. Le temps est présenté comme un témoin de nos actions et de nos choix. Cette perspective encourage une prise de conscience de la valeur de chaque instant et nous incite à utiliser notre temps de manière judicieuse et productive. La sourate nous rappelle que le temps qui passe est irréversible, et que chaque moment offre une opportunité unique de faire le bien et de progresser spirituellement.";
+            break;
+          case "loss":
+            reflectionContent.innerHTML =
+              "La sourate affirme que l'humanité est en état de perte, à l'exception de ceux qui remplissent certaines conditions. Cette déclaration puissante nous invite à une introspection profonde sur notre condition existentielle. Elle suggère que sans une orientation et un but précis, nos vies peuvent être vécues en vain, perdues dans la futilité. Cette notion de perte universelle souligne l'importance de vivre une vie consciente et significative. Elle nous pousse à examiner nos priorités, nos actions et nos objectifs pour nous assurer que nous ne gaspillons pas le temps précieux qui nous est accordé.";
+            break;
+          case "faith":
+            reflectionContent.innerHTML =
+              "La foi et les bonnes actions sont présentées comme les premiers éléments essentiels pour échapper à l'état de perte. La foi ('Iman') est le fondement qui donne un sens et une direction à la vie, tandis que les bonnes actions ('Amal Salih') sont la manifestation pratique de cette foi. Cette combinaison souligne l'importance d'une croyance active, où la foi se traduit par des actes concrets qui bénéficient à soi-même et à la société. La sourate nous rappelle que la vraie foi n'est pas seulement une conviction intérieure, mais qu'elle doit se refléter dans nos actions quotidiennes, nous poussant à contribuer positivement au monde qui nous entoure.";
+            break;
+          case "truth":
+            reflectionContent.innerHTML =
+              "La recommandation mutuelle de la vérité ('Haqq') est un autre aspect crucial mentionné dans la sourate. Cela implique non seulement d'adhérer personnellement à la vérité, mais aussi d'encourager les autres à le faire. Cette notion englobe l'honnêteté, l'intégrité et la justice dans tous les aspects de la vie. Elle souligne l'importance de la responsabilité collective dans la promotion et le maintien de valeurs morales élevées au sein de la société. En recommandant la vérité, nous contribuons à créer un environnement de confiance et de droiture, essentiel pour le bien-être individuel et collectif.";
+            break;
+          case "patience":
+            reflectionContent.innerHTML =
+              "La patience et la persévérance ('Sabr') sont les derniers éléments mentionnés comme essentiels pour échapper à la perte. Cette qualité est cruciale face aux difficultés et aux épreuves de la vie. La patience implique l'endurance dans l'adversité, la constance dans la pratique du bien, et la résistance face aux tentations. Elle nous rappelle que le chemin de la vertu et de la réussite spirituelle n'est pas toujours facile et nécessite souvent de la persévérance. En cultivant la patience, nous développons la force intérieure nécessaire pour surmonter les obstacles et rester fidèles à nos valeurs et à nos objectifs à long terme.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Al-'Asr.";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,385 @@
+<html>
+  <head>
+    quran/an-nas/">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate An-Nas (Les Hommes) - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f8ff;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #4a148c;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(74, 20, 140, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #6a1b9a;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 400px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ce93d8;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #4a148c;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #6a1b9a;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #4a148c;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #4a148c;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #6a1b9a;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #f3e5f5;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(74, 20, 140, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #4a148c;
+      }
+      .reflection-section {
+        background-color: #f3e5f5;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #4a148c;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #6a1b9a;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate An-Nas (Les Hommes)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/114.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate An-Nas - سورة الناس</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      
+
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color: #4a148c; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #7e57c2; stop-opacity: 1" />
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Background -->
+        <rect width="400" height="200" fill="url(#bg-gradient)" />
+
+        <!-- Symbolic representation of humanity -->
+        <g id="humanity-symbols" opacity="0.7"></g>
+
+        <!-- Arabic text -->
+        <text
+          x="200"
+          y="100"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#ffffff"
+          text-anchor="middle"
+          filter="url(#glow)"
+        >
+          قُلْ أَعُوذُ بِرَبِّ النَّاسِ
+        </text>
+
+        <!-- Protective circle -->
+        <circle
+          cx="200"
+          cy="100"
+          r="80"
+          fill="none"
+          stroke="#ffffff"
+          stroke-width="2"
+          opacity="0.5"
+        >
+          <animate
+            attributeName="r"
+            values="80;85;80"
+            dur="4s"
+            repeatCount="indefinite"
+          />
+        </circle>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate An-Nas</h2>
+        <div class="theme-item" onclick="showReflection('protection')">
+          <h3>1. La recherche de protection divine</h3>
+          <p>
+            L'importance de chercher refuge auprès d'Allah, le Seigneur de
+            l'humanité.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('attributes')">
+          <h3>2. Les attributs d'Allah</h3>
+          <p>Exploration des titres divins mentionnés dans la sourate.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('whispers')">
+          <h3>3. Protection contre les murmures (waswas)</h3>
+          <p>
+            Le concept des suggestions négatives et leur influence sur l'homme.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('jinn')">
+          <h3>4. L'influence des djinns et des hommes</h3>
+          <p>
+            La réalité des influences négatives provenant de sources visibles et
+            invisibles.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('daily')">
+          <h3>5. Application quotidienne</h3>
+          <p>
+            L'utilisation de cette sourate dans la vie quotidienne pour la
+            protection spirituelle.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate An-Nas</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate An-Nas.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s113.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="couleurjournuit.html" class="nav-button">Retour page Coran</a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        // Create symbolic representation of humanity
+        const humanitySymbols = document.getElementById("humanity-symbols");
+        for (let i = 0; i < 30; i++) {
+          const symbol = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+          symbol.setAttribute("cx", Math.random() * 400);
+          symbol.setAttribute("cy", Math.random() * 200);
+          symbol.setAttribute("r", Math.random() * 3 + 1);
+          symbol.setAttribute("fill", "#ffffff");
+          humanitySymbols.appendChild(symbol);
+        }
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate An-Nas a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log("La récitation de la sourate An-Nas a été mise en pause");
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate An-Nas est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/114"),
+              axios.get("https://api.alquran.cloud/v1/surah/114/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "protection":
+            reflectionContent.innerHTML =
+              "La sourate An-Nas met l'accent sur l'importance de chercher refuge auprès d'Allah contre les maux spirituels et psychologiques. Elle commence par 'Dis: «Je cherche protection auprès du Seigneur des hommes»', soulignant que la véritable protection ne peut venir que d'Allah. Cette sourate nous enseigne à reconnaître notre vulnérabilité face aux influences négatives et à nous tourner vers Allah pour trouver force et sécurité.";
+            break;
+          case "attributes":
+            reflectionContent.innerHTML =
+              "An-Nas mentionne trois attributs divins importants : le Seigneur (Rabb), le Souverain (Malik), et la Divinité (Ilah) des hommes. Ces titres soulignent la relation complète d'Allah avec l'humanité - Il est notre Créateur et Sustentateur, notre Roi et Maître, et le seul digne d'adoration. Cette progression des attributs renforce l'idée qu'Allah est la source ultime de protection et de guidance pour l'humanité.";
+            break;
+          case "whispers":
+            reflectionContent.innerHTML =
+              "La sourate fait référence au 'chuchoteur furtif' (al-waswas al-khannas), symbolisant les pensées et suggestions négatives qui peuvent influencer le comportement humain. Ce concept souligne la subtilité des tentations et des influences négatives, et l'importance d'être vigilant contre ces 'murmures' qui peuvent détourner une personne du droit chemin. La sourate nous rappelle de chercher la protection d'Allah contre ces influences insidieuses.";
+            break;
+          case "jinn":
+            reflectionContent.innerHTML =
+              "An-Nas mentionne explicitement que ces murmures peuvent provenir 'des djinns et des hommes'. Cela reconnaît que les influences négatives peuvent avoir des origines à la fois visibles (humaines) et invisibles (djinns). Cette reconnaissance élargit notre compréhension des défis spirituels auxquels nous sommes confrontés et souligne l'importance de chercher la protection d'Allah contre toutes les formes de mal, qu'elles soient apparentes ou cachées.";
+            break;
+          case "daily":
+            reflectionContent.innerHTML =
+              "La sourate An-Nas, avec sa sourate sœur Al-Falaq, est souvent récitée comme une forme de protection quotidienne, particulièrement le matin et le soir. Son utilisation régulière dans la vie d'un musulman sert de rappel constant de la présence d'Allah et de la nécessité de chercher Sa protection dans tous les aspects de la vie. Elle encourage une conscience spirituelle continue et un lien avec le Créateur face aux défis quotidiens et aux influences négatives qui nous entourent.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate An-Nas.";
+        }
+      }
+    </script>
+  </body>
+</html>

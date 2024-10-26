@@ -1,0 +1,462 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Sourate Ar-Rahman (Le Tout Miséricordieux) - Exploration Interactive
+    </title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0e6ff;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #333;
+      }
+      h1,
+      h2 {
+        color: #4a0e78;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(74, 14, 120, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #6c3483;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e6d0ff;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #4a0e78;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #6c3483;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #4a0e78;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #4a0e78;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #6c3483;
+      }
+      .interactive-section {
+        background-color: #e6d0ff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(74, 14, 120, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #4a0e78;
+      }
+      .reflection-section {
+        background-color: #e6d0ff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #4a0e78;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #333;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #6c3483;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Ar-Rahman (Le Tout Miséricordieux)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/055.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Ar-Rahman - سورة الرحمن</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <radialGradient
+            id="flowerGradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #ff9999; stop-opacity: 1" />
+            <stop
+              offset="100%"
+              style="stop-color: #ff3366; stop-opacity: 0.6"
+            />
+          </radialGradient>
+        </defs>
+        <rect x="0" y="0" width="100" height="100" fill="#f0e6ff" />
+
+        <!-- Flower petals -->
+        <g id="flower">
+          <path
+            d="M50,50 Q60,40 50,30 Q40,40 50,50"
+            fill="url(#flowerGradient)"
+          >
+            <animateTransform
+              attributeName="transform"
+              attributeType="XML"
+              type="rotate"
+              from="0 50 50"
+              to="360 50 50"
+              dur="20s"
+              repeatCount="indefinite"
+            />
+          </path>
+          <path
+            d="M50,50 Q60,60 50,70 Q40,60 50,50"
+            fill="url(#flowerGradient)"
+          >
+            <animateTransform
+              attributeName="transform"
+              attributeType="XML"
+              type="rotate"
+              from="0 50 50"
+              to="360 50 50"
+              dur="20s"
+              repeatCount="indefinite"
+            />
+          </path>
+          <path
+            d="M50,50 Q40,60 30,50 Q40,40 50,50"
+            fill="url(#flowerGradient)"
+          >
+            <animateTransform
+              attributeName="transform"
+              attributeType="XML"
+              type="rotate"
+              from="0 50 50"
+              to="360 50 50"
+              dur="20s"
+              repeatCount="indefinite"
+            />
+          </path>
+          <path
+            d="M50,50 Q60,40 70,50 Q60,60 50,50"
+            fill="url(#flowerGradient)"
+          >
+            <animateTransform
+              attributeName="transform"
+              attributeType="XML"
+              type="rotate"
+              from="0 50 50"
+              to="360 50 50"
+              dur="20s"
+              repeatCount="indefinite"
+            />
+          </path>
+        </g>
+
+        <!-- Center of the flower -->
+        <circle cx="50" cy="50" r="5" fill="#4a0e78">
+          <animate
+            attributeName="r"
+            values="5;6;5"
+            dur="4s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Arabic text for "Ar-Rahman" -->
+        <text
+          x="50"
+          y="90"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#4a0e78"
+          text-anchor="middle"
+        >
+          الرحمن
+        </text>
+      </svg>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate Ar-Rahman</h2>
+        <div class="interactive-item" onclick="showReflection('divine_mercy')">
+          <h3>1. La Miséricorde Divine</h3>
+          <p>L'attribut divin "Ar-Rahman" et ses manifestations.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('creation_blessings')"
+        >
+          <h3>2. Les Bienfaits de la Création</h3>
+          <p>Énumération des grâces d'Allah dans l'univers.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('balance_justice')"
+        >
+          <h3>3. L'Équilibre et la Justice</h3>
+          <p>Le concept de balance dans la création et le jugement.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('paradise_description')"
+        >
+          <h3>4. Description du Paradis</h3>
+          <p>Les délices et récompenses du Jardin.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('rhetorical_question')"
+        >
+          <h3>5. La Question Rhétorique</h3>
+          <p>
+            La répétition de "Lequel des bienfaits de votre Seigneur nierez-vous
+            donc ?"
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section fade-in">
+        <h2 class="reflection-title">Réflexions sur la sourate Ar-Rahman</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Ar-Rahman.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s54.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s56.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Ar-Rahman a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Ar-Rahman a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Ar-Rahman est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/55"),
+              axios.get("https://api.alquran.cloud/v1/surah/55/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "divine_mercy":
+            reflectionContent.innerHTML =
+              "La sourate Ar-Rahman s'ouvre avec le nom divin 'Ar-Rahman', qui signifie 'Le Tout Miséricordieux'. Ce nom souligne l'attribut de miséricorde d'Allah, qui est central dans cette sourate. Tout au long du texte, nous voyons comment cette miséricorde se manifeste dans la création, dans les bénédictions accordées aux êtres humains et aux djinns, et même dans l'avertissement donné à travers le Coran. La miséricorde d'Allah est présentée comme englobant et pénétrant tous les aspects de l'existence, rappelant aux croyants la bonté infinie de leur Créateur.";
+            break;
+          case "creation_blessings":
+            reflectionContent.innerHTML =
+              "Ar-Rahman énumère de nombreux bienfaits de la création, allant de l'enseignement du Coran à la création du soleil, de la lune, des étoiles, des arbres, des fruits, et bien plus encore. Cette énumération détaillée sert à éveiller la conscience des lecteurs sur les innombrables grâces qui les entourent quotidiennement. En reconnaissant ces bienfaits, les croyants sont invités à développer une profonde gratitude envers Allah et à utiliser ces dons avec sagesse et responsabilité.";
+            break;
+          case "balance_justice":
+            reflectionContent.innerHTML =
+              "Le concept de balance (Al-Mizan) est central dans cette sourate. Il fait référence à l'équilibre parfait dans la création d'Allah, ainsi qu'à la justice dans le jugement final. La sourate nous rappelle que tout dans l'univers a été créé avec mesure et équilibre, et que nous devons respecter cet équilibre dans nos propres actions. De plus, elle souligne l'importance de la justice divine, où chaque âme sera jugée avec équité, recevant exactement ce qu'elle mérite.";
+            break;
+          case "paradise_description":
+            reflectionContent.innerHTML =
+              "Ar-Rahman offre des descriptions vivantes et détaillées du Paradis (Jannah). Ces descriptions incluent des jardins luxuriants, des rivières qui coulent, des fruits en abondance, et des compagnons purs. Ces images servent non seulement à motiver les croyants à faire de bonnes actions pour mériter ces récompenses, mais aussi à leur donner un aperçu de la miséricorde et de la générosité infinies d'Allah. La beauté et la perfection du Paradis sont présentées comme le reflet ultime de la grâce divine.";
+            break;
+          case "rhetorical_question":
+            reflectionContent.innerHTML =
+              "La phrase 'Lequel des bienfaits de votre Seigneur nierez-vous donc ?' est répétée 31 fois dans cette sourate. Cette répétition sert plusieurs objectifs. Premièrement, elle agit comme un refrain, renforçant le message principal de la sourate sur la reconnaissance des bénédictions d'Allah. Deuxièmement, elle invite à la réflexion, poussant le lecteur à méditer profondément sur chaque bienfait mentionné. Enfin, elle sert d'avertissement subtil, rappelant les conséquences de l'ingratitude et du déni des grâces divines.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Ar-Rahman.";
+        }
+      }
+    </script>
+  </body>
+</html>

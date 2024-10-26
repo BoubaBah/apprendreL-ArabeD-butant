@@ -1,0 +1,385 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Ash-Sharh (L'Ouverture) - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f8ff;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #1e90ff;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #4682b4;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Amiri", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #b0e0e6;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #1e90ff;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #4682b4;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #4682b4;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #1e90ff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #4169e1;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #1e90ff;
+        border-radius: 5px;
+      }
+      .theme-section {
+        background-color: #e6f3ff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(30, 144, 255, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #1e90ff;
+      }
+      .reflection-section {
+        background-color: #e6f3ff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #1e90ff;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #4682b4;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Amiri:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Ash-Sharh (L'Ouverture)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/094.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Ash-Sharh - سورة الشرح</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 200 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #87ceeb; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #e0f6ff; stop-opacity: 1" />
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="200" height="100" fill="url(#sky-gradient)" />
+
+        <!-- Clouds -->
+        <path
+          d="M20,20 Q30,15 40,20 T60,20 T80,20 T100,20"
+          fill="none"
+          stroke="#FFFFFF"
+          stroke-width="3"
+        >
+          <animate
+            attributeName="d"
+            values="M20,20 Q30,15 40,20 T60,20 T80,20 T100,20;
+                                                  M20,20 Q30,25 40,20 T60,20 T80,20 T100,20;
+                                                  M20,20 Q30,15 40,20 T60,20 T80,20 T100,20"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </path>
+
+        <!-- Sun -->
+        <circle cx="150" cy="30" r="15" fill="#FFD700" filter="url(#glow)">
+          <animate
+            attributeName="r"
+            values="15;17;15"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Mountains -->
+        <path
+          d="M0,100 L50,40 L75,60 L100,30 L150,70 L200,50 L200,100 Z"
+          fill="#4682B4"
+        />
+
+        <!-- Arabic text for "Ash-Sharh" -->
+        <text
+          x="100"
+          y="85"
+          font-family="Amiri"
+          font-size="12"
+          fill="#FFFFFF"
+          text-anchor="middle"
+          filter="url(#glow)"
+        >
+          الشرح
+        </text>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Ash-Sharh</h2>
+        <div class="theme-item" onclick="showReflection('ease')">
+          <h3>1. La facilité après la difficulté</h3>
+          <p>Allah promet que chaque difficulté sera suivie de facilité.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('comfort')">
+          <h3>2. Le réconfort divin</h3>
+          <p>
+            Dieu rassure le Prophète Muhammad (paix soit sur lui) de Son soutien
+            constant.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('perseverance')">
+          <h3>3. La persévérance dans l'adoration</h3>
+          <p>
+            Encouragement à continuer à travailler dur et à se tourner vers
+            Allah.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('optimism')">
+          <h3>4. L'optimisme et l'espoir</h3>
+          <p>
+            La sourate inspire une attitude positive face aux défis de la vie.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('gratitude')">
+          <h3>5. La gratitude envers les bénédictions divines</h3>
+          <p>
+            Rappel des faveurs d'Allah et l'importance d'être reconnaissant.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Ash-Sharh</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Ash-Sharh.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s93.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s95.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Ash-Sharh a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Ash-Sharh a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Ash-Sharh est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/94"),
+              axios.get("https://api.alquran.cloud/v1/surah/94/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "ease":
+            reflectionContent.innerHTML =
+              "La sourate Ash-Sharh met en avant un message puissant d'espoir et de réconfort : avec chaque difficulté vient la facilité. Cette promesse divine nous rappelle que les épreuves de la vie sont temporaires et que le soulagement suivra toujours. Elle nous encourage à persévérer dans les moments difficiles, sachant que la miséricorde d'Allah est toujours présente. Cette perspective peut transformer notre façon d'aborder les défis, en les voyant comme des opportunités de croissance et de rapprochement avec Allah, plutôt que comme des obstacles insurmontables.";
+            break;
+          case "comfort":
+            reflectionContent.innerHTML =
+              "Dans cette sourate, Allah rassure directement le Prophète Muhammad (paix soit sur lui), lui rappelant Son soutien constant. Ce réconfort divin s'étend à tous les croyants, nous rappelant que nous ne sommes jamais seuls dans nos épreuves. Allah est toujours présent, apportant paix et tranquillité à nos cœurs. Cette assurance peut être une source immense de force et de résilience dans notre vie quotidienne, nous aidant à surmonter les moments de doute et de difficulté avec confiance et sérénité.";
+            break;
+          case "perseverance":
+            reflectionContent.innerHTML =
+              "La sourate Ash-Sharh encourage la persévérance dans l'adoration et les bonnes actions. Elle nous rappelle que lorsque nous terminons une tâche, nous devrions immédiatement nous tourner vers la suivante avec enthousiasme et dévotion. Cette attitude de constance dans l'effort et dans l'adoration est essentielle pour notre croissance spirituelle et personnelle. Elle nous enseigne à maintenir un équilibre entre nos responsabilités mondaines et nos devoirs envers Allah, en cherchant toujours à nous améliorer et à nous rapprocher de notre Créateur.";
+            break;
+          case "optimism":
+            reflectionContent.innerHTML =
+              "L'optimisme est un thème central de la sourate Ash-Sharh. Elle nous inspire à adopter une attitude positive face aux défis de la vie, en nous rappelant que chaque difficulté porte en elle les germes de sa propre résolution. Cette perspective optimiste peut transformer radicalement notre approche de la vie, nous aidant à voir les opportunités là où d'autres ne verraient que des obstacles. En cultivant cet optimisme ancré dans la foi, nous pouvons affronter les épreuves avec courage et confiance, sachant que la promesse d'Allah d'apporter la facilité après la difficulté se réalisera toujours.";
+            break;
+          case "gratitude":
+            reflectionContent.innerHTML =
+              "La sourate Ash-Sharh nous rappelle les nombreuses bénédictions qu'Allah nous a accordées, en particulier la guidance et le soutien spirituel. Elle nous invite à réfléchir sur ces faveurs et à cultiver un sentiment profond de gratitude envers notre Créateur. La gratitude n'est pas seulement une réponse aux bénédictions reçues, mais aussi un moyen d'attirer davantage de bénédictions dans notre vie. En reconnaissant et en appréciant ce qu'Allah nous a donné, nous ouvrons nos cœurs à recevoir encore plus de Sa générosité, tout en renforçant notre lien avec Lui.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Ash-Sharh.";
+        }
+      }
+    </script>
+  </body>
+</html>

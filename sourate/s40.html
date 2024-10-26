@@ -1,0 +1,418 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Ghafir (Le Pardonneur) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #e8f6ff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      #ghafir-canvas {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .reflection-section {
+        background-color: #e8f8f5;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #16a085;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Ghafir (Le Pardonneur)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/040.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Ghafir - سورة غافر</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <canvas id="ghafir-canvas"></canvas>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate</h2>
+        <div class="interactive-item" onclick="showReflection('pardon')">
+          <h3>1. Le pardon et la miséricorde d'Allah</h3>
+          <p>L'importance du pardon divin et de la repentance.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('croyantFirawn')">
+          <h3>2. Le croyant de la famille de Pharaon</h3>
+          <p>L'histoire d'un homme pieux parmi les gens de Pharaon.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('dawaInvitation')"
+        >
+          <h3>3. L'invitation à la foi (Da'wah)</h3>
+          <p>L'appel à croire en Allah et à suivre Son message.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('signesCreation')"
+        >
+          <h3>4. Les signes dans la création</h3>
+          <p>
+            Réflexions sur les preuves de l'existence d'Allah dans l'univers.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('consequencesIncroyance')"
+        >
+          <h3>5. Les conséquences de l'incroyance</h3>
+          <p>Avertissements sur le sort des incroyants dans l'au-delà.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section fade-in">
+        <h2 class="reflection-title">Réflexions sur Ghafir</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Ghafir.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s39.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s41.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+        const canvas = document.getElementById("ghafir-canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Set canvas size
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        // Ghafir animation
+        function drawGhafir() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // Draw background
+          const gradient = ctx.createLinearGradient(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+          gradient.addColorStop(0, "#2c3e50");
+          gradient.addColorStop(1, "#34495e");
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          // Draw stars
+          for (let i = 0; i < 100; i++) {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const radius = Math.random() * 2;
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fillStyle = "white";
+            ctx.fill();
+          }
+
+          // Draw light rays
+          ctx.save();
+          ctx.translate(canvas.width / 2, canvas.height / 2);
+          ctx.rotate(Date.now() * 0.0001);
+          for (let i = 0; i < 12; i++) {
+            ctx.rotate(Math.PI / 6);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(0, -canvas.height);
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
+            ctx.lineWidth = 10;
+            ctx.stroke();
+          }
+          ctx.restore();
+
+          // Draw central orb representing forgiveness
+          ctx.beginPath();
+          ctx.arc(canvas.width / 2, canvas.height / 2, 50, 0, Math.PI * 2);
+          const orbGradient = ctx.createRadialGradient(
+            canvas.width / 2,
+            canvas.height / 2,
+            0,
+            canvas.width / 2,
+            canvas.height / 2,
+            50
+          );
+          orbGradient.addColorStop(0, "rgba(255, 255, 255, 1)");
+          orbGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+          ctx.fillStyle = orbGradient;
+          ctx.fill();
+
+          requestAnimationFrame(drawGhafir);
+        }
+
+        drawGhafir();
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Ghafir a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log("La récitation de la sourate Ghafir a été mise en pause");
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Ghafir est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/40"),
+              axios.get("https://api.alquran.cloud/v1/surah/40/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "pardon":
+            reflectionContent.innerHTML =
+              "La sourate Ghafir met en avant l'attribut divin du pardon. Elle rappelle que Allah est Le Pardonneur, L'Accueillant au repentir. Cette sourate encourage les croyants à demander pardon pour leurs péchés et à se tourner vers Allah avec sincérité. Elle souligne l'immensité de la miséricorde divine et l'importance de la repentance dans la vie du croyant.";
+            break;
+          case "croyantFirawn":
+            reflectionContent.innerHTML =
+              "L'histoire du croyant de la famille de Pharaon est un exemple puissant de courage et de foi. Ce récit montre comment un individu peut rester ferme dans sa croyance même face à l'oppression et à la tyrannie. Il illustre l'importance de défendre la vérité et d'inviter les autres à la foi avec sagesse et éloquence, même dans les circonstances les plus difficiles.";
+            break;
+          case "dawaInvitation":
+            reflectionContent.innerHTML =
+              "Ghafir met l'accent sur l'importance de l'invitation à la foi (Da'wah). La sourate encourage les croyants à appeler les autres à Allah avec sagesse et bonne exhortation. Elle montre comment utiliser des arguments logiques et des preuves pour convaincre les gens de la vérité de l'Islam, tout en rappelant que le résultat final est entre les mains d'Allah.";
+            break;
+          case "signesCreation":
+            reflectionContent.innerHTML =
+              "La sourate invite à réfléchir sur les signes de la création comme preuves de l'existence et de l'unicité d'Allah. Elle mentionne la création des cieux et de la terre, l'alternance du jour et de la nuit, et d'autres phénomènes naturels. Ces réflexions visent à renforcer la foi et à éveiller la conscience de la grandeur du Créateur.";
+            break;
+          case "consequencesIncroyance":
+            reflectionContent.innerHTML =
+              "Ghafir met en garde contre les conséquences de l'incroyance et du rejet du message divin. Elle décrit le sort des peuples passés qui ont rejeté leurs prophètes et les châtiments qui leur ont été infligés. Ces avertissements servent à rappeler l'importance de croire en Allah et de suivre Ses commandements pour éviter un sort similaire dans l'au-delà.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Ghafir.";
+        }
+      }
+    </script>
+  </body>
+</html>

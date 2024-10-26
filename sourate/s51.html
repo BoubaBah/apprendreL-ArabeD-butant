@@ -1,0 +1,457 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Adh-Dhariyat - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #e8f6f3;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #16a085;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #2c3e50;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #bdc3c7;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Adh-Dhariyat (Les Vents qui éparpillent)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/051.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Adh-Dhariyat - سورة الذاريات</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #87ceeb; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #e0f6ff; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="100" height="100" fill="url(#skyGradient)" />
+
+        <!-- Sun -->
+        <circle cx="75" cy="25" r="10" fill="#FFD700">
+          <animate
+            attributeName="cy"
+            values="25;23;25"
+            dur="4s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Clouds -->
+        <path
+          d="M20,40 Q30,35 40,40 T60,40 T80,40"
+          fill="#FFFFFF"
+          opacity="0.7"
+        >
+          <animate
+            attributeName="d"
+            values="M20,40 Q30,35 40,40 T60,40 T80,40;M15,40 Q25,45 35,40 T55,40 T75,40;M20,40 Q30,35 40,40 T60,40 T80,40"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </path>
+
+        <!-- Wind particles -->
+        <g id="wind-particles">
+          <circle cx="10" cy="60" r="1" fill="#87CEEB">
+            <animate
+              attributeName="cx"
+              values="10;90;10"
+              dur="7s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="cy"
+              values="60;55;60"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="30" cy="70" r="1" fill="#87CEEB">
+            <animate
+              attributeName="cx"
+              values="30;110;30"
+              dur="8s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="cy"
+              values="70;65;70"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="50" cy="65" r="1" fill="#87CEEB">
+            <animate
+              attributeName="cx"
+              values="50;130;50"
+              dur="9s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="cy"
+              values="65;60;65"
+              dur="5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        </g>
+
+        <!-- Arabic text for "Adh-Dhariyat" -->
+        <text
+          x="50"
+          y="90"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#2c3e50"
+          text-anchor="middle"
+        >
+          الذاريات
+        </text>
+      </svg>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate Adh-Dhariyat</h2>
+        <div class="interactive-item" onclick="showReflection('divine_oath')">
+          <h3>1. Le Serment Divin</h3>
+          <p>
+            Allah jure par divers phénomènes naturels pour attirer l'attention
+            sur Son message.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('day_of_judgment')"
+        >
+          <h3>2. Le Jour du Jugement</h3>
+          <p>
+            Affirmation de la réalité du Jour du Jugement et ses conséquences.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('divine_provision')"
+        >
+          <h3>3. La Provision Divine</h3>
+          <p>
+            Rappel que la subsistance vient d'Allah et qu'Il est le Pourvoyeur
+            par excellence.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('prophetic_stories')"
+        >
+          <h3>4. Histoires Prophétiques</h3>
+          <p>Mentions brèves de certains prophètes et de leurs expériences.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('purpose_of_creation')"
+        >
+          <h3>5. Le But de la Création</h3>
+          <p>
+            Déclaration claire sur le but de la création des djinns et des
+            humains.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section fade-in">
+        <h2 class="reflection-title">Réflexions sur la sourate Adh-Dhariyat</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Adh-Dhariyat.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s50.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s52.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Adh-Dhariyat a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Adh-Dhariyat a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Adh-Dhariyat est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/51"),
+              axios.get("https://api.alquran.cloud/v1/surah/51/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "divine_oath":
+            reflectionContent.innerHTML =
+              "La sourate Adh-Dhariyat commence par une série de serments divins, jurant par les vents qui dispersent, les nuages chargés de pluie, les vaisseaux qui voguent avec aisance, et les anges qui répartissent les ordres. Ces serments attirent l'attention sur les phénomènes naturels comme signes de la puissance et de la sagesse d'Allah. Ils invitent à réfléchir sur la création et à reconnaître la main du Créateur dans l'ordre de l'univers.";
+            break;
+          case "day_of_judgment":
+            reflectionContent.innerHTML =
+              "La sourate affirme avec force la réalité du Jour du Jugement. Elle décrit ce jour comme inévitable et certain, soulignant l'importance de s'y préparer. La description des récompenses pour les pieux et des châtiments pour les incroyants sert d'avertissement et d'encouragement. Cette emphase sur l'au-delà rappelle aux croyants l'importance de leurs actions dans cette vie et les conséquences éternelles de leurs choix.";
+            break;
+          case "divine_provision":
+            reflectionContent.innerHTML =
+              "Un thème important de cette sourate est le rappel qu'Allah est le seul véritable Pourvoyeur. Elle affirme que la subsistance de toutes les créatures vient d'Allah et qu'Il est le Pourvoyeur par excellence. Ce rappel encourage les croyants à placer leur confiance en Allah pour leurs besoins, tout en les exhortant à chercher cette provision par des moyens licites. C'est une invitation à reconnaître la générosité d'Allah et à Lui être reconnaissant.";
+            break;
+          case "prophetic_stories":
+            reflectionContent.innerHTML =
+              "La sourate fait brièvement référence à plusieurs prophètes et à leurs expériences, notamment Abraham, Moïse, et Noé. Ces mentions servent de rappels et d'exemples pour les croyants. Elles illustrent la constance du message divin à travers l'histoire, la façon dont Allah a soutenu Ses messagers, et les conséquences du rejet de ce message. Ces histoires encouragent la persévérance dans la foi et rappellent la continuité de la guidance divine.";
+            break;
+          case "purpose_of_creation":
+            reflectionContent.innerHTML =
+              "La sourate contient une déclaration claire et profonde sur le but de la création des djinns et des humains : 'Je n'ai créé les djinns et les hommes que pour qu'ils M'adorent.' (51:56) Cette affirmation fournit une perspective fondamentale sur le sens de la vie et le rôle de l'humanité dans la création. Elle invite à une réflexion profonde sur notre existence et nos priorités, encourageant une vie centrée sur la recherche de la satisfaction d'Allah à travers l'adoration et les bonnes actions.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Adh-Dhariyat.";
+        }
+      }
+    </script>
+  </body>
+</html>

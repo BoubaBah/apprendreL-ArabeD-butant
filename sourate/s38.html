@@ -1,0 +1,412 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Sad (ص) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #e8f6ff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      #sad-canvas {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .story-section {
+        background-color: #e8f8f5;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .story-title {
+        font-weight: bold;
+        color: #16a085;
+        margin-bottom: 10px;
+      }
+      #story-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Sad (ص)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/038.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Sad - سورة ص</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <canvas id="sad-canvas"></canvas>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate</h2>
+        <div class="interactive-item" onclick="showStory('dawud')">
+          <h3>1. L'histoire du Prophète David (Dawud)</h3>
+          <p>La sourate mentionne le roi David et ses épreuves.</p>
+        </div>
+        <div class="interactive-item" onclick="showStory('sulayman')">
+          <h3>2. Le règne de Salomon (Sulayman)</h3>
+          <p>Elle évoque le royaume et la sagesse du Prophète Salomon.</p>
+        </div>
+        <div class="interactive-item" onclick="showStory('ayyub')">
+          <h3>3. La patience de Job (Ayyub)</h3>
+          <p>L'histoire de Job et sa persévérance face aux épreuves.</p>
+        </div>
+        <div class="interactive-item" onclick="showStory('iblis')">
+          <h3>4. L'arrogance d'Iblis</h3>
+          <p>
+            La sourate rappelle le refus d'Iblis de se prosterner devant Adam.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showStory('message')">
+          <h3>5. Le message universel</h3>
+          <p>
+            Sad souligne l'universalité du message du Coran pour l'humanité.
+          </p>
+        </div>
+      </div>
+
+      <div class="story-section fade-in">
+        <h2 class="story-title">Exploration des thèmes</h2>
+        <p id="story-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Sad.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s37.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s39.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+        const canvas = document.getElementById("sad-canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Set canvas size
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        // Sad animation
+        function drawSad() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // Draw night sky background
+          const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+          gradient.addColorStop(0, "#1a237e");
+          gradient.addColorStop(1, "#3f51b5");
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          // Draw stars
+          for (let i = 0; i < 100; i++) {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const radius = Math.random() * 1.5;
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(255, 255, 255, " + Math.random() + ")";
+            ctx.fill();
+          }
+
+          // Draw stylized Arabic letter ص (Sad)
+          ctx.strokeStyle = "#FFD700";
+          ctx.lineWidth = 10;
+          ctx.lineCap = "round";
+          ctx.lineJoin = "round";
+
+          ctx.beginPath();
+          ctx.arc(
+            canvas.width / 2,
+            canvas.height / 2,
+            80,
+            Math.PI * 0.8,
+            Math.PI * 2.2
+          );
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(canvas.width / 2 + 60, canvas.height / 2 + 60);
+          ctx.lineTo(canvas.width / 2 + 100, canvas.height / 2 + 60);
+          ctx.stroke();
+
+          // Draw pulsating light effect
+          const time = new Date().getTime() * 0.001;
+          const radius = 100 + Math.sin(time * 2) * 10;
+          const glow = ctx.createRadialGradient(
+            canvas.width / 2,
+            canvas.height / 2,
+            0,
+            canvas.width / 2,
+            canvas.height / 2,
+            radius
+          );
+          glow.addColorStop(0, "rgba(255, 215, 0, 0.3)");
+          glow.addColorStop(1, "rgba(255, 215, 0, 0)");
+          ctx.fillStyle = glow;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          requestAnimationFrame(drawSad);
+        }
+
+        drawSad();
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Sad a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log("La récitation de la sourate Sad a été mise en pause");
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Sad est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/38"),
+              axios.get("https://api.alquran.cloud/v1/surah/38/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+
+      function showStory(theme) {
+        const storyContent = document.getElementById("story-content");
+        switch (theme) {
+          case "dawud":
+            storyContent.innerHTML =
+              "La sourate Sad mentionne le Prophète David (Dawud) et ses épreuves. Elle raconte comment Allah lui a accordé la sagesse et la capacité de juger équitablement. L'histoire souligne l'importance de la justice et de la responsabilité dans le leadership. David est présenté comme un modèle de repentance et de dévotion à Allah.";
+            break;
+          case "sulayman":
+            storyContent.innerHTML =
+              "Le règne de Salomon (Sulayman) est évoqué dans cette sourate. Elle met en lumière la grande sagesse et le pouvoir extraordinaire que Allah lui a accordés. L'histoire de Salomon nous rappelle que même avec de grands dons, nous devons rester humbles et reconnaissants envers Allah. Son règne illustre comment la puissance et la sagesse peuvent être utilisées pour servir Allah.";
+            break;
+          case "ayyub":
+            storyContent.innerHTML =
+              "La sourate mentionne brièvement l'histoire de Job (Ayyub), un exemple de patience et de persévérance face à l'adversité. Malgré les épreuves et les souffrances qu'il a endurées, Job est resté fidèle à Allah. Son histoire nous enseigne la valeur de la patience dans les moments difficiles et la confiance en la miséricorde d'Allah.";
+            break;
+          case "iblis":
+            storyContent.innerHTML =
+              "La sourate Sad rappelle l'arrogance d'Iblis (Satan) lorsqu'il a refusé de se prosterner devant Adam. Cette histoire sert de mise en garde contre l'orgueil et la désobéissance à Allah. Elle nous rappelle les dangers de l'arrogance et l'importance de l'humilité et de la soumission à la volonté d'Allah.";
+            break;
+          case "message":
+            storyContent.innerHTML =
+              "Tout au long de la sourate, l'accent est mis sur l'universalité du message du Coran. Elle affirme que le Coran est un rappel pour toute l'humanité, pas seulement pour un groupe particulier. La sourate encourage la réflexion sur les signes d'Allah et l'importance de suivre la guidance divine pour atteindre le succès dans cette vie et dans l'au-delà.";
+            break;
+          default:
+            storyContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Sad.";
+        }
+      }
+    </script>
+  </body>
+</html>

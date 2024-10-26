@@ -1,0 +1,428 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Qaf - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #e8f6f3;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #16a085;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #2c3e50;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #bdc3c7;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Qaf</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/050.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Qaf - سورة ق</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <radialGradient
+            id="skyGradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #1abc9c; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #3498db; stop-opacity: 1" />
+          </radialGradient>
+        </defs>
+        <rect x="0" y="0" width="100" height="100" fill="url(#skyGradient)" />
+
+        <!-- Mountains -->
+        <path
+          d="M0 70 L20 40 L40 60 L60 30 L80 50 L100 20 L100 100 L0 100 Z"
+          fill="#34495e"
+        />
+
+        <!-- Sun -->
+        <circle cx="80" cy="20" r="10" fill="#f1c40f">
+          <animate
+            attributeName="cy"
+            values="20;18;20"
+            dur="4s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Arabic letter Qaf -->
+        <text
+          x="50"
+          y="50"
+          font-family="Scheherazade"
+          font-size="40"
+          fill="#ecf0f1"
+          text-anchor="middle"
+          dominant-baseline="middle"
+        >
+          ق
+        </text>
+
+        <!-- Decorative elements -->
+        <circle cx="25" cy="75" r="3" fill="#ecf0f1" opacity="0.7" />
+        <circle cx="40" cy="85" r="2" fill="#ecf0f1" opacity="0.5" />
+        <circle cx="60" cy="80" r="4" fill="#ecf0f1" opacity="0.6" />
+        <circle cx="75" cy="70" r="3" fill="#ecf0f1" opacity="0.8" />
+
+        <!-- Animated star -->
+        <path
+          d="M10 10 L12 15 L17 15 L13 18 L15 23 L10 20 L5 23 L7 18 L3 15 L8 15 Z"
+          fill="#f39c12"
+        >
+          <animateTransform
+            attributeName="transform"
+            type="rotate"
+            from="0 10 10"
+            to="360 10 10"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </path>
+      </svg>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate Qaf</h2>
+        <div class="interactive-item" onclick="showReflection('resurrection')">
+          <h3>1. La Résurrection</h3>
+          <p>
+            Affirmation de la réalité de la résurrection et réponse aux
+            sceptiques.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('creation')">
+          <h3>2. La Création</h3>
+          <p>
+            Rappel de la puissance d'Allah dans la création de l'univers et de
+            l'homme.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('accountability')"
+        >
+          <h3>3. La Responsabilité</h3>
+          <p>
+            L'importance de la responsabilité individuelle et de la conscience
+            de nos actes.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('day_of_judgment')"
+        >
+          <h3>4. Le Jour du Jugement</h3>
+          <p>Description vivante des événements du Jour du Jugement.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('divine_presence')"
+        >
+          <h3>5. La Présence Divine</h3>
+          <p>
+            Rappel de la proximité d'Allah et de Sa connaissance de toutes
+            choses.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section fade-in">
+        <h2 class="reflection-title">Réflexions sur la sourate Qaf</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Qaf.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s49.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s51.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Qaf a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log("La récitation de la sourate Qaf a été mise en pause");
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Qaf est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/50"),
+              axios.get("https://api.alquran.cloud/v1/surah/50/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "resurrection":
+            reflectionContent.innerHTML =
+              "La sourate Qaf commence par affirmer avec force la réalité de la résurrection, répondant aux doutes des sceptiques. Elle utilise des arguments logiques et des analogies tirées de la nature pour démontrer la possibilité et la certitude de la résurrection. Cette insistance sur la vie après la mort souligne l'importance de la croyance en l'au-delà dans la foi islamique et son rôle crucial dans la motivation des croyants à mener une vie vertueuse.";
+            break;
+          case "creation":
+            reflectionContent.innerHTML =
+              "La sourate rappelle la puissance créatrice d'Allah en évoquant la création des cieux, de la terre et de tout ce qui s'y trouve. Elle invite les hommes à contempler la beauté et la complexité de la création comme signes de la grandeur divine. Ce thème souligne l'omnipotence d'Allah et renforce l'argument de la résurrection : Celui qui a créé l'univers est certainement capable de ressusciter les morts.";
+            break;
+          case "accountability":
+            reflectionContent.innerHTML =
+              "Un thème récurrent dans la sourate Qaf est celui de la responsabilité individuelle. Elle rappelle que chaque âme est accompagnée d'un ange qui enregistre ses actions. Cette notion de surveillance constante et d'enregistrement des actes souligne l'importance de la conscience de soi et de la responsabilité dans la vie du croyant. Elle encourage à mener une vie droite et à être conscient des conséquences de nos choix.";
+            break;
+          case "day_of_judgment":
+            reflectionContent.innerHTML =
+              "La sourate offre une description vivante et détaillée du Jour du Jugement. Elle évoque le son de la trompette, la résurrection des morts, et le jugement de chaque âme. Ces descriptions servent à la fois d'avertissement et d'encouragement, rappelant aux croyants l'importance de se préparer pour ce jour inévitable par des actions justes et une foi sincère.";
+            break;
+          case "divine_presence":
+            reflectionContent.innerHTML =
+              "La sourate Qaf met l'accent sur la proximité d'Allah et Sa connaissance intime de chaque individu. Elle mentionne qu'Allah est plus proche de l'homme que sa veine jugulaire, soulignant ainsi l'omniprésence et l'omniscience divines. Cette notion de présence divine constante invite à une plus grande conscience de Dieu dans tous les aspects de la vie et encourage à cultiver une relation intime avec le Créateur.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Qaf.";
+        }
+      }
+    </script>
+  </body>
+</html>

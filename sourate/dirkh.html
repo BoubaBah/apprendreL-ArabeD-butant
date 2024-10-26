@@ -1,0 +1,387 @@
+<html><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invocations (Dhikr) - Le Noble Coran</title>
+<style>
+    :root {
+        --bg-color: #f0f8ff;
+        --text-color: #333;
+        --header-color: #1a237e;
+        --container-bg: #fff;
+        --item-bg: #e8eaf6;
+        --button-bg: #3f51b5;
+        --button-color: white;
+    }
+    body {
+        font-family: 'Noto Sans', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    h1, h2 {
+        color: var(--header-color);
+        text-align: center;
+    }
+    .container {
+        background-color: var(--container-bg);
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(26, 35, 126, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+    }
+    .dhikr-item {
+        background-color: var(--item-bg);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    .dhikr-title {
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    .dhikr-arabic {
+        font-family: 'Scheherazade', serif;
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    .dhikr-phonetic {
+        font-style: italic;
+        margin-bottom: 10px;
+    }
+    .dhikr-translation {
+        margin-bottom: 10px;
+    }
+    .dhikr-instruction {
+        font-style: italic;
+        color: #666;
+        margin-bottom: 15px;
+    }
+    .nav-button {
+        display: inline-block;
+        background-color: var(--button-bg);
+        color: var(--button-color);
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        margin-top: 20px;
+    }
+    .nav-button:hover {
+        background-color: var(--header-color);
+    }
+    .section-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        color: var(--header-color);
+    }
+    .table-of-contents {
+        background-color: var(--container-bg);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .table-of-contents ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+    .table-of-contents li {
+        margin-bottom: 10px;
+    }
+    .table-of-contents a {
+        color: var(--text-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .table-of-contents a:hover {
+        color: var(--header-color);
+    }
+    .section {
+        scroll-margin-top: 20px;
+    }
+    .reminder {
+        background-color: var(--item-bg);
+        border-left: 5px solid var(--header-color);
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 20px;
+        font-size: 0.9em;
+    }
+    .reminder strong {
+        color: var(--header-color);
+    }
+    .reminder ul {
+        margin-top: 10px;
+        padding-left: 20px;
+    }
+    .reminder li {
+        margin-bottom: 10px;
+    }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Invocations (Dhikr)</h1>
+    
+    <div class="container">
+        <div class="table-of-contents">
+            <h2>Sommaire</h2>
+            <ul>
+                <li><a href="#general-dhikr">Dhikr généraux</a></li>
+                <li><a href="#morning-dhikr">Invocations du matin</a></li>
+                <li><a href="#evening-dhikr">Invocations du soir</a></li>
+                <li><a href="#prayer-dhikr">Dhikr après la prière</a></li>
+                <li><a href="#rain-dhikr">Invocations lors de la pluie</a></li>
+            </ul>
+        </div>
+
+        <div id="general-dhikr" class="section">
+            <h2 class="section-title">Dhikr généraux</h2>
+            <div class="dhikr-item">
+                <div class="dhikr-title">Le Dhikr du Nom d'Allah</div>
+                <div class="dhikr-arabic">سُبْحَانَ اللهِ وَالْحَمْدُ لِلَّهِ وَاللهُ أَكْبَرُ</div>
+                <div class="dhikr-phonetic">Subhan Allahi wal hamdulillahi wa Allahu akbar</div>
+                <div class="dhikr-translation">Gloire à Allah, louange à Allah, et Allah est le plus grand</div>
+            </div>
+            <div class="dhikr-item">
+                <div class="dhikr-title">Le Dhikr de la Shahada</div>
+                <div class="dhikr-arabic">لَا إِلَٰهَ إِلَّا اللهُ مُحَمَّدٌ رَسُولُ اللهِ</div>
+                <div class="dhikr-phonetic">La ilaha illa Allah, Muhammadun rasul Allah</div>
+                <div class="dhikr-translation">Il n'y a de dieu qu'Allah, et Muhammad est le messager d'Allah</div>
+            </div>
+            <div class="dhikr-item">
+                <div class="dhikr-title">Le Dhikr du Coran</div>
+                <div class="dhikr-arabic">اللَّهُمَّ ذَكِّرْنِي مِنْهُ مَا نَسِيتُ وَعَلِّمْنِي مِنْهُ مَا جَهِلْتُ</div>
+                <div class="dhikr-phonetic">Allahumma dhakkirni minhu ma nasitu wa 'allimni minhu ma jahiltu</div>
+                <div class="dhikr-translation">Ô Allah, rappelle-moi ce que j'ai oublié et enseigne-moi ce que j'ignore</div>
+            </div>
+            <div class="dhikr-item">
+                <div class="dhikr-title">Le Dhikr du Tasbih</div>
+                <div class="dhikr-arabic">سُبْحَانَ اللهِ وَبِحَمْدِهِ سُبْحَانَ اللهِ الْعَظِيمِ</div>
+                <div class="dhikr-phonetic">Subhan Allahi wa bihamdihi, Subhan Allahil-'Adhim</div>
+                <div class="dhikr-translation">Gloire et louange à Allah, gloire à Allah le Majestueux</div>
+            </div>
+            <div class="dhikr-item">
+                <div class="dhikr-title">Le Dhikr du Tahlil</div>
+                <div class="dhikr-arabic">لَا إِلَٰهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ</div>
+                <div class="dhikr-phonetic">La ilaha illa Allah wahdahu la sharika lah, lahul-mulku wa lahul-hamdu wa huwa 'ala kulli shay'in qadir</div>
+                <div class="dhikr-translation">Il n'y a de dieu qu'Allah, l'Unique, sans associé. À Lui la royauté et la louange, et Il est Omnipotent</div>
+            </div>
+        </div>
+
+        <div id="morning-dhikr" class="section">
+            <h2 class="section-title">Invocations du matin</h2>
+            <div class="reminder">
+                <strong>Rappel :</strong> Pour une protection complète, il est important de réciter également :
+                <ul>
+                    <li>Ayat el Kursi (Le Verset du Trône)</li>
+                    <li>Sourate Al-Ikhlas (Le Monothéisme pur)</li>
+                    <li>Sourate Al-Falaq (L'Aube naissante)</li>
+                    <li>Sourate An-Nas (Les Hommes)</li>
+                </ul>
+            </div>
+            <div class="dhikr-item">
+                <div class="dhikr-title">Invocation du réveil</div>
+                <div class="dhikr-arabic">الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ</div>
+                <div class="dhikr-phonetic">Alhamdu lillahil-ladhi ahyana ba'da ma amatana wa ilayhin-nushur</div>
+                <div class="dhikr-translation">Louange à Allah qui nous a fait revivre après nous avoir fait mourir et c'est vers Lui que se fera la résurrection</div>
+            </div>
+            <div class="dhikr-item">
+                <div class="dhikr-title">Protection du matin</div>
+                <div class="dhikr-arabic">أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَٰهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ</div>
+                <div class="dhikr-phonetic">Asbahna wa asbahal-mulku lillah walhamdu lillah, la ilaha illallahu wahdahu la sharika lah</div>
+                <div class="dhikr-translation">Nous sommes entrés dans le matin, et le royaume appartient à Allah. Louange à Allah, il n'y a de divinité qu'Allah, l'Unique sans associé</div>
+            </div>
+        </div>
+
+        <div id="evening-dhikr" class="section">
+            <h2 class="section-title">Invocations du soir</h2>
+            <div class="reminder">
+                <strong>Rappel :</strong> Pour une protection complète, il est important de réciter également :
+                <ul>
+                    <li>Ayat el Kursi (Le Verset du Trône)</li>
+                    <li>Sourate Al-Ikhlas (Le Monothéisme pur)</li>
+                    <li>Sourate Al-Falaq (L'Aube naissante)</li>
+                    <li>Sourate An-Nas (Les Hommes)</li>
+                </ul>
+            </div>
+            <div class="dhikr-item">
+                <div class="dhikr-title">Invocation du coucher</div>
+                <div class="dhikr-arabic">بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا</div>
+                <div class="dhikr-phonetic">Bismika Allahumma amutu wa ahya</div>
+                <div class="dhikr-translation">C'est en Ton nom, ô Allah, que je meurs et que je vis</div>
+            </div>
+            <div class="dhikr-item">
+                <div class="dhikr-title">Protection du soir</div>
+                <div class="dhikr-arabic">أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَٰهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ</div>
+                <div class="dhikr-phonetic">Amsayna wa amsal-mulku lillah walhamdu lillah, la ilaha illallahu wahdahu la sharika lah</div>
+                <div class="dhikr-translation">Nous sommes entrés dans la soirée, et le royaume appartient à Allah. Louange à Allah, il n'y a de divinité qu'Allah, l'Unique sans associé</div>
+            </div>
+        </div>
+
+        <div id="prayer-dhikr" class="section">
+            <h2 class="section-title">Dhikr après la prière</h2>
+            <div class="dhikr-item">
+                <div class="dhikr-title">Le Dhikr de sortie de prière</div>
+                <div class="dhikr-arabic">أَسْتَغْفِرُ اللَّهَ (ثَلاثًا) اللَّهُمَّ أَنْتَ السَّلاَمُ، وَمِنْكَ السَّلاَمُ، تَبَارَكْتَ يَا ذَا الْجَلاَلِ وَالإِكْرَامِ</div>
+                <div class="dhikr-phonetic">Astaghfirullah (3 fois) Allahumma antas-salam wa minkas-salam, tabarakta ya dhal-jalali wal-ikram</div>
+                <div class="dhikr-translation">Je demande pardon à Allah (3 fois). Ô Allah, Tu es la Paix et de Toi vient la paix. Béni sois-Tu, ô Détenteur de la Majesté et de la Générosité.</div>
+            </div>
+            <div class="dhikr-item">
+                <div class="dhikr-title">Récitation d'Ayat al Kursi</div>
+                <div class="dhikr-translation">Il est fortement recommandé de réciter Ayat al Kursi (Le Verset du Trône) après chaque prière obligatoire.</div>
+                <div class="reminder">
+                    <strong>Rappel important :</strong> Le Prophète (paix et bénédictions sur lui) a dit : "Rien ne vous séparera du Paradis si ce n'est que la mort si vous récitez Ayat el Kursi après chaque prière obligatoire."
+                </div>
+            </div>
+            <div class="dhikr-item">
+                <div class="dhikr-title">Invocations après la prière</div>
+                <div class="dhikr-arabic">سُبْحَانَ اللهِ وَالْحَمْدُ لِلَّهِ وَاللهُ أَكْبَرُ</div>
+                <div class="dhikr-phonetic">Soubhana Allah walhamdou lillah wa Allahou akbar</div>
+                <div class="dhikr-translation">Gloire à Allah, louange à Allah, Allah est le plus grand</div>
+                <div class="dhikr-instruction">Répéter chaque phrase 33 fois</div>
+                
+                <div class="dhikr-arabic">لَا إِلَٰهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ</div>
+                <div class="dhikr-phonetic">Laa ilaaha illa Allah wahdahou laa sharika lahou lahoulmoulk wa lahoul hamd wa houwa alaa koulli shayin qadiiroun</div>
+                <div class="dhikr-translation">Il n'y a pas de dieu en dehors d'Allah le seul qui n'a pas d'associé. La royauté et les louanges Lui reviennent. Il donne la vie et la mort. Il est omnipotent.</div>
+                <div class="dhikr-instruction">Répéter 10 fois</div>
+
+                <div class="reminder">
+                    <strong>Importance de ces invocations :</strong>
+                    <p>Ces invocations sont essentielles après chaque prière pour plusieurs raisons :</p>
+                    <ul>
+                        <li>Elles permettent de compléter et de parfaire la prière.</li>
+                        <li>Elles constituent un moyen d'obtenir le pardon d'Allah et Sa miséricorde.</li>
+                        <li>Elles aident à maintenir un lien constant avec Allah après la prière.</li>
+                        <li>Répéter ces phrases 33 fois chacune, puis la dernière invocation 10 fois, permet d'atteindre un total de 100 invocations, un nombre significatif dans l'Islam.</li>
+                        <li>Le Prophète Muhammad (paix et bénédictions sur lui) a encouragé cette pratique, promettant de grandes récompenses à ceux qui la suivent régulièrement.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="rain-dhikr" class="section">
+            <h2 class="section-title">Invocations lors de la pluie</h2>
+            <div class="dhikr-item">
+                <div class="dhikr-title">Invocation pendant la pluie</div>
+                <div class="dhikr-arabic">اللَّهُمَّ صَيِّبًا نَافِعًا</div>
+                <div class="dhikr-phonetic">Allahumma sayyiban nafi'an</div>
+                <div class="dhikr-translation">Ô Allah, [fais que cette pluie soit] une averse bénéfique</div>
+            </div>
+            <div class="dhikr-item">
+                <div class="dhikr-title">Invocation après la pluie</div>
+                <div class="dhikr-arabic">مُطِرْنَا بِفَضْلِ اللَّهِ وَرَحْمَتِهِ</div>
+                <div class="dhikr-phonetic">Mutirnaa bifadlillahi wa rahmatih</div>
+                <div class="dhikr-translation">Nous avons reçu la pluie par la grâce et la miséricorde d'Allah</div>
+            </div>
+            <div class="dhikr-item">
+                <div class="dhikr-title">Invocation en voyant les nuages et en entendant le tonnerre</div>
+                <div class="dhikr-arabic">اللَّهُمَّ صَيِّبًا نَافِعًا</div>
+                <div class="dhikr-phonetic">Allahumma sayyiban nafi'an</div>
+                <div class="dhikr-translation">Ô Allah, [fais que cette pluie soit] une averse bénéfique</div>
+            </div>
+            <div class="reminder">
+                <strong>Rappel :</strong> La pluie est une bénédiction d'Allah. Il est recommandé de faire ces invocations avec sincérité et gratitude envers Allah pour Sa bonté et Sa miséricorde.
+            </div>
+        </div>
+    </div>
+    <a href="index.html" class="nav-button">Retour à l'index des sourates</a>
+
+    <script>
+        function getTheme() {
+            const now = new Date();
+            const hour = now.getHours();
+            const month = now.getMonth();
+
+            if (hour >= 20 || hour < 6) {
+                return 'night';
+            } else if (month >= 5 && month <= 7) {
+                return 'summer';
+            } else if (month >= 2 && month <= 4) {
+                return 'spring';
+            } else if (month >= 8 && month <= 10) {
+                return 'autumn';
+            } else {
+                return 'winter';
+            }
+        }
+
+        function applyTheme(theme) {
+            const root = document.documentElement;
+            switch (theme) {
+                case 'night':
+                    root.style.setProperty('--bg-color', '#1a1a2e');
+                    root.style.setProperty('--text-color', '#e0e0e0');
+                    root.style.setProperty('--header-color', '#4a5568');
+                    root.style.setProperty('--container-bg', '#2a2a3c');
+                    root.style.setProperty('--item-bg', '#16213e');
+                    root.style.setProperty('--button-bg', '#0f3460');
+                    root.style.setProperty('--button-color', '#e0e0e0');
+                    break;
+                case 'summer':
+                    root.style.setProperty('--bg-color', '#fff4e0');
+                    root.style.setProperty('--text-color', '#333');
+                    root.style.setProperty('--header-color', '#ff6b6b');
+                    root.style.setProperty('--container-bg', '#ffe8d6');
+                    root.style.setProperty('--item-bg', '#ffd5c2');
+                    root.style.setProperty('--button-bg', '#ff8c42');
+                    root.style.setProperty('--button-color', '#fff');
+                    break;
+                case 'spring':
+                    root.style.setProperty('--bg-color', '#e6f3ff');
+                    root.style.setProperty('--text-color', '#333');
+                    root.style.setProperty('--header-color', '#4caf50');
+                    root.style.setProperty('--container-bg', '#f1f8e9');
+                    root.style.setProperty('--item-bg', '#dcedc8');
+                    root.style.setProperty('--button-bg', '#8bc34a');
+                    root.style.setProperty('--button-color', '#fff');
+                    break;
+                case 'autumn':
+                    root.style.setProperty('--bg-color', '#fff8e1');
+                    root.style.setProperty('--text-color', '#4e342e');
+                    root.style.setProperty('--header-color', '#795548');
+                    root.style.setProperty('--container-bg', '#ffecb3');
+                    root.style.setProperty('--item-bg', '#ffe082');
+                    root.style.setProperty('--button-bg', '#ff9800');
+                    root.style.setProperty('--button-color', '#fff');
+                    break;
+                default: // winter
+                    root.style.setProperty('--bg-color', '#f0f8ff');
+                    root.style.setProperty('--text-color', '#333');
+                    root.style.setProperty('--header-color', '#1a237e');
+                    root.style.setProperty('--container-bg', '#fff');
+                    root.style.setProperty('--item-bg', '#e8eaf6');
+                    root.style.setProperty('--button-bg', '#3f51b5');
+                    root.style.setProperty('--button-color', '#fff');
+            }
+        }
+
+        function updateTheme() {
+            const theme = getTheme();
+            applyTheme(theme);
+        }
+
+        updateTheme();
+        setInterval(updateTheme, 3600000);
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

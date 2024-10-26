@@ -1,0 +1,402 @@
+<html>
+  <head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Kafirun (Les Infidèles) - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 400px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #e8f4fc;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #3498db;
+      }
+      .reflection-section {
+        background-color: #e8f4fc;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #3498db;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Kafirun (Les Infidèles)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/109.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Kafirun - سورة الكافرون</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #1a237e; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #3949ab; stop-opacity: 1" />
+          </linearGradient>
+          <radialGradient
+            id="star-gradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #ffffff; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #ffffff; stop-opacity: 0" />
+          </radialGradient>
+        </defs>
+
+        <!-- Night sky background -->
+        <rect width="400" height="200" fill="url(#sky-gradient)" />
+
+        <!-- Stars -->
+        <g id="stars"></g>
+
+        <!-- Crescent moon -->
+        <path d="M300,50 a30,30 0 1,1 0,60 a25,25 0 1,0 0,-60" fill="#ffd54f">
+          <animateTransform
+            attributeName="transform"
+            attributeType="XML"
+            type="rotate"
+            from="0 300 80"
+            to="360 300 80"
+            dur="60s"
+            repeatCount="indefinite"
+          />
+        </path>
+
+        <!-- Arabic text for "Al-Kafirun" -->
+        <text
+          x="200"
+          y="180"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          الكافرون
+        </text>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Al-Kafirun</h2>
+        <div class="theme-item" onclick="showReflection('religious_tolerance')">
+          <h3>1. La Tolérance Religieuse</h3>
+          <p>
+            Respect mutuel et coexistence pacifique entre différentes croyances.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('clarity_of_faith')">
+          <h3>2. Clarté de la Foi</h3>
+          <p>
+            Affirmation claire et sans compromis des croyances fondamentales.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('non_compulsion')">
+          <h3>3. Non-Contrainte en Religion</h3>
+          <p>
+            Principe de liberté de croyance et rejet de la coercition en matière
+            de foi.
+          </p>
+        </div>
+        <div
+          class="theme-item"
+          onclick="showReflection('identity_preservation')"
+        >
+          <h3>4. Préservation de l'Identité Religieuse</h3>
+          <p>
+            Importance de maintenir son identité et ses pratiques religieuses
+            face à la pression sociale.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('dialogue_boundaries')">
+          <h3>5. Limites du Dialogue Interreligieux</h3>
+          <p>
+            Reconnaissance des différences fondamentales tout en maintenant le
+            respect mutuel.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Kafirun</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Al-Kafirun.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s108.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s110.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        // Star generation
+        const starsGroup = document.getElementById("stars");
+        for (let i = 0; i < 50; i++) {
+          const star = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+          star.setAttribute("cx", Math.random() * 400);
+          star.setAttribute("cy", Math.random() * 200);
+          star.setAttribute("r", Math.random() * 1.5 + 0.5);
+          star.setAttribute("fill", "url(#star-gradient)");
+
+          // Animation for twinkling effect
+          const animate = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "animate"
+          );
+          animate.setAttribute("attributeName", "opacity");
+          animate.setAttribute("dur", Math.random() * 3 + 2 + "s");
+          animate.setAttribute("values", "0;1;0");
+          animate.setAttribute("repeatCount", "indefinite");
+          animate.setAttribute("begin", Math.random() * 5 + "s");
+
+          star.appendChild(animate);
+          starsGroup.appendChild(star);
+        }
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Kafirun a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Kafirun a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Kafirun est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/109"),
+              axios.get("https://api.alquran.cloud/v1/surah/109/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "religious_tolerance":
+            reflectionContent.innerHTML =
+              "La sourate Al-Kafirun est un puissant message de tolérance religieuse. Elle établit clairement la distinction entre les croyances tout en promouvant le respect mutuel. Cette sourate enseigne que la coexistence pacifique est possible et nécessaire dans une société pluraliste, sans pour autant compromettre ses propres convictions. Elle invite à reconnaître et à accepter les différences religieuses, plutôt que de chercher à les effacer ou à les combattre. Cette approche est particulièrement pertinente dans notre monde moderne, où la diversité religieuse est une réalité quotidienne et où le dialogue interconfessionnel est crucial pour la paix sociale.";
+            break;
+          case "clarity_of_faith":
+            reflectionContent.innerHTML =
+              "Cette sourate met l'accent sur l'importance d'une affirmation claire et sans ambiguïté de sa foi. Le Prophète Muhammad, à travers ces versets, déclare fermement sa position monothéiste, refusant tout compromis ou fusion avec les croyances polythéistes. Cette clarté de la foi est essentielle pour préserver l'intégrité des croyances religieuses et éviter les confusions ou les syncrétismes inappropriés. Elle nous enseigne l'importance d'être honnête et direct dans l'expression de nos convictions religieuses, tout en respectant celles des autres. Cette clarté permet un dialogue interreligieux authentique, basé sur une compréhension mutuelle des différences fondamentales.";
+            break;
+          case "non_compulsion":
+            reflectionContent.innerHTML =
+              "Al-Kafirun réaffirme le principe islamique fondamental de non-contrainte en matière de religion. En déclarant 'À vous votre religion, et à moi ma religion', la sourate rejette catégoriquement l'idée de forcer quelqu'un à adopter une croyance particulière. Ce principe est en harmonie avec le verset coranique bien connu 'Nulle contrainte en religion' (2:256). Cette sourate nous rappelle que la foi est une affaire personnelle et que chacun doit être libre de choisir sa propre voie spirituelle. Elle encourage une approche de la religion basée sur la conviction personnelle et la libre volonté, plutôt que sur la coercition ou la pression sociale.";
+            break;
+          case "identity_preservation":
+            reflectionContent.innerHTML =
+              "La sourate Al-Kafirun souligne l'importance de préserver son identité religieuse face aux pressions extérieures. Dans le contexte historique de sa révélation, elle répondait aux tentatives de compromis proposées par certains polythéistes de La Mecque. Aujourd'hui, elle reste pertinente dans des contextes où les minorités religieuses peuvent faire face à des pressions pour se conformer ou abandonner leurs pratiques. Elle encourage les croyants à rester fermes dans leurs convictions tout en coexistant pacifiquement avec ceux qui ont des croyances différentes. Cette sourate nous enseigne que la préservation de l'identité religieuse n'est pas incompatible avec le respect et la tolérance envers les autres traditions.";
+            break;
+          case "dialogue_boundaries":
+            reflectionContent.innerHTML =
+              "Tout en promouvant le respect mutuel, la sourate Al-Kafirun établit également des limites claires au dialogue interreligieux. Elle reconnaît qu'il existe des différences fondamentales entre les croyances qui ne peuvent pas toujours être réconciliées. Cette sourate nous enseigne que le véritable dialogue interreligieux ne consiste pas à gommer les différences ou à chercher un consensus artificiel, mais plutôt à comprendre et à respecter ces différences. Elle encourage une approche du dialogue basée sur l'honnêteté intellectuelle et le respect mutuel, où chaque partie peut exprimer librement ses croyances sans chercher à convaincre ou à convertir l'autre. Cette approche favorise une compréhension plus profonde et un respect authentique entre les différentes traditions religieuses.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Al-Kafirun.";
+        }
+      }
+    </script>
+  </body>
+</html>

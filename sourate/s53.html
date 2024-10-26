@@ -1,0 +1,433 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate An-Najm (L'Étoile) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #1a1a2e;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #e0e0e0;
+      }
+      h1,
+      h2 {
+        color: #4a8fe7;
+        text-align: center;
+      }
+      .container {
+        background-color: #16213e;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #a0a0a0;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #2a2a4a;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #4a8fe7;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #a0a0a0;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #4a8fe7;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #4a8fe7;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #3a7fd7;
+      }
+      .interactive-section {
+        background-color: #2a2a4a;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #1a1a2e;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(74, 143, 231, 0.3);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #4a8fe7;
+      }
+      .reflection-section {
+        background-color: #2a2a4a;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #4a8fe7;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #e0e0e0;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #4a8fe7;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate An-Najm (L'Étoile)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/053.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate An-Najm - سورة النجم</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <radialGradient
+            id="starGlow"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #ffffff; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #4a8fe7; stop-opacity: 0" />
+          </radialGradient>
+        </defs>
+        <rect x="0" y="0" width="100" height="100" fill="#1a1a2e" />
+
+        <!-- Stars -->
+        <g id="stars"></g>
+
+        <!-- Main star (An-Najm) -->
+        <circle cx="50" cy="50" r="5" fill="url(#starGlow)">
+          <animate
+            attributeName="r"
+            values="5;7;5"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Arabic text for "An-Najm" -->
+        <text
+          x="50"
+          y="90"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#4a8fe7"
+          text-anchor="middle"
+        >
+          النجم
+        </text>
+      </svg>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate An-Najm</h2>
+        <div
+          class="interactive-item"
+          onclick="showReflection('divine_revelation')"
+        >
+          <h3>1. La Révélation Divine</h3>
+          <p>
+            Affirmation de l'authenticité de la révélation reçue par le Prophète
+            Muhammad (paix sur lui).
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('prophetic_journey')"
+        >
+          <h3>2. Le Voyage Nocturne et l'Ascension</h3>
+          <p>
+            Évocation du voyage miraculeux du Prophète et de sa rencontre avec
+            l'ange Gabriel.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('idolatry_critique')"
+        >
+          <h3>3. Critique de l'Idolâtrie</h3>
+          <p>Réfutation des croyances polythéistes et des fausses divinités.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('divine_attributes')"
+        >
+          <h3>4. Les Attributs Divins</h3>
+          <p>Description de la puissance et de la sagesse d'Allah.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('accountability')"
+        >
+          <h3>5. Responsabilité Individuelle</h3>
+          <p>
+            Rappel de la responsabilité de chacun pour ses actes et croyances.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section fade-in">
+        <h2 class="reflection-title">Réflexions sur la sourate An-Najm</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate An-Najm.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s52.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s54.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate An-Najm a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate An-Najm a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate An-Najm est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/53"),
+              axios.get("https://api.alquran.cloud/v1/surah/53/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+
+        // Generate stars
+        const starsGroup = document.getElementById("stars");
+        for (let i = 0; i < 50; i++) {
+          const star = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+          star.setAttribute("cx", Math.random() * 100);
+          star.setAttribute("cy", Math.random() * 100);
+          star.setAttribute("r", Math.random() * 0.5 + 0.1);
+          star.setAttribute("fill", "#ffffff");
+
+          const animateBrightness = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "animate"
+          );
+          animateBrightness.setAttribute("attributeName", "opacity");
+          animateBrightness.setAttribute("values", "0;1;0");
+          animateBrightness.setAttribute("dur", Math.random() * 3 + 2 + "s");
+          animateBrightness.setAttribute("repeatCount", "indefinite");
+
+          star.appendChild(animateBrightness);
+          starsGroup.appendChild(star);
+        }
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "divine_revelation":
+            reflectionContent.innerHTML =
+              "La sourate An-Najm s'ouvre sur une affirmation puissante de l'authenticité de la révélation reçue par le Prophète Muhammad (paix sur lui). Elle souligne que ses paroles ne sont pas le fruit de ses désirs personnels, mais une révélation divine transmise par l'ange Gabriel. Cette introduction établit la crédibilité du message coranique et renforce la position du Prophète en tant que messager d'Allah.";
+            break;
+          case "prophetic_journey":
+            reflectionContent.innerHTML =
+              "An-Najm fait référence au voyage nocturne (Isra) et à l'ascension céleste (Mi'raj) du Prophète Muhammad. Cette expérience extraordinaire, où le Prophète a été transporté de La Mecque à Jérusalem puis élevé à travers les cieux, est décrite avec des détails mystiques. Ce récit souligne le statut spécial du Prophète et la proximité de sa relation avec Allah, tout en offrant des aperçus des réalités célestes.";
+            break;
+          case "idolatry_critique":
+            reflectionContent.innerHTML =
+              "La sourate consacre une partie importante à la critique de l'idolâtrie et des fausses croyances. Elle remet en question la logique derrière l'adoration des idoles, en soulignant leur impuissance et leur nature illusoire. An-Najm invite à la réflexion critique sur les traditions héritées et encourage l'abandon des pratiques polythéistes en faveur du monothéisme pur.";
+            break;
+          case "divine_attributes":
+            reflectionContent.innerHTML =
+              "An-Najm met en lumière plusieurs attributs divins, notamment la puissance, la sagesse et la connaissance totale d'Allah. Elle rappelle que c'est Allah qui est la source de toute vie et de toute mort, qui guide et qui égare, et qui connaît tous les secrets de l'univers. Ces descriptions visent à inspirer la crainte révérencielle et l'adoration sincère envers le Créateur.";
+            break;
+          case "accountability":
+            reflectionContent.innerHTML =
+              "La sourate insiste sur le principe de responsabilité individuelle. Elle affirme que chaque âme ne portera que le fardeau de ses propres actions et ne sera pas tenue responsable des actes d'autrui. Ce message souligne l'importance de la conscience personnelle et de la rectitude morale, encourageant chaque individu à se préparer pour le Jour du Jugement en assumant la pleine responsabilité de ses choix et de ses actes.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate An-Najm.";
+        }
+      }
+    </script>
+  </body>
+</html>

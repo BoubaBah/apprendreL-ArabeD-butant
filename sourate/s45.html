@@ -1,0 +1,396 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Jathiyah (L'Agenouillée) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #e8f6f3;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #16a085;
+      }
+      .reflection-section {
+        background-color: #f9e79f;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #d35400;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #universe-canvas {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Jathiyah (L'Agenouillée)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/045.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Jathiyah - سورة الجاثية</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <canvas id="universe-canvas"></canvas>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate</h2>
+        <div class="interactive-item" onclick="showReflection('universe')">
+          <h3>1. Les signes dans l'univers</h3>
+          <p>Les preuves de la création dans la nature.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('revelation')">
+          <h3>2. La révélation divine</h3>
+          <p>L'importance du Coran comme guide.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('judgment')">
+          <h3>3. Le Jour du Jugement</h3>
+          <p>La réalité de la vie après la mort et la responsabilité.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('rejection')">
+          <h3>4. Le rejet de la vérité</h3>
+          <p>Les conséquences de nier les signes d'Allah.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('monotheism')">
+          <h3>5. L'unicité d'Allah</h3>
+          <p>L'appel au monothéisme pur.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section fade-in">
+        <h2 class="reflection-title">Réflexions sur Al-Jathiyah</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Jathiyah.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s44.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s46.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+        const canvas = document.getElementById("universe-canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Set canvas size
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        // Universe animation
+        let stars = [];
+        const numStars = 100;
+
+        function Star(x, y, size, speed) {
+          this.x = x;
+          this.y = y;
+          this.size = size;
+          this.speed = speed;
+        }
+
+        Star.prototype.update = function () {
+          this.x -= this.speed;
+          if (this.x < 0) {
+            this.x = canvas.width;
+          }
+        };
+
+        Star.prototype.draw = function () {
+          ctx.fillStyle = "white";
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        };
+
+        function createStars() {
+          for (let i = 0; i < numStars; i++) {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const size = Math.random() * 2;
+            const speed = Math.random() * 0.5 + 0.1;
+            stars.push(new Star(x, y, size, speed));
+          }
+        }
+
+        function animateUniverse() {
+          ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          stars.forEach((star) => {
+            star.update();
+            star.draw();
+          });
+
+          requestAnimationFrame(animateUniverse);
+        }
+
+        createStars();
+        animateUniverse();
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Jathiyah a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Jathiyah a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Jathiyah est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/45"),
+              axios.get("https://api.alquran.cloud/v1/surah/45/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "universe":
+            reflectionContent.innerHTML =
+              "La sourate Al-Jathiyah met en lumière les nombreux signes de la création divine présents dans l'univers. Elle invite les croyants à observer et réfléchir sur les merveilles de la nature, telles que l'alternance du jour et de la nuit, les vents qui poussent les navires, et la diversité de la vie sur Terre. Ces signes sont présentés comme des preuves de l'existence et de la puissance d'Allah, encourageant ainsi une réflexion profonde sur la création et renforçant la foi des croyants.";
+            break;
+          case "revelation":
+            reflectionContent.innerHTML =
+              "Cette sourate souligne l'importance de la révélation divine, en particulier le Coran, comme guide pour l'humanité. Elle rappelle que le Livre saint contient la sagesse et les instructions nécessaires pour mener une vie droite et agréable à Allah. La révélation est présentée comme une miséricorde d'Allah envers Ses créatures, offrant clarté et direction dans un monde complexe. La sourate encourage les croyants à s'attacher fermement aux enseignements du Coran et à les mettre en pratique dans leur vie quotidienne.";
+            break;
+          case "judgment":
+            reflectionContent.innerHTML =
+              "Al-Jathiyah met l'accent sur la réalité du Jour du Jugement, un thème central dans l'Islam. Elle décrit comment toutes les nations seront rassemblées et 'agenouillées' devant Allah pour rendre compte de leurs actions. Cette image puissante rappelle l'inévitabilité de la responsabilité individuelle et collective. La sourate encourage ainsi les croyants à vivre leur vie présente avec conscience et droiture, sachant que chaque acte sera jugé. Elle offre espoir aux justes et avertit ceux qui persistent dans l'erreur.";
+            break;
+          case "rejection":
+            reflectionContent.innerHTML =
+              "La sourate aborde les conséquences du rejet de la vérité et de la négation des signes d'Allah. Elle met en garde contre l'arrogance et l'obstination face aux preuves évidentes de la création divine. Al-Jathiyah rappelle que ceux qui rejettent consciemment la vérité s'exposent à un châtiment sévère dans l'au-delà. Cependant, elle souligne également la patience et la miséricorde d'Allah, offrant toujours une opportunité de repentir et de retour vers le droit chemin.";
+            break;
+          case "monotheism":
+            reflectionContent.innerHTML =
+              "L'unicité d'Allah (Tawhid) est un thème récurrent dans Al-Jathiyah. La sourate réaffirme qu'Allah seul mérite l'adoration et la soumission. Elle critique l'association d'autres divinités à Allah et rappelle que toute la création Lui appartient. Ce message de monothéisme pur est au cœur de l'Islam, invitant les croyants à purifier leur foi et à orienter tous leurs actes d'adoration vers Allah seul. La sourate encourage ainsi une relation directe et sincère avec le Créateur, libre de toute forme d'idolâtrie ou d'association.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Jathiyah.";
+        }
+      }
+    </script>
+  </body>
+</html>

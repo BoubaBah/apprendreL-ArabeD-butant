@@ -1,0 +1,404 @@
+<html>
+  <head>
+   
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Ya-Sin (يس) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #e8f6ff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      #ya-sin-canvas {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .reflection-container {
+        background-color: #e8f8f5;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-question {
+        font-weight: bold;
+        color: #16a085;
+        margin-bottom: 10px;
+      }
+      #reflection-input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #bdc3c7;
+      }
+      #reflection-submit {
+        background-color: #2ecc71;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #reflection-submit:hover {
+        background-color: #27ae60;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Ya-Sin (يس)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/036.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Ya-Sin - سورة يس</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <canvas id="ya-sin-canvas"></canvas>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate</h2>
+        <div class="interactive-item">
+          <h3>1. L'importance du Coran</h3>
+          <p>
+            Ya-Sin met l'accent sur l'importance du Coran comme guide pour
+            l'humanité.
+          </p>
+        </div>
+        <div class="interactive-item">
+          <h3>2. La mission du Prophète Muhammad</h3>
+          <p>
+            La sourate souligne le rôle du Prophète en tant que messager
+            d'Allah.
+          </p>
+        </div>
+        <div class="interactive-item">
+          <h3>3. La résurrection et l'au-delà</h3>
+          <p>
+            Elle présente des arguments en faveur de la résurrection et de la
+            vie après la mort.
+          </p>
+        </div>
+        <div class="interactive-item">
+          <h3>4. Les signes de la création d'Allah</h3>
+          <p>
+            Ya-Sin invite à réfléchir sur les signes de la création dans la
+            nature.
+          </p>
+        </div>
+        <div class="interactive-item">
+          <h3>5. L'histoire des habitants de la cité</h3>
+          <p>
+            Une parabole est présentée pour illustrer les conséquences du rejet
+            des messagers.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-container fade-in">
+        <h2>Réflexion personnelle</h2>
+        <p class="reflection-question">
+          Comment les enseignements de Ya-Sin peuvent-ils être appliqués dans
+          notre vie quotidienne pour renforcer notre foi et notre compréhension
+          ?
+        </p>
+        <textarea
+          id="reflection-input"
+          rows="4"
+          placeholder="Partagez vos réflexions ici..."
+        ></textarea>
+        <button id="reflection-submit">Soumettre</button>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s35.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s37.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+        const reflectionInput = document.getElementById("reflection-input");
+        const reflectionSubmit = document.getElementById("reflection-submit");
+        const canvas = document.getElementById("ya-sin-canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Set canvas size
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        // Ya-Sin animation
+        function drawYaSin() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // Draw night sky
+          const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+          gradient.addColorStop(0, "#0f2027");
+          gradient.addColorStop(0.5, "#203a43");
+          gradient.addColorStop(1, "#2c5364");
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          // Draw stars
+          for (let i = 0; i < 100; i++) {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const radius = Math.random() * 1.5;
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(255, 255, 255, " + Math.random() + ")";
+            ctx.fill();
+          }
+
+          // Draw moon
+          ctx.beginPath();
+          ctx.arc(canvas.width * 0.8, canvas.height * 0.2, 40, 0, Math.PI * 2);
+          ctx.fillStyle = "#F4F6F0";
+          ctx.fill();
+
+          // Draw Ya-Sin calligraphy
+          ctx.font = "120px Scheherazade";
+          ctx.fillStyle = "#FFD700";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText("يس", canvas.width / 2, canvas.height / 2);
+
+          requestAnimationFrame(drawYaSin);
+        }
+
+        drawYaSin();
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Ya-Sin a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log("La récitation de la sourate Ya-Sin a été mise en pause");
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Ya-Sin est terminée");
+        });
+
+        reflectionSubmit.addEventListener("click", function () {
+          const reflection = reflectionInput.value;
+          if (reflection) {
+            console.log("Réflexion soumise:", reflection);
+            alert("Merci pour votre réflexion ! Elle a été enregistrée.");
+            reflectionInput.value = "";
+          } else {
+            alert("Veuillez entrer une réflexion avant de soumettre.");
+          }
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/36"),
+              axios.get("https://api.alquran.cloud/v1/surah/36/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,383 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Insan (L'Homme) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Insan (L'Homme)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/076.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Insan - سورة الإنسان</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #1a237e; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #3949ab; stop-opacity: 1" />
+          </linearGradient>
+          <radialGradient
+            id="lightGlow"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #ffffff; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #ffffff; stop-opacity: 0" />
+          </radialGradient>
+        </defs>
+
+        <!-- Background -->
+        <rect width="100" height="100" fill="url(#skyGradient)" />
+
+        <!-- Stars -->
+        <g id="stars">
+          <circle cx="10" cy="15" r="0.5" fill="#ffffff" />
+          <circle cx="25" cy="10" r="0.3" fill="#ffffff" />
+          <circle cx="40" cy="20" r="0.4" fill="#ffffff" />
+          <circle cx="60" cy="15" r="0.3" fill="#ffffff" />
+          <circle cx="75" cy="25" r="0.4" fill="#ffffff" />
+          <circle cx="90" cy="10" r="0.3" fill="#ffffff" />
+        </g>
+
+        <!-- Human figure -->
+        <g id="human-figure" transform="translate(50, 50)">
+          <!-- Body -->
+          <path d="M0,-15 Q-10,0 0,15 Q10,0 0,-15" fill="#ffffff" />
+          <!-- Head -->
+          <circle cx="0" cy="-20" r="5" fill="#ffffff" />
+          <!-- Arms -->
+          <path
+            d="M-10,0 Q-20,-10 -25,0"
+            stroke="#ffffff"
+            fill="none"
+            stroke-width="2"
+          />
+          <path
+            d="M10,0 Q20,-10 25,0"
+            stroke="#ffffff"
+            fill="none"
+            stroke-width="2"
+          />
+          <!-- Legs -->
+          <path d="M-5,15 L-10,30" stroke="#ffffff" stroke-width="2" />
+          <path d="M5,15 L10,30" stroke="#ffffff" stroke-width="2" />
+        </g>
+
+        <!-- Light emanating from the figure -->
+        <circle cx="50" cy="50" r="35" fill="url(#lightGlow)" opacity="0.5" />
+
+        <!-- Arabic text for "Al-Insan" -->
+        <text
+          x="50"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          الإنسان
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Insan</h2>
+        <div class="interactive-item" onclick="showReflection('creation')">
+          <h3>1. La création de l'homme</h3>
+          <p>Le rappel de l'origine de l'humanité et son but.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('guidance')">
+          <h3>2. La guidance divine</h3>
+          <p>L'importance du libre arbitre et de la guidance d'Allah.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('righteousness')">
+          <h3>3. Les actes de piété</h3>
+          <p>Description des qualités et actions des pieux.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('afterlife')">
+          <h3>4. Les récompenses de l'au-delà</h3>
+          <p>La description du Paradis et de ses délices.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('gratitude')">
+          <h3>5. La gratitude envers Allah</h3>
+          <p>L'importance de la reconnaissance envers le Créateur.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Insan</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Insan.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s75.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s77.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Insan a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Insan a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Insan est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/76"),
+              axios.get("https://api.alquran.cloud/v1/surah/76/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "creation":
+            reflectionContent.innerHTML =
+              "La sourate Al-Insan commence par rappeler l'origine de l'humanité, soulignant que l'homme n'était pas même une chose mentionnée avant sa création par Allah. Ce rappel de notre création sert à éveiller en nous un sentiment d'humilité et de gratitude envers notre Créateur. Il nous invite à réfléchir sur notre existence, notre but dans ce monde, et notre responsabilité envers Allah qui nous a donné la vie. Cette réflexion sur nos origines devrait nous motiver à vivre une vie pleine de sens et de dévotion, conscients de la grandeur d'Allah et de notre dépendance totale envers Lui.";
+            break;
+          case "guidance":
+            reflectionContent.innerHTML =
+              "La sourate met en lumière l'importance du libre arbitre et de la guidance divine. Allah a montré à l'homme le chemin, qu'il soit reconnaissant ou ingrat. Cette liberté de choix est un aspect fondamental de notre existence et de notre test dans ce monde. La guidance d'Allah est toujours présente, mais c'est à nous de choisir de la suivre ou non. Cette réflexion nous rappelle notre responsabilité dans nos choix et actions, et l'importance de chercher constamment la guidance d'Allah dans tous les aspects de notre vie. Elle nous encourage à être reconnaissants pour cette guidance et à faire des efforts conscients pour rester sur le droit chemin.";
+            break;
+          case "righteousness":
+            reflectionContent.innerHTML =
+              "La sourate Al-Insan décrit les qualités et les actions des personnes pieuses. Elle mentionne leur générosité, leur compassion envers les nécessiteux, et leur crainte du Jour du Jugement. Ces descriptions servent de modèle et d'inspiration pour les croyants. Elles nous rappellent que la véritable piété se manifeste non seulement dans notre relation avec Allah, mais aussi dans nos interactions avec les autres et notre comportement dans la société. Cette réflexion nous encourage à examiner nos propres actions et à nous efforcer d'incarner ces qualités vertueuses dans notre vie quotidienne, cherchant ainsi à plaire à Allah et à avoir un impact positif sur notre entourage.";
+            break;
+          case "afterlife":
+            reflectionContent.innerHTML =
+              "La sourate offre une description vivante des récompenses qui attendent les croyants dans l'au-delà. Elle parle des jardins du Paradis, des vêtements de soie, des bracelets d'argent, et des boissons pures que les pieux recevront. Ces descriptions servent à motiver les croyants et à les encourager à persévérer dans leur foi et leurs bonnes actions. Elles nous rappellent que les difficultés et les sacrifices de cette vie sont temporaires et que la véritable récompense nous attend dans l'au-delà. Cette perspective sur l'au-delà devrait nous aider à maintenir notre focus sur ce qui est vraiment important et à résister aux tentations et aux distractions de ce monde.";
+            break;
+          case "gratitude":
+            reflectionContent.innerHTML =
+              "Un thème récurrent dans la sourate Al-Insan est l'importance de la gratitude envers Allah. Elle rappelle les nombreuses bénédictions qu'Allah a accordées à l'humanité, de notre création à la guidance qu'Il nous offre. Cette emphase sur la gratitude nous invite à reconnaître constamment les faveurs d'Allah dans notre vie et à Lui exprimer notre reconnaissance non seulement par nos paroles, mais aussi par nos actions. La gratitude devrait se manifester dans notre obéissance à Allah, notre générosité envers les autres, et notre utilisation responsable des bénédictions qui nous ont été accordées. Cette attitude de gratitude peut transformer notre perspective sur la vie, nous rendant plus contents, plus patients face aux épreuves, et plus conscients de notre relation avec notre Créateur.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Insan.";
+        }
+      }
+    </script>
+  </body>
+</html>

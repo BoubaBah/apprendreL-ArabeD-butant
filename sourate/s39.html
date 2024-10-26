@@ -1,0 +1,402 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Az-Zumar (Les Groupes) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #e8f6ff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      #zumar-canvas {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .reflection-section {
+        background-color: #e8f8f5;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #16a085;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Az-Zumar (Les Groupes)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/039.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Az-Zumar - سورة الزمر</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <canvas id="zumar-canvas"></canvas>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate</h2>
+        <div class="interactive-item" onclick="showReflection('monotheisme')">
+          <h3>1. Le monothéisme pur</h3>
+          <p>L'importance de l'adoration exclusive d'Allah.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('creation')">
+          <h3>2. La création et ses merveilles</h3>
+          <p>Réflexions sur les signes d'Allah dans la création.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('jugement')">
+          <h3>3. Le Jour du Jugement</h3>
+          <p>Description du Jour de la Résurrection et ses événements.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('repentir')">
+          <h3>4. L'appel au repentir</h3>
+          <p>Invitation à se repentir et à retourner vers Allah.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('recompense')">
+          <h3>5. La récompense des croyants</h3>
+          <p>Description du Paradis et de ses délices pour les pieux.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section fade-in">
+        <h2 class="reflection-title">Réflexions sur Az-Zumar</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Az-Zumar.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s38.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s40.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+        const canvas = document.getElementById("zumar-canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Set canvas size
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        // Az-Zumar animation
+        function drawZumar() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // Draw background
+          const gradient = ctx.createLinearGradient(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+          gradient.addColorStop(0, "#4a69bd");
+          gradient.addColorStop(1, "#1e3799");
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          // Draw groups of people
+          const groups = 5;
+          const peoplePerGroup = 10;
+          const groupWidth = canvas.width / groups;
+
+          for (let i = 0; i < groups; i++) {
+            const groupCenterX = (i + 0.5) * groupWidth;
+            const groupCenterY = canvas.height * 0.7;
+
+            for (let j = 0; j < peoplePerGroup; j++) {
+              const angle = (j / peoplePerGroup) * Math.PI * 2;
+              const radius = 30 + Math.sin(Date.now() * 0.001 + i) * 5;
+              const x = groupCenterX + Math.cos(angle) * radius;
+              const y = groupCenterY + Math.sin(angle) * radius;
+
+              ctx.beginPath();
+              ctx.arc(x, y, 5, 0, Math.PI * 2);
+              ctx.fillStyle = "#feca57";
+              ctx.fill();
+            }
+          }
+
+          // Draw light beams
+          ctx.globalAlpha = 0.2 + Math.sin(Date.now() * 0.001) * 0.1;
+          for (let i = 0; i < 5; i++) {
+            const x = (canvas.width * (i + 0.5)) / 5;
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x - 100, canvas.height);
+            ctx.lineTo(x + 100, canvas.height);
+            ctx.fillStyle = "white";
+            ctx.fill();
+          }
+          ctx.globalAlpha = 1;
+
+          requestAnimationFrame(drawZumar);
+        }
+
+        drawZumar();
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Az-Zumar a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Az-Zumar a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Az-Zumar est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/39"),
+              axios.get("https://api.alquran.cloud/v1/surah/39/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "monotheisme":
+            reflectionContent.innerHTML =
+              "Az-Zumar met l'accent sur l'importance du monothéisme pur (Tawhid). Elle rappelle aux croyants que l'adoration doit être exclusivement réservée à Allah. La sourate encourage à purifier sa foi de toute forme d'association (shirk) et à se consacrer entièrement à Allah. Elle souligne que la sincérité dans l'adoration est essentielle pour le salut de l'âme.";
+            break;
+          case "creation":
+            reflectionContent.innerHTML =
+              "La sourate invite à méditer sur les merveilles de la création d'Allah. Elle mentionne la création des cieux et de la terre, l'alternance du jour et de la nuit, et la diversité de la création comme signes de la puissance et de la sagesse d'Allah. Ces réflexions visent à renforcer la foi et à éveiller la gratitude envers le Créateur.";
+            break;
+          case "jugement":
+            reflectionContent.innerHTML =
+              "Az-Zumar offre une description vivante du Jour du Jugement. Elle évoque le rassemblement des gens en groupes, la reddition des comptes, et la séparation entre les habitants du Paradis et ceux de l'Enfer. Cette description sert de rappel pour encourager les bonnes actions et éviter les péchés dans la vie présente.";
+            break;
+          case "repentir":
+            reflectionContent.innerHTML =
+              "Un thème récurrent dans la sourate est l'appel au repentir. Elle rappelle la miséricorde infinie d'Allah et invite les pécheurs à ne pas désespérer de Sa clémence. La sourate encourage à se tourner vers Allah avec sincérité, assurant que le repentir sincère est toujours accepté. Ce message d'espoir est central dans Az-Zumar.";
+            break;
+          case "recompense":
+            reflectionContent.innerHTML =
+              "La sourate décrit les délices du Paradis réservés aux croyants pieux. Elle mentionne les jardins éternels, la paix et la sérénité qui y règnent, ainsi que la satisfaction ultime d'être en présence d'Allah. Ces descriptions servent à motiver les croyants à persévérer dans la foi et les bonnes actions, en vue de cette récompense sublime.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Az-Zumar.";
+        }
+      }
+    </script>
+  </body>
+</html>

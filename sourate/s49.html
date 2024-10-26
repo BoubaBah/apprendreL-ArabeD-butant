@@ -1,0 +1,390 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Sourate Al-Hujurat (Les Appartements) - Exploration Interactive
+    </title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #e8f6f3;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #16a085;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #2c3e50;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 200px;
+        margin: 20px 0;
+        border: 1px solid #bdc3c7;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Hujurat (Les Appartements)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/049.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Hujurat - سورة الحجرات</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #3498db; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #ecf0f1; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="100" height="100" fill="url(#skyGradient)" />
+        <rect x="10" y="40" width="20" height="60" fill="#e67e22" />
+        <rect x="40" y="50" width="20" height="50" fill="#d35400" />
+        <rect x="70" y="45" width="20" height="55" fill="#e74c3c" />
+        <text
+          x="50"
+          y="30"
+          font-family="Arial"
+          font-size="8"
+          fill="#fff"
+          text-anchor="middle"
+        >
+          Al-Hujurat
+        </text>
+        <circle cx="85" cy="15" r="8" fill="#f1c40f">
+          <animate
+            attributeName="cy"
+            values="15;13;15"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <path d="M0 100 Q25 80 50 100 T100 100" fill="#27ae60" />
+      </svg>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate</h2>
+        <div class="interactive-item" onclick="showReflection('etiquette')">
+          <h3>1. Étiquette envers Allah et Son Messager</h3>
+          <p>
+            Comportement approprié en présence du Prophète et respect de ses
+            enseignements.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('verification')">
+          <h3>2. Vérification des informations</h3>
+          <p>L'importance de vérifier les nouvelles avant de les propager.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('reconciliation')"
+        >
+          <h3>3. Réconciliation entre les croyants</h3>
+          <p>
+            Appel à la paix et à la résolution des conflits au sein de la
+            communauté.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('brotherhood')">
+          <h3>4. Fraternité islamique</h3>
+          <p>
+            Renforcement des liens entre les croyants et promotion de l'unité.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('moral_conduct')">
+          <h3>5. Conduite morale</h3>
+          <p>
+            Interdiction de la moquerie, de la médisance et des soupçons
+            injustifiés.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section fade-in">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Hujurat</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Hujurat.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s48.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s50.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Hujurat a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Hujurat a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Hujurat est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/49"),
+              axios.get("https://api.alquran.cloud/v1/surah/49/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "etiquette":
+            reflectionContent.innerHTML =
+              "La sourate Al-Hujurat commence par rappeler aux croyants l'importance du respect et de la révérence envers Allah et Son Messager. Elle enjoint les musulmans à ne pas élever leur voix au-dessus de celle du Prophète et à ne pas l'interpeller de manière familière. Ce passage souligne l'importance de l'adab (bonne conduite) dans l'Islam, particulièrement envers les figures d'autorité spirituelle. Il rappelle que le respect du Prophète est intimement lié au respect d'Allah et que la manière dont nous interagissons avec les enseignements de l'Islam reflète notre niveau de piété.";
+            break;
+          case "verification":
+            reflectionContent.innerHTML =
+              "Un des enseignements cruciaux de cette sourate est l'importance de vérifier l'authenticité des informations avant de les propager. Le verset 6 met en garde contre les conséquences potentiellement désastreuses de la propagation de fausses nouvelles. Cette injonction est particulièrement pertinente à notre ère de l'information rapide et des médias sociaux. Elle encourage les croyants à être responsables, critiques et prudents dans leur consommation et leur partage d'informations, soulignant que la vérité et l'intégrité sont des valeurs islamiques fondamentales.";
+            break;
+          case "reconciliation":
+            reflectionContent.innerHTML =
+              "La sourate met l'accent sur l'importance de maintenir la paix et l'harmonie au sein de la communauté musulmane. Elle appelle les croyants à agir comme médiateurs lorsque des conflits surgissent entre les musulmans, soulignant que la réconciliation est préférable à la division. Ce passage rappelle que l'unité de la communauté est une priorité en Islam et que chaque musulman a la responsabilité de contribuer à maintenir cette unité en promouvant la paix et en résolvant les conflits de manière juste et équitable.";
+            break;
+          case "brotherhood":
+            reflectionContent.innerHTML =
+              "La sourate Al-Hujurat met en avant le concept de fraternité islamique, décrivant les croyants comme des frères. Elle souligne l'importance de cultiver des relations positives entre les musulmans, basées sur le respect mutuel, la compassion et la coopération. Ce thème rappelle que la force de la communauté musulmane réside dans son unité et sa cohésion. Il encourage les croyants à surmonter les différences superficielles et à se concentrer sur les liens spirituels qui les unissent en tant que membres de la ummah (communauté) islamique.";
+            break;
+          case "moral_conduct":
+            reflectionContent.innerHTML =
+              "Une partie significative de la sourate est consacrée à l'établissement de normes élevées de conduite morale parmi les croyants. Elle interdit spécifiquement des comportements négatifs tels que la moquerie, la médisance, l'utilisation de surnoms offensants et les soupçons injustifiés. Ces enseignements visent à créer une société basée sur le respect mutuel, la dignité et la confiance. La sourate rappelle que la véritable piété ne se manifeste pas seulement dans les actes de culte, mais aussi dans la manière dont on traite les autres, soulignant l'importance de l'éthique et du caractère moral dans la vie d'un musulman.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Hujurat.";
+        }
+      }
+    </script>
+  </body>
+</html>

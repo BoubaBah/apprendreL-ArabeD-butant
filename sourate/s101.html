@@ -1,0 +1,439 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Qariah (Le Fracas) - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #e74c3c;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #e74c3c;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #e74c3c;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #c0392b;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(231, 76, 60, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #e74c3c;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #e74c3c;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Qariah (Le Fracas)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/101.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Qariah - سورة القارعة</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <radialGradient
+            id="sky-gradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #ff6b6b; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #c44d56; stop-opacity: 1" />
+          </radialGradient>
+          <filter id="earthquake">
+            <feTurbulence
+              type="turbulence"
+              baseFrequency="0.05"
+              numOctaves="2"
+              result="turbulence"
+            />
+            <feDisplacementMap
+              in2="turbulence"
+              in="SourceGraphic"
+              scale="5"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+        </defs>
+
+        <!-- Sky -->
+        <rect width="400" height="200" fill="url(#sky-gradient)" />
+
+        <!-- Mountains -->
+        <path
+          d="M0 200 L100 100 L200 180 L300 80 L400 200 Z"
+          fill="#34495e"
+          filter="url(#earthquake)"
+        >
+          <animate
+            attributeName="d"
+            values="M0 200 L100 100 L200 180 L300 80 L400 200 Z;
+                            M0 200 L100 110 L200 170 L300 90 L400 200 Z;
+                            M0 200 L100 100 L200 180 L300 80 L400 200 Z"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </path>
+
+        <!-- Ground -->
+        <rect
+          x="0"
+          y="180"
+          width="400"
+          height="20"
+          fill="#2c3e50"
+          filter="url(#earthquake)"
+        >
+          <animate
+            attributeName="y"
+            values="180;178;180"
+            dur="0.5s"
+            repeatCount="indefinite"
+          />
+        </rect>
+
+        <!-- Falling debris -->
+        <g id="debris">
+          <circle cx="50" cy="0" r="2" fill="#ecf0f1">
+            <animate
+              attributeName="cy"
+              from="0"
+              to="200"
+              dur="2s"
+              begin="0s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="150" cy="-20" r="3" fill="#bdc3c7">
+            <animate
+              attributeName="cy"
+              from="-20"
+              to="200"
+              dur="2.5s"
+              begin="0.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="250" cy="-10" r="2" fill="#ecf0f1">
+            <animate
+              attributeName="cy"
+              from="-10"
+              to="200"
+              dur="1.8s"
+              begin="1s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="350" cy="-30" r="3" fill="#bdc3c7">
+            <animate
+              attributeName="cy"
+              from="-30"
+              to="200"
+              dur="2.2s"
+              begin="0.2s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        </g>
+
+        <!-- Arabic text for "Al-Qariah" -->
+        <text
+          x="200"
+          y="40"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#ffffff"
+          text-anchor="middle"
+          filter="url(#earthquake)"
+        >
+          القارعة
+        </text>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Al-Qariah</h2>
+        <div class="theme-item" onclick="showReflection('day_of_judgement')">
+          <h3>1. Le Jour du Jugement</h3>
+          <p>Description du Jour de la Résurrection et ses événements.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('scale_of_deeds')">
+          <h3>2. La balance des actes</h3>
+          <p>
+            L'importance des bonnes et mauvaises actions dans le jugement final.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('consequences')">
+          <h3>3. Les conséquences des actions</h3>
+          <p>
+            Les récompenses et les punitions basées sur les actes de chacun.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('accountability')">
+          <h3>4. La responsabilité individuelle</h3>
+          <p>Chaque âme sera jugée selon ses propres actions.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('apocalyptic_imagery')">
+          <h3>5. L'imagerie apocalyptique</h3>
+          <p>
+            Utilisation de métaphores puissantes pour décrire le Jour du
+            Jugement.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Qariah</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Al-Qariah.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s100.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s102.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Qariah a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Qariah a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Qariah est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/101"),
+              axios.get("https://api.alquran.cloud/v1/surah/101/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "day_of_judgement":
+            reflectionContent.innerHTML =
+              "La sourate Al-Qariah commence par une description vivante et saisissante du Jour du Jugement, appelé ici 'Le Fracas'. Ce jour est présenté comme un événement d'une ampleur et d'une gravité inimaginables, marquant la fin du monde tel que nous le connaissons. L'utilisation répétée du terme 'Al-Qariah' souligne l'importance et l'inévitabilité de cet événement. Cette description sert à éveiller la conscience des croyants sur la réalité de l'au-delà et l'importance de se préparer à ce jour inéluctable. Elle nous invite à réfléchir sur la nature temporaire de notre existence terrestre et sur l'importance de nos actions dans la perspective de l'éternité.";
+            break;
+          case "scale_of_deeds":
+            reflectionContent.innerHTML =
+              "La sourate introduit l'image puissante de la balance des actes, où les bonnes et les mauvaises actions de chaque individu seront pesées. Cette métaphore de la balance illustre la justice absolue de Dieu, où chaque action, aussi minime soit-elle, sera prise en compte. Elle nous rappelle l'importance de chacun de nos actes, de nos paroles et même de nos intentions. Cette image nous encourage à être vigilants dans notre comportement quotidien et à nous efforcer constamment d'accomplir de bonnes actions, tout en évitant les mauvaises. C'est un appel à l'introspection et à l'amélioration continue de soi-même.";
+            break;
+          case "consequences":
+            reflectionContent.innerHTML =
+              "Al-Qariah met en évidence les conséquences directes de nos actions. Ceux dont la balance penchera du côté du bien connaîtront une vie agréable dans l'au-delà, tandis que ceux dont la balance penchera du côté du mal feront face à un destin difficile. Cette dichotomie claire souligne la responsabilité personnelle et l'importance des choix que nous faisons dans cette vie. Elle nous rappelle que chaque action a des conséquences, non seulement dans ce monde, mais aussi et surtout dans l'au-delà. Cette perspective peut nous motiver à réfléchir attentivement à nos actions et à leurs implications à long terme.";
+            break;
+          case "accountability":
+            reflectionContent.innerHTML =
+              "Un thème central de la sourate est la responsabilité individuelle. Chaque personne sera jugée selon ses propres actions, sans possibilité de rejeter la faute sur autrui ou de bénéficier des bonnes actions des autres. Cette notion d'accountability personnelle est fondamentale dans l'Islam. Elle nous encourage à prendre notre vie spirituelle en main, à assumer la responsabilité de nos actes et à ne pas nous reposer sur les mérites d'autrui. C'est un appel à l'autonomie spirituelle et à la prise de conscience de notre propre rôle dans la détermination de notre destin dans l'au-delà.";
+            break;
+          case "apocalyptic_imagery":
+            reflectionContent.innerHTML =
+              "La sourate Al-Qariah utilise des images apocalyptiques puissantes pour décrire le Jour du Jugement. Les montagnes seront comme de la laine cardée, et les gens seront comme des papillons éparpillés. Ces métaphores visuelles frappantes servent à illustrer l'ampleur et l'intensité des événements de ce jour. Elles soulignent la transformation radicale de l'ordre naturel et social que nous connaissons. Cette imagerie n'est pas seulement destinée à effrayer, mais plutôt à éveiller la conscience et à stimuler la réflexion sur la nature éphémère de notre monde actuel et l'importance de se préparer pour l'éternité. Elle nous invite à reconsidérer nos priorités et à réfléchir sur ce qui est vraiment important à la lumière de cette perspective cosmique.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Al-Qariah.";
+        }
+      }
+    </script>
+  </body>
+</html>

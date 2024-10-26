@@ -1,0 +1,338 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Hajj (Le Pèlerinage) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #1a237e;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Amiri", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e0e0e0;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #1a237e;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #555;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #1a237e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #1a237e;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #3949ab;
+      }
+      .kaaba-scene {
+        width: 100%;
+        height: 300px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 20px;
+        background: linear-gradient(to bottom, #1a237e 0%, #3949ab 100%);
+        border-radius: 15px;
+      }
+      .kaaba {
+        position: absolute;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 100px;
+        background-color: #000;
+        border: 2px solid #ffd700;
+      }
+      .pilgrims {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-end;
+      }
+      .pilgrim {
+        width: 20px;
+        height: 30px;
+        background-color: #fff;
+        border-radius: 50% 50% 0 0;
+      }
+      .hajj-info {
+        margin-top: 30px;
+        text-align: justify;
+      }
+      .hajj-toggle {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-bottom: 15px;
+      }
+      .hajj-content {
+        display: none;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Amiri:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Hajj (الحج)</h1>
+    <div class="container">
+      <div class="kaaba-scene">
+        <div class="kaaba"></div>
+        <div class="pilgrims">
+          <div class="pilgrim"></div>
+          <div class="pilgrim"></div>
+          <div class="pilgrim"></div>
+          <div class="pilgrim"></div>
+          <div class="pilgrim"></div>
+        </div>
+      </div>
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/022.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Hajj (Le Pèlerinage) - سورة الحج</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+
+      <div class="hajj-info">
+        <button class="hajj-toggle" onclick="toggleHajjInfo()">
+          En savoir plus sur le Hajj
+        </button>
+        <div class="hajj-content">
+          <h3>Le Hajj : Le Pèlerinage à La Mecque</h3>
+          <p>
+            Le Hajj, ou pèlerinage à La Mecque, est l'un des cinq piliers de
+            l'Islam. C'est un voyage spirituel que chaque musulman adulte, en
+            bonne santé et ayant les moyens financiers, doit accomplir au moins
+            une fois dans sa vie. Voici quelques points essentiels sur le Hajj :
+          </p>
+          <ul>
+            <li>
+              <strong>Période</strong> : Le Hajj se déroule pendant le mois de
+              Dhu al-Hijjah, le dernier mois du calendrier lunaire islamique.
+            </li>
+            <li>
+              <strong>Rites principaux</strong> :
+              <ul>
+                <li>Tawaf : Circumambulation autour de la Kaaba</li>
+                <li>Sa'i : Marche entre les collines de Safa et Marwa</li>
+                <li>Wuquf : Station sur le mont Arafat</li>
+                <li>Rami al-Jamarat : Lapidation symbolique de Satan</li>
+              </ul>
+            </li>
+            <li>
+              <strong>Signification</strong> : Le Hajj symbolise l'unité des
+              musulmans du monde entier, l'égalité devant Dieu, et la
+              purification des péchés.
+            </li>
+            <li>
+              <strong>Histoire</strong> : Les rites du Hajj remontent à l'époque
+              du prophète Ibrahim (Abraham) et de son fils Ismaïl.
+            </li>
+          </ul>
+          <p>
+            La sourate Al-Hajj tire son nom de la mention du pèlerinage et
+            contient des versets qui parlent de son importance et de ses rites.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s21.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s23.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Hajj a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Hajj a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Hajj est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/22"),
+              axios.get("https://api.alquran.cloud/v1/surah/22/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Animation des pèlerins
+        const pilgrims = document.querySelectorAll(".pilgrim");
+        pilgrims.forEach((pilgrim, index) => {
+          pilgrim.style.animation = `movePilgrim ${
+            3 + index * 0.5
+          }s infinite linear`;
+        });
+      });
+
+      function toggleHajjInfo() {
+        const hajjContent = document.querySelector(".hajj-content");
+        const hajjToggle = document.querySelector(".hajj-toggle");
+        if (
+          hajjContent.style.display === "none" ||
+          hajjContent.style.display === ""
+        ) {
+          hajjContent.style.display = "block";
+          hajjToggle.textContent = "Masquer les informations sur le Hajj";
+        } else {
+          hajjContent.style.display = "none";
+          hajjToggle.textContent = "En savoir plus sur le Hajj";
+        }
+      }
+
+      // Animation des pèlerins
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes movePilgrim {
+            0% { transform: translateX(-50px); }
+            50% { transform: translateX(50px); }
+            100% { transform: translateX(-50px); }
+        }
+    `;
+      document.head.appendChild(style);
+    </script>
+  </body>
+</html>

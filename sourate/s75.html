@@ -1,0 +1,407 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Sourate Al-Qiyamah (La Résurrection) - Exploration Interactive
+    </title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Qiyamah (La Résurrection)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/075.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Qiyamah - سورة القيامة</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #1a237e; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #3949ab; stop-opacity: 1" />
+          </linearGradient>
+          <radialGradient
+            id="sunGlow"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #fff700; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #ff9900; stop-opacity: 0" />
+          </radialGradient>
+        </defs>
+
+        <!-- Background -->
+        <rect width="100" height="100" fill="url(#skyGradient)" />
+
+        <!-- Stars -->
+        <g id="stars">
+          <circle cx="10" cy="15" r="0.5" fill="#ffffff" />
+          <circle cx="25" cy="10" r="0.3" fill="#ffffff" />
+          <circle cx="40" cy="20" r="0.4" fill="#ffffff" />
+          <circle cx="60" cy="15" r="0.3" fill="#ffffff" />
+          <circle cx="75" cy="25" r="0.4" fill="#ffffff" />
+          <circle cx="90" cy="10" r="0.3" fill="#ffffff" />
+        </g>
+
+        <!-- Resurrection scene -->
+        <g id="resurrection-scene">
+          <!-- Glowing sun -->
+          <circle cx="50" cy="25" r="15" fill="url(#sunGlow)" />
+          <circle cx="50" cy="25" r="10" fill="#ffff00" />
+
+          <!-- Rising figures -->
+          <g id="rising-figures">
+            <path
+              d="M30 80 Q35 70 40 80"
+              stroke="#ffffff"
+              fill="none"
+              stroke-width="1"
+            />
+            <path
+              d="M50 85 Q55 75 60 85"
+              stroke="#ffffff"
+              fill="none"
+              stroke-width="1"
+            />
+            <path
+              d="M70 82 Q75 72 80 82"
+              stroke="#ffffff"
+              fill="none"
+              stroke-width="1"
+            />
+          </g>
+
+          <!-- Symbolic representation of scales -->
+          <g id="scales" transform="translate(50, 60) scale(0.7)">
+            <line
+              x1="-15"
+              y1="0"
+              x2="15"
+              y2="0"
+              stroke="#ffd700"
+              stroke-width="2"
+            />
+            <circle cx="-15" cy="5" r="5" fill="#ffd700" />
+            <circle cx="15" cy="5" r="5" fill="#ffd700" />
+          </g>
+        </g>
+
+        <!-- Arabic text for "Al-Qiyamah" -->
+        <text
+          x="50"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          القيامة
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Qiyamah</h2>
+        <div class="interactive-item" onclick="showReflection('resurrection')">
+          <h3>1. La Résurrection</h3>
+          <p>La réalité et les détails du Jour de la Résurrection.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('accountability')"
+        >
+          <h3>2. La Responsabilité</h3>
+          <p>L'importance de la responsabilité individuelle et du jugement.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('human-nature')">
+          <h3>3. La Nature Humaine</h3>
+          <p>Réflexions sur la nature humaine et ses tendances.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('quran-revelation')"
+        >
+          <h3>4. La Révélation du Coran</h3>
+          <p>Le processus de révélation du Coran au Prophète Muhammad.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('afterlife')">
+          <h3>5. L'Au-delà</h3>
+          <p>Description de l'état des gens dans l'au-delà.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Qiyamah</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Qiyamah.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s74.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s76.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Qiyamah a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Qiyamah a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Qiyamah est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/75"),
+              axios.get("https://api.alquran.cloud/v1/surah/75/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "resurrection":
+            reflectionContent.innerHTML =
+              "La sourate Al-Qiyamah s'ouvre sur une puissante affirmation de la réalité du Jour de la Résurrection. Elle décrit en détail les événements de ce jour, mettant l'accent sur sa certitude et son importance. Cette description vise à éveiller la conscience des croyants sur l'inévitabilité de ce jour et à les encourager à se préparer pour ce moment crucial. La sourate nous rappelle que notre existence ne se limite pas à cette vie terrestre, mais qu'il y a une vie après la mort où nous serons jugés pour nos actions. Cette réalité devrait nous inciter à vivre notre vie présente avec conscience et responsabilité, en gardant toujours à l'esprit notre destination finale.";
+            break;
+          case "accountability":
+            reflectionContent.innerHTML =
+              "Un thème central de la sourate Al-Qiyamah est la responsabilité individuelle et le jugement. Elle souligne que chaque âme sera tenue responsable de ses actions et que rien ne sera caché à Allah le Jour du Jugement. Cette notion de responsabilité individuelle est fondamentale dans l'Islam et nous rappelle l'importance de nos choix et de nos actions dans cette vie. La sourate nous encourage à réfléchir attentivement à nos actes et à leurs conséquences, non seulement dans ce monde mais aussi dans l'au-delà. Elle nous invite à vivre avec intégrité et à nous efforcer constamment de faire le bien, sachant que nous aurons à rendre compte de chacun de nos actes devant notre Créateur.";
+            break;
+          case "human-nature":
+            reflectionContent.innerHTML =
+              "La sourate Al-Qiyamah offre des réflexions profondes sur la nature humaine. Elle met en lumière certaines tendances de l'être humain, comme l'amour de la vie immédiate et la négligence de l'au-delà. Ces versets nous invitent à une introspection sincère sur nos propres attitudes et comportements. Ils nous rappellent notre propension à être absorbés par les préoccupations mondaines au détriment de notre préparation spirituelle pour l'au-delà. Cette prise de conscience de notre nature et de nos faiblesses est une étape cruciale dans notre développement spirituel. Elle nous encourage à cultiver la discipline, la patience et la foi pour surmonter nos tendances négatives et nous aligner davantage avec la volonté divine.";
+            break;
+          case "quran-revelation":
+            reflectionContent.innerHTML =
+              "La sourate Al-Qiyamah aborde le processus de révélation du Coran au Prophète Muhammad (paix soit sur lui). Elle décrit comment le Prophète recevait la révélation et l'importance de ne pas se précipiter dans sa récitation. Ces versets soulignent la nature divine du Coran et l'attention particulière accordée à sa préservation et à sa transmission. Ils nous rappellent également l'importance de l'étude attentive et réfléchie du Coran, plutôt que d'une lecture hâtive et superficielle. Cette réflexion sur le processus de révélation nous invite à apprécier la profondeur et la richesse du Coran, et à l'aborder avec révérence et contemplation dans notre quête de guidance et de compréhension.";
+            break;
+          case "afterlife":
+            reflectionContent.innerHTML =
+              "La sourate Al-Qiyamah offre une description vivante de l'état des gens dans l'au-delà. Elle dépeint les visages radieux des croyants qui regardent vers leur Seigneur, contrastant avec l'état des incroyants qui seront accablés par le chagrin et la détresse. Ces descriptions ne sont pas simplement destinées à effrayer, mais à encourager la réflexion et à motiver les croyants à mener une vie vertueuse. Elles nous rappellent que nos actions dans cette vie ont des conséquences éternelles et que notre véritable demeure est l'au-delà. Cette perspective sur l'au-delà devrait nous inspirer à vivre de manière à mériter la satisfaction d'Allah et à nous préparer pour une éternité de bonheur en Sa présence.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Qiyamah.";
+        }
+      }
+    </script>
+  </body>
+</html>

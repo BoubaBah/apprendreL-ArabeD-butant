@@ -1,0 +1,430 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Sourate At-Takathur (La Course aux Richesses) - Expérience Interactive
+    </title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #27ae60;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #e74c3c;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #27ae60;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #219a52;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(39, 174, 96, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #27ae60;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #27ae60;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate At-Takathur (La Course aux Richesses)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/102.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate At-Takathur - سورة التكاثر</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #4a90e2; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #87ceeb; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+
+        <!-- Background -->
+        <rect width="400" height="200" fill="url(#sky-gradient)" />
+
+        <!-- Sun -->
+        <circle cx="350" cy="50" r="30" fill="#f1c40f">
+          <animate
+            attributeName="cy"
+            values="50;40;50"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Mountains -->
+        <path d="M0 200 L100 100 L200 180 L300 80 L400 200 Z" fill="#34495e" />
+
+        <!-- Coin stacks -->
+        <g id="coin-stacks"></g>
+
+        <!-- People -->
+        <g id="people"></g>
+
+        <!-- Arabic text for "At-Takathur" -->
+        <text
+          x="200"
+          y="40"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          التكاثر
+        </text>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate At-Takathur</h2>
+        <div class="theme-item" onclick="showReflection('materialism')">
+          <h3>1. Le matérialisme</h3>
+          <p>
+            Critique de la course effrénée aux richesses et aux possessions.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('distraction')">
+          <h3>2. La distraction de l'essentiel</h3>
+          <p>
+            Comment la quête de biens matériels détourne de ce qui est vraiment
+            important.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('death')">
+          <h3>3. La réalité de la mort</h3>
+          <p>
+            Rappel de la fin inévitable et de la futilité des possessions face à
+            la mort.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('accountability')">
+          <h3>4. La responsabilité</h3>
+          <p>L'interrogation sur l'usage des bienfaits reçus dans cette vie.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('eternal_perspective')">
+          <h3>5. La perspective éternelle</h3>
+          <p>
+            L'importance de considérer la vie au-delà de l'existence terrestre.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate At-Takathur</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate At-Takathur.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s101.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s103.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        // Create coin stacks
+        const coinStacksGroup = document.getElementById("coin-stacks");
+        for (let i = 0; i < 5; i++) {
+          const stack = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "g"
+          );
+          const x = 50 + i * 80;
+          const y = 180;
+          for (let j = 0; j < 5; j++) {
+            const coin = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "ellipse"
+            );
+            coin.setAttribute("cx", x);
+            coin.setAttribute("cy", y - j * 5);
+            coin.setAttribute("rx", 20);
+            coin.setAttribute("ry", 5);
+            coin.setAttribute("fill", "#f1c40f");
+            coin.setAttribute("stroke", "#d35400");
+            stack.appendChild(coin);
+          }
+          coinStacksGroup.appendChild(stack);
+
+          // Animate stack
+          const animate = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "animate"
+          );
+          animate.setAttribute("attributeName", "transform");
+          animate.setAttribute("attributeType", "XML");
+          animate.setAttribute("type", "translate");
+          animate.setAttribute("values", `0,0; 0,-10; 0,0`);
+          animate.setAttribute("dur", `${1 + i * 0.5}s`);
+          animate.setAttribute("repeatCount", "indefinite");
+          stack.appendChild(animate);
+        }
+
+        // Create people
+        const peopleGroup = document.getElementById("people");
+        for (let i = 0; i < 3; i++) {
+          const person = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "path"
+          );
+          const x = 100 + i * 100;
+          person.setAttribute("d", `M${x},180 L${x - 10},200 L${x + 10},200 Z`);
+          person.setAttribute("fill", "#2ecc71");
+          peopleGroup.appendChild(person);
+
+          // Animate person
+          const animate = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "animate"
+          );
+          animate.setAttribute("attributeName", "transform");
+          animate.setAttribute("attributeType", "XML");
+          animate.setAttribute("type", "translate");
+          animate.setAttribute(
+            "values",
+            `0,0; ${i % 2 === 0 ? "" : "-"}20,0; 0,0`
+          );
+          animate.setAttribute("dur", `${2 + i}s`);
+          animate.setAttribute("repeatCount", "indefinite");
+          person.appendChild(animate);
+        }
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate At-Takathur a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate At-Takathur a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate At-Takathur est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/102"),
+              axios.get("https://api.alquran.cloud/v1/surah/102/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "materialism":
+            reflectionContent.innerHTML =
+              "La sourate At-Takathur commence par une critique directe de la course effrénée aux richesses et aux possessions matérielles. Elle met en lumière la tendance humaine à s'engager dans une compétition sans fin pour accumuler plus de biens. Cette obsession pour les possessions matérielles est présentée comme une distraction majeure de ce qui est vraiment important dans la vie. La sourate nous invite à réfléchir sur nos priorités et à nous demander si notre quête de richesses nous apporte réellement le bonheur et l'épanouissement que nous recherchons. Elle nous encourage à chercher un équilibre entre nos besoins matériels et nos besoins spirituels, en mettant l'accent sur l'importance de cultiver des valeurs plus profondes et durables.";
+            break;
+          case "distraction":
+            reflectionContent.innerHTML =
+              "Un thème central de cette sourate est la façon dont la poursuite des biens matériels peut nous distraire de l'essentiel. Elle souligne comment cette préoccupation constante pour l'accumulation de richesses peut nous faire perdre de vue les aspects les plus importants de notre existence, tels que notre développement spirituel, nos relations humaines, et notre préparation pour l'au-delà. La sourate nous invite à prendre du recul et à examiner nos vies, à nous demander si nous ne sommes pas tellement absorbés par la quête de biens matériels que nous en oublions de nourrir notre âme et de nous consacrer à des actions qui ont une valeur éternelle. C'est un appel à réévaluer nos priorités et à nous concentrer sur ce qui compte vraiment à long terme.";
+            break;
+          case "death":
+            reflectionContent.innerHTML =
+              "La sourate At-Takathur rappelle de manière poignante la réalité inévitable de la mort. Elle souligne que, quelle que soit l'étendue de nos possessions ou de notre statut social, nous serons tous confrontés à la fin de notre existence terrestre. Ce rappel sert à mettre en perspective notre course aux richesses et aux plaisirs mondains. La sourate nous invite à réfléchir sur la futilité de l'accumulation excessive de biens matériels face à la réalité de notre mortalité. Elle nous encourage à vivre notre vie avec une conscience aiguë de sa finitude, et donc à faire des choix qui ont un impact positif et durable, au-delà de notre existence terrestre.";
+            break;
+          case "accountability":
+            reflectionContent.innerHTML =
+              "La sourate évoque également le concept de responsabilité et de reddition de comptes. Elle mentionne que nous serons interrogés sur les plaisirs et les bienfaits dont nous avons joui dans cette vie. Cette notion d'accountability nous rappelle que nous sommes responsables de la façon dont nous utilisons les ressources qui nous sont confiées. La sourate nous invite à réfléchir sur notre gestion des biens matériels et des opportunités qui nous sont données. Elle nous encourage à utiliser nos ressources de manière responsable et bénéfique, non seulement pour nous-mêmes, mais aussi pour les autres et pour notre développement spirituel. C'est un appel à la conscience et à l'utilisation éthique de nos possessions et de nos privilèges.";
+            break;
+          case "eternal_perspective":
+            reflectionContent.innerHTML =
+              "Enfin, la sourate At-Takathur nous invite à adopter une perspective éternelle sur notre vie. Elle nous encourage à regarder au-delà de l'existence terrestre et à considérer les conséquences à long terme de nos actions et de nos choix. Cette perspective éternelle nous aide à prioriser ce qui a une valeur durable et transcendante par rapport à ce qui est éphémère et passager. La sourate nous pousse à réfléchir sur le sens profond de notre existence et sur la façon dont nous pouvons vivre de manière à préparer notre vie future dans l'au-delà. C'est une invitation à cultiver des valeurs et des actions qui ont un impact positif non seulement dans cette vie, mais aussi dans la vie éternelle à venir.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate At-Takathur.";
+        }
+      }
+    </script>
+  </body>
+</html>

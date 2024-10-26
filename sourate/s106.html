@@ -1,0 +1,378 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Quraysh - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #e67e22;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #e67e22;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #e67e22;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #d35400;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #fef5e7;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(230, 126, 34, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #e67e22;
+      }
+      .reflection-section {
+        background-color: #fef5e7;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #e67e22;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Quraysh (Les Quraysh)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/106.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Quraysh - سورة قريش</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #ffa07a; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #fff8dc; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="400" height="200" fill="url(#sky-gradient)" />
+
+        <!-- Sun -->
+        <circle cx="350" cy="50" r="30" fill="#FFD700">
+          <animate
+            attributeName="cy"
+            from="50"
+            to="40"
+            dur="4s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Desert dunes -->
+        <path
+          d="M0 150 Q100 100 200 150 T400 150 L400 200 L0 200 Z"
+          fill="#D2B48C"
+        />
+
+        <!-- Camel caravan -->
+        <g id="caravan" transform="translate(-50, 0)">
+          <path
+            d="M30,150 Q45,130 60,150 L75,150 Q90,130 105,150 L120,150 Q135,130 150,150"
+            fill="none"
+            stroke="#8B4513"
+            stroke-width="3"
+          />
+          <circle cx="45" cy="135" r="10" fill="#8B4513" />
+          <circle cx="90" cy="135" r="10" fill="#8B4513" />
+          <circle cx="135" cy="135" r="10" fill="#8B4513" />
+          <animateTransform
+            attributeName="transform"
+            type="translate"
+            from="-50,0"
+            to="450,0"
+            dur="20s"
+            repeatCount="indefinite"
+          />
+        </g>
+
+        <!-- Kaaba representation -->
+        <rect x="180" y="100" width="40" height="40" fill="#000" />
+
+        <!-- Arabic text for "Quraysh" -->
+        <text
+          x="200"
+          y="180"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#8B4513"
+          text-anchor="middle"
+        >
+          قريش
+        </text>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Quraysh</h2>
+        <div class="theme-item" onclick="showReflection('divine_favor')">
+          <h3>1. La Faveur Divine</h3>
+          <p>Les bienfaits accordés par Allah à la tribu des Quraysh.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('unity_purpose')">
+          <h3>2. L'Unité et le But</h3>
+          <p>
+            L'importance de l'unité et de la direction dans la vie
+            communautaire.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('economic_prosperity')">
+          <h3>3. La Prospérité Économique</h3>
+          <p>Les voyages commerciaux des Quraysh et leur importance.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('worship_gratitude')">
+          <h3>4. L'Adoration et la Gratitude</h3>
+          <p>L'appel à adorer Allah en reconnaissance de Ses bienfaits.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('historical_context')">
+          <h3>5. Le Contexte Historique</h3>
+          <p>
+            L'importance des Quraysh dans l'histoire pré-islamique et islamique.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Quraysh</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Quraysh.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s105.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s107.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Quraysh a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Quraysh a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Quraysh est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/106"),
+              axios.get("https://api.alquran.cloud/v1/surah/106/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "divine_favor":
+            reflectionContent.innerHTML =
+              "La sourate Quraysh met en lumière les faveurs divines accordées à la tribu des Quraysh. Allah leur a octroyé la sécurité et la prospérité, notamment à travers leurs voyages commerciaux. Cette reconnaissance des bienfaits divins souligne l'importance de la gratitude envers Allah et rappelle que toute bénédiction provient de Lui. La sourate invite à réfléchir sur les faveurs que nous recevons dans nos vies et à en être reconnaissants, tout en comprenant que ces bienfaits impliquent une responsabilité envers le Créateur et envers la société.";
+            break;
+          case "unity_purpose":
+            reflectionContent.innerHTML =
+              "La sourate Quraysh met en évidence l'importance de l'unité et du but commun dans la vie d'une communauté. Les voyages commerciaux des Quraysh, mentionnés dans la sourate, nécessitaient une coordination et une coopération significatives. Cette unité leur a permis de prospérer et de jouer un rôle important dans la région. La sourate nous invite à réfléchir sur l'importance de l'unité dans nos propres communautés et sur la manière dont nous pouvons travailler ensemble vers des objectifs communs, tout en restant fidèles à notre foi et à nos valeurs.";
+            break;
+          case "economic_prosperity":
+            reflectionContent.innerHTML =
+              "Les voyages commerciaux des Quraysh, mentionnés dans cette sourate, étaient cruciaux pour leur prospérité économique. Ces caravanes, voyageant en hiver vers le Yémen et en été vers la Syrie, ont joué un rôle vital dans l'établissement de Makka comme centre commercial important. Cette prospérité économique est présentée comme une bénédiction d'Allah. La sourate nous invite à réfléchir sur l'importance du travail et du commerce légitime dans l'Islam, tout en nous rappelant que la richesse matérielle doit être équilibrée avec la responsabilité spirituelle et sociale.";
+            break;
+          case "worship_gratitude":
+            reflectionContent.innerHTML =
+              "La sourate Quraysh se termine par un appel à adorer le Seigneur de la Maison (la Kaaba), en reconnaissance des bienfaits reçus. Ce verset souligne le lien intrinsèque entre la gratitude et l'adoration. Il nous rappelle que la véritable réponse aux faveurs d'Allah est de Le reconnaître comme la source de toutes les bénédictions et de L'adorer sincèrement. Cette sourate nous enseigne que la gratitude ne doit pas seulement être exprimée en paroles, mais aussi en actes d'adoration et en obéissance aux commandements d'Allah.";
+            break;
+          case "historical_context":
+            reflectionContent.innerHTML =
+              "La sourate Quraysh met en lumière l'importance historique de la tribu des Quraysh, qui était la gardienne de la Kaaba et jouait un rôle central dans la vie religieuse et économique de l'Arabie pré-islamique. Cette sourate nous aide à comprendre le contexte dans lequel l'Islam est apparu et l'importance de Makka comme centre spirituel. Elle nous rappelle également que l'Islam n'est pas venu dans un vide historique, mais s'est construit sur et a réformé les traditions existantes. Cette perspective historique nous invite à réfléchir sur la continuité et le changement dans notre propre pratique religieuse et culturelle.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Quraysh.";
+        }
+      }
+    </script>
+  </body>
+</html>

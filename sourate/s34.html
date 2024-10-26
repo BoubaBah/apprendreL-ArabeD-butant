@@ -1,0 +1,406 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Saba' (Les Saba) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #e8f6f3;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      #saba-map {
+        width: 100%;
+        max-width: 500px;
+        height: 300px;
+        margin: 20px auto;
+        display: block;
+      }
+      .reflection-container {
+        background-color: #f9e79f;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-question {
+        font-weight: bold;
+        color: #34495e;
+        margin-bottom: 10px;
+      }
+      #reflection-input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #bdc3c7;
+      }
+      #reflection-submit {
+        background-color: #2ecc71;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #reflection-submit:hover {
+        background-color: #27ae60;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Saba' (سبأ)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/034.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Saba' - سورة سبأ</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="saba-map"
+        viewBox="0 0 500 300"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="desert" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #f4a460; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #d2691e; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+        <rect width="500" height="300" fill="url(#desert)" />
+        <path
+          d="M50,150 Q250,50 450,150"
+          stroke="#4682b4"
+          stroke-width="10"
+          fill="none"
+        />
+        <circle cx="250" cy="150" r="30" fill="#228b22" />
+        <rect x="220" y="120" width="60" height="40" fill="#8b4513" />
+        <path d="M180,180 L320,180 L250,120 Z" fill="#cd853f" />
+        <g id="caravan">
+          <circle cx="100" cy="200" r="10" fill="#4b0082" />
+          <circle cx="130" cy="200" r="10" fill="#4b0082" />
+          <circle cx="160" cy="200" r="10" fill="#4b0082" />
+        </g>
+      </svg>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate</h2>
+        <div class="interactive-item">
+          <h3>1. Le royaume de Saba'</h3>
+          <p>
+            La sourate tire son nom du royaume de Saba', situé dans le Yémen
+            actuel, connu pour sa prospérité et son ingénierie avancée.
+          </p>
+        </div>
+        <div class="interactive-item">
+          <h3>2. La gratitude envers Allah</h3>
+          <p>"Et peu de Mes serviteurs sont reconnaissants." (Verset 13)</p>
+        </div>
+        <div class="interactive-item">
+          <h3>3. La puissance et la connaissance d'Allah</h3>
+          <p>
+            "Il connaît ce qui pénètre dans la terre et ce qui en sort, ce qui
+            descend du ciel et ce qui y monte." (Verset 2)
+          </p>
+        </div>
+        <div class="interactive-item">
+          <h3>4. L'avertissement contre l'arrogance</h3>
+          <p>
+            L'histoire du royaume de Saba' sert d'avertissement contre
+            l'ingratitude et l'arrogance.
+          </p>
+        </div>
+        <div class="interactive-item">
+          <h3>5. La résurrection et le jugement</h3>
+          <p>
+            La sourate rappelle la réalité de la résurrection et du jugement
+            final.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-container fade-in">
+        <h2>Réflexion personnelle</h2>
+        <p class="reflection-question">
+          Comment l'histoire du royaume de Saba' peut-elle nous inspirer à être
+          plus reconnaissants dans notre vie quotidienne ?
+        </p>
+        <textarea
+          id="reflection-input"
+          rows="4"
+          placeholder="Partagez vos réflexions ici..."
+        ></textarea>
+        <button id="reflection-submit">Soumettre</button>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s33.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s35.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+        const reflectionInput = document.getElementById("reflection-input");
+        const reflectionSubmit = document.getElementById("reflection-submit");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Saba' a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log("La récitation de la sourate Saba' a été mise en pause");
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Saba' est terminée");
+        });
+
+        reflectionSubmit.addEventListener("click", function () {
+          const reflection = reflectionInput.value;
+          if (reflection) {
+            console.log("Réflexion soumise:", reflection);
+            alert("Merci pour votre réflexion ! Elle a été enregistrée.");
+            reflectionInput.value = "";
+          } else {
+            alert("Veuillez entrer une réflexion avant de soumettre.");
+          }
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/34"),
+              axios.get("https://api.alquran.cloud/v1/surah/34/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Animation for caravan
+        function animateCaravan() {
+          const caravan = document.getElementById("caravan");
+          let position = 0;
+          const duration = 10000; // 10 seconds
+          const startTime = Date.now();
+
+          function animate() {
+            const currentTime = Date.now();
+            const progress = (currentTime - startTime) / duration;
+
+            if (progress < 1) {
+              position = 400 * progress;
+              caravan.setAttribute("transform", `translate(${position}, 0)`);
+              requestAnimationFrame(animate);
+            } else {
+              // Reset position and start over
+              caravan.setAttribute("transform", "translate(0, 0)");
+              setTimeout(animateCaravan, 1000); // Wait 1 second before restarting
+            }
+          }
+
+          animate();
+        }
+
+        animateCaravan();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+    </script>
+  </body>
+</html>

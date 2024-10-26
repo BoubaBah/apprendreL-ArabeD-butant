@@ -1,0 +1,414 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Ahzab (Les Coalisés) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #e8f6f3;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      #battle-illustration {
+        width: 100%;
+        max-width: 400px;
+        height: 300px;
+        margin: 20px auto;
+        display: block;
+      }
+      .reflection-container {
+        background-color: #f9e79f;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-question {
+        font-weight: bold;
+        color: #34495e;
+        margin-bottom: 10px;
+      }
+      #reflection-input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #bdc3c7;
+      }
+      #reflection-submit {
+        background-color: #2ecc71;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #reflection-submit:hover {
+        background-color: #27ae60;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Ahzab (الأحزاب)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/033.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Ahzab - سورة الأحزاب</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="battle-illustration"
+        viewBox="0 0 400 300"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #87ceeb; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #e0f6ff; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+        <rect width="400" height="300" fill="url(#sky)" />
+        <path d="M0,300 Q100,250 200,300 T400,300" fill="#C2B280" />
+        <g id="medina">
+          <rect x="150" y="150" width="100" height="100" fill="#D2B48C" />
+          <polygon points="150,150 200,100 250,150" fill="#8B4513" />
+          <rect x="190" y="200" width="20" height="50" fill="#4A0E0E" />
+        </g>
+        <g id="army1">
+          <circle cx="50" cy="250" r="20" fill="#8B4513" />
+          <rect x="45" y="270" width="10" height="30" fill="#D2691E" />
+        </g>
+        <g id="army2">
+          <circle cx="350" cy="250" r="20" fill="#A52A2A" />
+          <rect x="345" y="270" width="10" height="30" fill="#CD5C5C" />
+        </g>
+      </svg>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate</h2>
+        <div class="interactive-item">
+          <h3>1. La Bataille des Coalisés</h3>
+          <p>
+            La sourate tire son nom de l'alliance des tribus contre les
+            musulmans à Médine, connue sous le nom de Bataille du Fossé.
+          </p>
+        </div>
+        <div class="interactive-item">
+          <h3>2. Statut du Prophète Muhammad</h3>
+          <p>
+            "Le Prophète a plus de droit sur les croyants qu'ils n'en ont sur
+            eux-mêmes..." (Verset 6)
+          </p>
+        </div>
+        <div class="interactive-item">
+          <h3>3. Règles sociales et familiales</h3>
+          <p>
+            La sourate aborde des questions telles que l'adoption, le divorce et
+            le comportement approprié envers les épouses du Prophète.
+          </p>
+        </div>
+        <div class="interactive-item">
+          <h3>4. Le rôle des femmes dans la société islamique</h3>
+          <p>
+            Elle inclut des directives spécifiques pour les femmes croyantes et
+            les épouses du Prophète.
+          </p>
+        </div>
+        <div class="interactive-item">
+          <h3>5. La confiance en Allah</h3>
+          <p>
+            "Et place ta confiance en Allah. Allah suffit comme protecteur."
+            (Verset 3)
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-container fade-in">
+        <h2>Réflexion personnelle</h2>
+        <p class="reflection-question">
+          Comment les enseignements de cette sourate sur la confiance en Allah
+          peuvent-ils s'appliquer à notre vie quotidienne moderne ?
+        </p>
+        <textarea
+          id="reflection-input"
+          rows="4"
+          placeholder="Partagez vos réflexions ici..."
+        ></textarea>
+        <button id="reflection-submit">Soumettre</button>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s32.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s34.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+        const reflectionInput = document.getElementById("reflection-input");
+        const reflectionSubmit = document.getElementById("reflection-submit");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Ahzab a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Ahzab a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Ahzab est terminée");
+        });
+
+        reflectionSubmit.addEventListener("click", function () {
+          const reflection = reflectionInput.value;
+          if (reflection) {
+            console.log("Réflexion soumise:", reflection);
+            alert("Merci pour votre réflexion ! Elle a été enregistrée.");
+            reflectionInput.value = "";
+          } else {
+            alert("Veuillez entrer une réflexion avant de soumettre.");
+          }
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/33"),
+              axios.get("https://api.alquran.cloud/v1/surah/33/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Animation for battle illustration
+        function animateBattle() {
+          const army1 = document.getElementById("army1");
+          const army2 = document.getElementById("army2");
+
+          let progress = 0;
+          const duration = 4000; // 4 seconds
+          const startTime = Date.now();
+
+          function animate() {
+            const currentTime = Date.now();
+            progress = (currentTime - startTime) / duration;
+
+            if (progress < 1) {
+              const x1 = 50 + 100 * Math.sin(progress * Math.PI);
+              const x2 = 350 - 100 * Math.sin(progress * Math.PI);
+              army1.setAttribute("transform", `translate(${x1 - 50}, 0)`);
+              army2.setAttribute("transform", `translate(${x2 - 350}, 0)`);
+
+              requestAnimationFrame(animate);
+            } else {
+              setTimeout(animateBattle, 1000); // Repeat after 1 second
+            }
+          }
+
+          animate();
+        }
+
+        animateBattle();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+    </script>
+  </body>
+</html>

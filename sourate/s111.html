@@ -1,0 +1,387 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Masad (Les Fibres) - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f4e8d9;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #8b4513;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(139, 69, 19, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #8b4513;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 400px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #d2b48c;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #cd853f;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #8b4513;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #cd853f;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #cd853f;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #8b4513;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #f8e8d8;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(205, 133, 63, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #cd853f;
+      }
+      .reflection-section {
+        background-color: #f8e8d8;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #cd853f;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #8b4513;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Masad (Les Fibres)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/111.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Masad - سورة المسد</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #ff9966; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #ff5e62; stop-opacity: 1" />
+          </linearGradient>
+          <pattern
+            id="palm-leaves"
+            x="0"
+            y="0"
+            width="50"
+            height="50"
+            patternUnits="userSpaceOnUse"
+          >
+            <path d="M25,0 Q50,25 25,50 Q0,25 25,0" fill="#2e8b57" />
+          </pattern>
+        </defs>
+
+        <!-- Desert background -->
+        <rect width="400" height="200" fill="url(#sky-gradient)" />
+
+        <!-- Sand dunes -->
+        <path
+          d="M0,150 Q100,100 200,150 T400,150 L400,200 L0,200 Z"
+          fill="#d2b48c"
+        />
+
+        <!-- Palm tree -->
+        <line
+          x1="100"
+          y1="150"
+          x2="100"
+          y2="80"
+          stroke="#8b4513"
+          stroke-width="10"
+        />
+        <circle cx="100" cy="80" r="30" fill="url(#palm-leaves)" />
+
+        <!-- Rope (Al-Masad) -->
+        <path
+          d="M250,50 Q300,75 350,50"
+          stroke="#8b4513"
+          stroke-width="5"
+          fill="none"
+        />
+        <path
+          d="M250,60 Q300,85 350,60"
+          stroke="#8b4513"
+          stroke-width="5"
+          fill="none"
+        />
+
+        <!-- Fire symbol -->
+        <g transform="translate(280,120) scale(0.5)">
+          <path d="M25,50 Q0,25 25,0 Q50,25 25,50" fill="#ff4500" />
+          <path d="M25,50 Q12.5,37.5 25,25 Q37.5,37.5 25,50" fill="#ffa500" />
+        </g>
+
+        <!-- Arabic text -->
+        <text
+          x="200"
+          y="30"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          سورة المسد
+        </text>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Al-Masad</h2>
+        <div class="theme-item" onclick="showReflection('opposition')">
+          <h3>1. Opposition à l'Islam</h3>
+          <p>L'histoire d'Abu Lahab et son opposition au message de l'Islam.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('consequences')">
+          <h3>2. Conséquences de l'hostilité</h3>
+          <p>
+            Les résultats de l'opposition et de l'hostilité envers la vérité.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('wealth')">
+          <h3>3. Futilité des richesses</h3>
+          <p>L'inutilité des richesses et du statut face au jugement divin.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('divine_justice')">
+          <h3>4. Justice divine</h3>
+          <p>
+            La certitude de la justice d'Allah envers ceux qui s'opposent à Sa
+            message.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('prophecy')">
+          <h3>5. Aspect prophétique</h3>
+          <p>
+            La nature prophétique de la sourate et sa réalisation dans
+            l'histoire.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Masad</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Al-Masad.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s110.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s112.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Masad a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Masad a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Masad est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/111"),
+              axios.get("https://api.alquran.cloud/v1/surah/111/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "opposition":
+            reflectionContent.innerHTML =
+              "La sourate Al-Masad illustre l'opposition féroce à laquelle le Prophète Muhammad a fait face, en particulier de la part de son oncle Abu Lahab et de sa femme. Cette histoire nous rappelle que la vérité et la justice peuvent souvent rencontrer une résistance, même de la part de ceux qui sont proches. Elle nous enseigne l'importance de rester ferme dans nos convictions face à l'adversité et de ne pas nous laisser décourager par l'opposition, aussi forte soit-elle.";
+            break;
+          case "consequences":
+            reflectionContent.innerHTML =
+              "Cette sourate met en lumière les conséquences de l'hostilité envers la vérité et le message divin. Elle montre que ceux qui s'opposent activement à la guidance d'Allah et cherchent à entraver Sa voie finiront par faire face à des conséquences sévères. C'est un rappel puissant que nos actions ont des répercussions, et que l'opposition à la vérité et à la justice peut mener à notre propre perte.";
+            break;
+          case "wealth":
+            reflectionContent.innerHTML =
+              "Al-Masad souligne la futilité des richesses et du statut social face au jugement d'Allah. Abu Lahab, malgré sa position élevée et sa richesse, ne peut échapper au châtiment divin. Cette sourate nous rappelle que les biens matériels et l'influence mondaine ne nous protégeront pas du jugement d'Allah. Elle nous encourage à chercher des valeurs plus durables et à ne pas être trompés par les apparences de succès dans ce monde.";
+            break;
+          case "divine_justice":
+            reflectionContent.innerHTML =
+              "La sourate Al-Masad affirme la certitude de la justice divine. Elle montre qu'Allah rend justice à ceux qui s'opposent obstinément à Son message et persécutent Ses messagers. C'est un rappel que, bien que la justice puisse sembler retardée dans ce monde, elle est inévitable dans l'au-delà. Cette sourate peut être une source de réconfort pour ceux qui font face à l'injustice, leur assurant que la justice divine prévaudra ultimement.";
+            break;
+          case "prophecy":
+            reflectionContent.innerHTML =
+              "Al-Masad a également un aspect prophétique significatif. Elle prédit le sort d'Abu Lahab et de sa femme, une prédiction qui s'est réalisée. Cet aspect renforce la véracité du message coranique et la mission prophétique de Muhammad. Il nous rappelle que les paroles d'Allah sont véridiques et que Ses promesses se réalisent toujours, que ce soit dans ce monde ou dans l'au-delà.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Al-Masad.";
+        }
+      }
+    </script>
+  </body>
+</html>

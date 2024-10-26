@@ -1,0 +1,426 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Kawthar (L'Abondance) - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 400px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #e8f4fc;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #3498db;
+      }
+      .reflection-section {
+        background-color: #e8f4fc;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #3498db;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Kawthar (L'Abondance)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/108.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Kawthar - سورة الكوثر</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #87ceeb; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #e0f6ff; stop-opacity: 1" />
+          </linearGradient>
+          <radialGradient
+            id="sun-gradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #ffffa1; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #ffd700; stop-opacity: 1" />
+          </radialGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="400" height="200" fill="url(#sky-gradient)" />
+
+        <!-- Sun -->
+        <circle cx="350" cy="50" r="30" fill="url(#sun-gradient)">
+          <animate
+            attributeName="cy"
+            from="50"
+            to="40"
+            dur="4s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Kawthar river -->
+        <path
+          d="M0 150 Q100 100 200 150 T400 150"
+          fill="none"
+          stroke="#4FC3F7"
+          stroke-width="20"
+        >
+          <animate
+            attributeName="d"
+            dur="10s"
+            repeatCount="indefinite"
+            values="M0 150 Q100 100 200 150 T400 150;
+                                 M0 150 Q100 200 200 150 T400 150;
+                                 M0 150 Q100 100 200 150 T400 150"
+          />
+        </path>
+
+        <!-- Water droplets -->
+        <g id="droplets">
+          <circle cx="100" cy="140" r="3" fill="#FFFFFF">
+            <animate
+              attributeName="cy"
+              from="140"
+              to="120"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="opacity"
+              from="1"
+              to="0"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="200" cy="140" r="3" fill="#FFFFFF">
+            <animate
+              attributeName="cy"
+              from="140"
+              to="120"
+              dur="2.5s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="opacity"
+              from="1"
+              to="0"
+              dur="2.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="300" cy="140" r="3" fill="#FFFFFF">
+            <animate
+              attributeName="cy"
+              from="140"
+              to="120"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="opacity"
+              from="1"
+              to="0"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        </g>
+
+        <!-- Arabic text for "Al-Kawthar" -->
+        <text
+          x="200"
+          y="30"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#3498db"
+          text-anchor="middle"
+        >
+          الكوثر
+        </text>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Al-Kawthar</h2>
+        <div class="theme-item" onclick="showReflection('divine_generosity')">
+          <h3>1. La Générosité Divine</h3>
+          <p>L'abondance et les bénédictions accordées par Allah.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('gratitude')">
+          <h3>2. Gratitude et Dévotion</h3>
+          <p>
+            L'importance de la reconnaissance envers Allah et de la pratique
+            religieuse.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('perseverance')">
+          <h3>3. Persévérance face à l'Adversité</h3>
+          <p>Le réconfort et l'encouragement face aux difficultés.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('sacrifice')">
+          <h3>4. Le Sacrifice comme Acte d'Adoration</h3>
+          <p>La signification profonde du sacrifice dans l'Islam.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('eternal_success')">
+          <h3>5. Le Succès Éternel</h3>
+          <p>La promesse d'un avenir prospère pour les croyants.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Kawthar</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Al-Kawthar.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s107.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s109.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Kawthar a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Kawthar a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Kawthar est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/108"),
+              axios.get("https://api.alquran.cloud/v1/surah/108/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "divine_generosity":
+            reflectionContent.innerHTML =
+              "La sourate Al-Kawthar s'ouvre sur une puissante affirmation de la générosité divine. Le terme 'Al-Kawthar' lui-même évoque l'abondance, souvent interprété comme référence à un fleuve paradisiaque ou à une abondance de biens spirituels. Cette ouverture rappelle aux croyants que Dieu est la source ultime de toute bonté et de toute bénédiction. Elle invite à la réflexion sur les innombrables dons que nous recevons quotidiennement, qu'ils soient matériels ou spirituels, et encourage une attitude de gratitude constante envers le Créateur. Cette perspective sur la générosité divine peut transformer notre approche de la vie, nous incitant à voir chaque instant comme une opportunité de reconnaître et d'apprécier les bienfaits divins.";
+            break;
+          case "gratitude":
+            reflectionContent.innerHTML =
+              "En réponse à l'abondance divine mentionnée dans le premier verset, la sourate Al-Kawthar appelle à la gratitude et à la dévotion. Le commandement de prier et de faire des sacrifices souligne l'importance de manifester notre reconnaissance non seulement par des paroles, mais aussi par des actes concrets d'adoration. Cette directive nous rappelle que la vraie gratitude se traduit par un engagement actif dans notre pratique religieuse. Elle nous invite à réfléchir sur la qualité de notre culte et sur la façon dont nous exprimons notre reconnaissance envers Dieu dans notre vie quotidienne. La gratitude, ainsi comprise, devient un puissant moteur de croissance spirituelle et de rapprochement avec le divin.";
+            break;
+          case "perseverance":
+            reflectionContent.innerHTML =
+              "Bien que brève, la sourate Al-Kawthar offre un profond message de réconfort et d'encouragement face à l'adversité. Elle a été révélée à un moment où le Prophète Muhammad faisait face à de nombreuses difficultés et critiques. En promettant l'abondance et en assurant que ce sont les ennemis du Prophète qui seront sans postérité, la sourate insuffle espoir et persévérance. Ce message reste pertinent pour tous les croyants confrontés à des défis. Il nous rappelle que les difficultés sont temporaires et que la persévérance dans la foi et les bonnes actions conduira ultimement à la victoire et à la bénédiction divine. Cette sourate nous encourage à maintenir notre confiance en Dieu même dans les moments les plus sombres.";
+            break;
+          case "sacrifice":
+            reflectionContent.innerHTML =
+              "Le deuxième verset de la sourate Al-Kawthar met en avant l'importance du sacrifice comme acte d'adoration. Dans le contexte islamique, le sacrifice ne se limite pas à l'offrande d'animaux lors de certaines célébrations, mais englobe le concept plus large de renoncement pour l'amour de Dieu. Cette notion de sacrifice nous invite à réfléchir sur ce que nous sommes prêts à offrir - que ce soit notre temps, nos ressources, ou nos désirs personnels - pour plaire à Dieu et servir Sa cause. Le sacrifice, ainsi compris, devient un moyen puissant de purification de l'âme et de renforcement de notre lien avec le Divin. Il nous rappelle que la vraie dévotion implique souvent de donner priorité aux commandements divins sur nos propres désirs.";
+            break;
+          case "eternal_success":
+            reflectionContent.innerHTML =
+              "La sourate Al-Kawthar se conclut sur une note de triomphe, affirmant que ce sont les ennemis du Prophète (et par extension, les ennemis de la vérité et de la justice) qui seront privés de postérité et de succès durable. Cette déclaration porte un message profond sur la nature du vrai succès dans la perspective islamique. Elle nous rappelle que le succès réel et durable n'est pas mesuré par les normes mondaines de richesse ou de statut, mais par notre relation avec Dieu et notre héritage spirituel. Cette promesse de succès éternel pour ceux qui suivent le chemin de la vérité et de la droiture est une source d'inspiration et de motivation. Elle nous encourage à fixer nos objectifs au-delà des récompenses immédiates de ce monde et à œuvrer pour un héritage spirituel qui perdurera bien après notre départ de ce monde.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Al-Kawthar.";
+        }
+      }
+    </script>
+  </body>
+</html>

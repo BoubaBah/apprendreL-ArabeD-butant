@@ -1,0 +1,445 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate At-Tariq (L'Astre Nocturne) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #0a192f;
+        color: #e0e0e0;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #64ffda;
+        text-align: center;
+      }
+      .container {
+        background-color: #112240;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #8892b0;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #233554;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #64ffda;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #8892b0;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #8892b0;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #64ffda;
+        color: #0a192f;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #45c89f;
+      }
+      .interactive-section {
+        background-color: #1d3557;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #233554;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #64ffda;
+      }
+      .reflection-section {
+        background-color: #1d3557;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #64ffda;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #8892b0;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #64ffda;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate At-Tariq (L'Astre Nocturne)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/086.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate At-Tariq - سورة الطارق</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 200 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #0a192f; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #112240; stop-opacity: 1" />
+          </linearGradient>
+          <radialGradient
+            id="star-gradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: white; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #64ffda; stop-opacity: 0" />
+          </radialGradient>
+        </defs>
+
+        <!-- Night sky background -->
+        <rect width="200" height="100" fill="url(#sky-gradient)" />
+
+        <!-- Stars -->
+        <g id="stars">
+          <circle cx="20" cy="15" r="0.5" fill="white">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="40" cy="25" r="0.5" fill="white">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="4s"
+              repeatCount="indefinite"
+              begin="1s"
+            />
+          </circle>
+          <circle cx="60" cy="10" r="0.5" fill="white">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3.5s"
+              repeatCount="indefinite"
+              begin="0.5s"
+            />
+          </circle>
+          <!-- Add more stars here -->
+        </g>
+
+        <!-- At-Tariq (The Night Star) -->
+        <g id="at-tariq">
+          <circle cx="100" cy="50" r="10" fill="url(#star-gradient)">
+            <animate
+              attributeName="r"
+              values="10;12;10"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="100" cy="50" r="2" fill="#64ffda">
+            <animate
+              attributeName="r"
+              values="2;3;2"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        </g>
+
+        <!-- Rays of light -->
+        <g id="rays" stroke="#64ffda" stroke-width="0.5">
+          <line x1="100" y1="50" x2="120" y2="30">
+            <animate
+              attributeName="x2"
+              values="120;125;120"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y2"
+              values="30;25;30"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </line>
+          <line x1="100" y1="50" x2="80" y2="30">
+            <animate
+              attributeName="x2"
+              values="80;75;80"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y2"
+              values="30;25;30"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </line>
+          <line x1="100" y1="50" x2="100" y2="20">
+            <animate
+              attributeName="y2"
+              values="20;15;20"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </line>
+        </g>
+
+        <!-- Arabic text for "At-Tariq" -->
+        <text
+          x="100"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#64ffda"
+          text-anchor="middle"
+        >
+          الطارق
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate At-Tariq</h2>
+        <div class="interactive-item" onclick="showReflection('night_star')">
+          <h3>1. L'Astre Nocturne (At-Tariq)</h3>
+          <p>Signification et symbolisme de l'astre nocturne dans le Coran.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('human_creation')"
+        >
+          <h3>2. La Création de l'Homme</h3>
+          <p>Réflexions sur l'origine et la nature de l'être humain.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('resurrection')">
+          <h3>3. La Résurrection</h3>
+          <p>Le concept de résurrection et de jugement dans l'Islam.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('divine_power')">
+          <h3>4. La Puissance d'Allah</h3>
+          <p>
+            Manifestations de la puissance divine dans la création et la
+            résurrection.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('quran_truth')">
+          <h3>5. La Vérité du Coran</h3>
+          <p>
+            L'affirmation de la vérité et de l'importance du message coranique.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate At-Tariq</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate At-Tariq.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s85.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s87.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate At-Tariq a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate At-Tariq a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate At-Tariq est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/86"),
+              axios.get("https://api.alquran.cloud/v1/surah/86/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "night_star":
+            reflectionContent.innerHTML =
+              "La sourate At-Tariq s'ouvre sur un serment par l'astre nocturne, At-Tariq, qui signifie littéralement 'celui qui frappe (à la porte) la nuit'. Cet astre est interprété par beaucoup comme étant une étoile brillante ou une planète visible la nuit. Son apparition soudaine dans le ciel nocturne est comparée à un visiteur nocturne, soulignant ainsi son caractère mystérieux et captivant. Cette image céleste sert d'introduction à des réflexions plus profondes sur la création et la puissance divine, invitant le lecteur à contempler les merveilles du ciel nocturne comme signes de la grandeur d'Allah.";
+            break;
+          case "human_creation":
+            reflectionContent.innerHTML =
+              "At-Tariq aborde la création de l'être humain d'une manière particulièrement évocatrice. Elle mentionne spécifiquement que l'homme est créé d'un liquide jaillissant, faisant référence au processus de reproduction humaine. Cette description directe de l'origine physique de l'homme sert à rappeler l'humilité de nos débuts et la merveille de notre création. Elle invite à réfléchir sur la complexité et la précision de la création divine, même dans les aspects les plus fondamentaux de la vie humaine. Ce thème renforce l'idée que chaque aspect de notre existence est un signe de la puissance et de la sagesse d'Allah.";
+            break;
+          case "resurrection":
+            reflectionContent.innerHTML =
+              "La sourate fait allusion à la résurrection en affirmant qu'Allah a le pouvoir de ramener l'homme à la vie. Cette affirmation est présentée comme une extension logique du pouvoir créateur d'Allah : s'Il peut créer l'homme une première fois à partir d'une simple goutte de liquide, Il peut certainement le ressusciter après la mort. Ce thème est central dans la croyance islamique, rappelant que notre existence ne se limite pas à cette vie terrestre. Il sert à la fois d'avertissement et de réconfort, rappelant la responsabilité de nos actions et la promesse d'une justice ultime dans l'au-delà.";
+            break;
+          case "divine_power":
+            reflectionContent.innerHTML =
+              "Tout au long de la sourate, la puissance d'Allah est un thème récurrent. De la création des cieux et de la terre à celle de l'être humain, en passant par la capacité de ressusciter les morts, At-Tariq souligne constamment l'omnipotence divine. Cette emphase sur la puissance d'Allah sert à inspirer l'émerveillement et la crainte respectueuse chez le croyant. Elle rappelle que rien n'est impossible pour Allah et que Sa volonté gouverne toute chose. Ce thème encourage la confiance en Allah et la soumission à Sa volonté, reconnaissant que notre existence et notre destin sont entre Ses mains toutes-puissantes.";
+            break;
+          case "quran_truth":
+            reflectionContent.innerHTML =
+              "La sourate se termine par une affirmation forte de la vérité et de l'importance du Coran. En le décrivant comme une 'parole décisive' et non comme une 'plaisanterie', At-Tariq souligne la gravité et la véracité du message coranique. Cette déclaration sert à renforcer la foi des croyants et à avertir ceux qui pourraient prendre le message à la légère. Elle invite à une réflexion sérieuse sur le contenu du Coran et à son application dans la vie quotidienne. Ce thème rappelle que le Coran n'est pas simplement un texte historique ou littéraire, mais une guidance divine avec des implications profondes pour la vie de chaque individu et pour l'humanité dans son ensemble.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate At-Tariq.";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,406 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Balad (La Cité) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #1a1a2e;
+        color: #e0e0e0;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #f9c74f;
+        text-align: center;
+      }
+      .container {
+        background-color: #16213e;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #b2b2b2;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #2c3e50;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #f9c74f;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #b2b2b2;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #b2b2b2;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #f9c74f;
+        color: #1a1a2e;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #f3b63a;
+      }
+      .interactive-section {
+        background-color: #0f3460;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #1e4d7b;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #f9c74f;
+      }
+      .reflection-section {
+        background-color: #0f3460;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #f9c74f;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #b2b2b2;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #f9c74f;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Balad (La Cité)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/090.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Balad - سورة البلد</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 200 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #0f3460; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #16213e; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+
+        <!-- Night sky background -->
+        <rect width="200" height="100" fill="url(#sky-gradient)" />
+
+        <!-- Stars -->
+        <g id="stars">
+          <circle cx="20" cy="15" r="0.5" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="40" cy="10" r="0.5" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="60" cy="20" r="0.5" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="160" cy="15" r="0.5" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="180" cy="10" r="0.5" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        </g>
+
+        <!-- Moon -->
+        <circle cx="170" cy="30" r="15" fill="#f9c74f" opacity="0.8">
+          <animate
+            attributeName="cy"
+            values="30;28;30"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- City silhouette -->
+        <path
+          d="M0 70 L20 70 L20 55 L30 55 L30 65 L40 65 L40 50 L50 50 L50 60 L60 60 L60 45 L70 45 L70 70 L80 70 L80 40 L90 40 L90 55 L100 55 L100 35 L110 35 L110 50 L120 50 L120 60 L130 60 L130 45 L140 45 L140 65 L150 65 L150 55 L160 55 L160 70 L170 70 L170 50 L180 50 L180 65 L190 65 L190 70 L200 70 L200 100 L0 100 Z"
+          fill="#2c3e50"
+        />
+
+        <!-- Kaaba representation -->
+        <rect
+          x="90"
+          y="60"
+          width="20"
+          height="20"
+          fill="#1a1a2e"
+          stroke="#f9c74f"
+          stroke-width="2"
+        />
+
+        <!-- Arabic text for "Al-Balad" -->
+        <text
+          x="100"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#f9c74f"
+          text-anchor="middle"
+        >
+          البلد
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Balad</h2>
+        <div class="interactive-item" onclick="showReflection('oath')">
+          <h3>1. Le Serment par la Cité</h3>
+          <p>Signification du serment par la cité sacrée (La Mecque).</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('human')">
+          <h3>2. La Condition Humaine</h3>
+          <p>Réflexion sur la création de l'homme et ses épreuves.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('path')">
+          <h3>3. Les Deux Voies</h3>
+          <p>Le choix entre la voie facile et la voie difficile.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('charity')">
+          <h3>4. L'Importance de la Charité</h3>
+          <p>Les actes de bonté envers les nécessiteux.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('faith')">
+          <h3>5. Les Gens de la Main Droite</h3>
+          <p>Description des croyants vertueux et leur récompense.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Balad</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Balad.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s89.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s91.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Balad a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Balad a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Balad est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/90"),
+              axios.get("https://api.alquran.cloud/v1/surah/90/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "oath":
+            reflectionContent.innerHTML =
+              "La sourate Al-Balad s'ouvre par un serment puissant par la cité sacrée, qui est généralement interprétée comme étant La Mecque. Ce serment souligne l'importance de cette ville dans l'histoire islamique et dans la vie du Prophète Muhammad (paix soit sur lui). Il attire l'attention sur la sacralité de ce lieu et son rôle central dans la foi islamique. Ce serment invite également à réfléchir sur la signification spirituelle des lieux saints et leur importance dans notre cheminement spirituel.";
+            break;
+          case "human":
+            reflectionContent.innerHTML =
+              "La sourate évoque ensuite la condition humaine, rappelant que l'homme a été créé dans la difficulté. Cette réflexion profonde sur la nature de l'existence humaine nous rappelle que les épreuves et les défis font partie intégrante de notre vie. Elle nous encourage à adopter une perspective plus large sur nos difficultés, les voyant comme des opportunités de croissance spirituelle et de développement personnel plutôt que comme de simples obstacles.";
+            break;
+          case "path":
+            reflectionContent.innerHTML =
+              "Al-Balad présente l'idée des deux voies : la voie facile et la voie difficile. La voie difficile est décrite comme celle qui implique des actes de bonté et de compassion envers les autres. Cette métaphore puissante nous invite à réfléchir sur nos choix quotidiens et à considérer les implications à long terme de nos actions. Elle nous encourage à choisir la voie de la vertu et de la compassion, même si elle peut sembler plus difficile à court terme.";
+            break;
+          case "charity":
+            reflectionContent.innerHTML =
+              "La sourate met un accent particulier sur l'importance de la charité et des actes de bonté envers les nécessiteux. Elle mentionne spécifiquement le fait de nourrir les orphelins et les pauvres. Ce thème souligne l'importance de la compassion et de la solidarité dans l'Islam, nous rappelant notre responsabilité collective envers les membres les plus vulnérables de la société. Il nous encourage à cultiver la générosité et l'empathie dans nos interactions quotidiennes.";
+            break;
+          case "faith":
+            reflectionContent.innerHTML =
+              "La sourate se termine par une description des 'gens de la main droite', qui sont ceux qui croient et s'encouragent mutuellement à la patience et à la compassion. Cette partie souligne l'importance de la foi combinée à l'action vertueuse. Elle nous rappelle que la vraie foi se manifeste non seulement dans nos croyances, mais aussi dans nos actions envers les autres et notre persévérance face aux défis. C'est un appel à vivre notre foi de manière active et engagée dans notre communauté.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Balad.";
+        }
+      }
+    </script>
+  </body>
+</html>

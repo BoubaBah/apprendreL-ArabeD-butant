@@ -1,0 +1,494 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Nuh (Noé) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Nuh (Noé)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/071.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Nuh - سورة نوح</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #1a237e; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #3f51b5; stop-opacity: 1" />
+          </linearGradient>
+          <filter id="rainFilter">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.01"
+              numOctaves="3"
+              result="noise"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="5"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="100" height="100" fill="url(#skyGradient)" />
+
+        <!-- Waves -->
+        <path d="M0 70 Q 25 60, 50 70 T 100 70" fill="#3498db" opacity="0.7">
+          <animate
+            attributeName="d"
+            values="M0 70 Q 25 60, 50 70 T 100 70;M0 70 Q 25 80, 50 70 T 100 70;M0 70 Q 25 60, 50 70 T 100 70"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </path>
+        <path d="M0 75 Q 25 65, 50 75 T 100 75" fill="#2980b9" opacity="0.7">
+          <animate
+            attributeName="d"
+            values="M0 75 Q 25 65, 50 75 T 100 75;M0 75 Q 25 85, 50 75 T 100 75;M0 75 Q 25 65, 50 75 T 100 75"
+            dur="7s"
+            repeatCount="indefinite"
+          />
+        </path>
+
+        <!-- Ark -->
+        <path
+          d="M30 65 Q 50 55, 70 65"
+          stroke="#8b4513"
+          stroke-width="2"
+          fill="none"
+        >
+          <animate
+            attributeName="d"
+            values="M30 65 Q 50 55, 70 65;M30 66 Q 50 56, 70 66;M30 65 Q 50 55, 70 65"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </path>
+
+        <!-- Rain -->
+        <g filter="url(#rainFilter)">
+          <line
+            x1="10"
+            y1="0"
+            x2="8"
+            y2="20"
+            stroke="#a9cce3"
+            stroke-width="0.5"
+          >
+            <animate
+              attributeName="y1"
+              values="0;100"
+              dur="1s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y2"
+              values="20;120"
+              dur="1s"
+              repeatCount="indefinite"
+            />
+          </line>
+          <line
+            x1="30"
+            y1="0"
+            x2="28"
+            y2="20"
+            stroke="#a9cce3"
+            stroke-width="0.5"
+          >
+            <animate
+              attributeName="y1"
+              values="0;100"
+              dur="1.5s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y2"
+              values="20;120"
+              dur="1.5s"
+              repeatCount="indefinite"
+            />
+          </line>
+          <line
+            x1="50"
+            y1="0"
+            x2="48"
+            y2="20"
+            stroke="#a9cce3"
+            stroke-width="0.5"
+          >
+            <animate
+              attributeName="y1"
+              values="0;100"
+              dur="0.8s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y2"
+              values="20;120"
+              dur="0.8s"
+              repeatCount="indefinite"
+            />
+          </line>
+          <line
+            x1="70"
+            y1="0"
+            x2="68"
+            y2="20"
+            stroke="#a9cce3"
+            stroke-width="0.5"
+          >
+            <animate
+              attributeName="y1"
+              values="0;100"
+              dur="1.2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y2"
+              values="20;120"
+              dur="1.2s"
+              repeatCount="indefinite"
+            />
+          </line>
+          <line
+            x1="90"
+            y1="0"
+            x2="88"
+            y2="20"
+            stroke="#a9cce3"
+            stroke-width="0.5"
+          >
+            <animate
+              attributeName="y1"
+              values="0;100"
+              dur="1.7s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y2"
+              values="20;120"
+              dur="1.7s"
+              repeatCount="indefinite"
+            />
+          </line>
+        </g>
+
+        <!-- Arabic text for "Nuh" -->
+        <text
+          x="50"
+          y="20"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#ffffff"
+          text-anchor="middle"
+          dominant-baseline="middle"
+        >
+          نوح
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Nuh</h2>
+        <div class="interactive-item" onclick="showReflection('mission')">
+          <h3>1. La Mission de Noé</h3>
+          <p>
+            Le rôle de Noé en tant que prophète et sa mission pour guider son
+            peuple.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('patience')">
+          <h3>2. La Patience et la Persévérance</h3>
+          <p>Les efforts constants de Noé malgré le rejet de son peuple.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('idolatry')">
+          <h3>3. L'Idolâtrie et ses Conséquences</h3>
+          <p>Les dangers de l'adoration des fausses divinités.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('punishment')">
+          <h3>4. Le Châtiment Divin</h3>
+          <p>Les conséquences du rejet persistant du message divin.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('supplication')">
+          <h3>5. La Supplication et le Pardon</h3>
+          <p>L'importance de la prière et de la demande de pardon.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Nuh</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Nuh.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s70.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s72.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Nuh a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log("La récitation de la sourate Nuh a été mise en pause");
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Nuh est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/71"),
+              axios.get("https://api.alquran.cloud/v1/surah/71/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "mission":
+            reflectionContent.innerHTML =
+              "La sourate Nuh met en lumière la mission divine confiée à Noé. En tant que prophète, Noé a été chargé de guider son peuple vers le droit chemin et de les avertir des conséquences de leur désobéissance. Cette mission illustre l'importance du rôle des prophètes dans la transmission du message divin et dans l'orientation des sociétés. Elle nous rappelle aussi la responsabilité qui incombe à chacun de nous de partager la vérité et de guider les autres vers le bien, même face à l'adversité.";
+            break;
+          case "patience":
+            reflectionContent.innerHTML =
+              "La patience et la persévérance de Noé face au rejet constant de son peuple sont des aspects centraux de cette sourate. Pendant des siècles, Noé a continué à appeler son peuple vers Allah, utilisant diverses méthodes et approches. Cette persévérance inébranlable nous enseigne l'importance de la constance dans notre foi et nos actions, même lorsque nous sommes confrontés à des difficultés ou à l'opposition. Elle nous rappelle que le succès dans la mission divine ne se mesure pas nécessairement par des résultats immédiats, mais par notre fidélité et notre endurance dans l'accomplissement de notre devoir.";
+            break;
+          case "idolatry":
+            reflectionContent.innerHTML =
+              "La sourate Nuh aborde le thème de l'idolâtrie et ses conséquences néfastes. Elle mentionne spécifiquement les noms de plusieurs idoles adorées par le peuple de Noé, soulignant ainsi la gravité de leur égarement. Cette emphase sur les dangers de l'idolâtrie nous invite à réfléchir sur les formes modernes d'attachement excessif à des objets, des personnes ou des idéologies qui peuvent nous détourner de la véritable adoration d'Allah. Elle nous rappelle l'importance de maintenir le monothéisme pur et de rester vigilants face aux influences qui pourraient compromettre notre relation avec le Divin.";
+            break;
+          case "punishment":
+            reflectionContent.innerHTML =
+              "Le châtiment divin qui s'abat sur le peuple de Noé est un thème important de cette sourate. Il est présenté comme la conséquence inévitable d'un rejet persistant du message divin et d'une obstination dans l'erreur. Cet aspect de la sourate nous rappelle la justice divine et l'importance de prendre au sérieux les avertissements divins. Il souligne également la responsabilité individuelle et collective dans l'acceptation ou le rejet de la vérité. Cette réflexion nous invite à examiner nos propres actions et attitudes, et à nous efforcer de rester sur le droit chemin pour éviter les conséquences négatives de nos choix.";
+            break;
+          case "supplication":
+            reflectionContent.innerHTML =
+              "La sourate se termine par une puissante supplication de Noé, mettant en évidence l'importance de la prière et de la demande de pardon. Noé implore Allah non seulement pour lui-même, mais aussi pour ses parents, pour les croyants, et même pour ceux qui entreront dans sa maison. Cette supplication universelle nous enseigne l'importance de l'intercession et de la compassion, même envers ceux qui ne croient pas encore. Elle souligne également le pouvoir de la prière comme moyen de communication avec Allah et comme source de force et de guidance dans les moments difficiles. Cette conclusion nous rappelle l'importance de nous tourner constamment vers Allah, de chercher Son pardon et Sa miséricorde, non seulement pour nous-mêmes mais aussi pour les autres.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Nuh.";
+        }
+      }
+    </script>
+  </body>
+</html>

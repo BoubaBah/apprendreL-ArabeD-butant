@@ -1,0 +1,435 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate 'Abasa (Il s'est renfrogné) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate 'Abasa (Il s'est renfrogné)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/080.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate 'Abasa - سورة عبس</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #87ceeb; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #1e90ff; stop-opacity: 1" />
+          </linearGradient>
+          <radialGradient
+            id="sunGradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #ffd700; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #ffa500; stop-opacity: 1" />
+          </radialGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="100" height="100" fill="url(#skyGradient)" />
+
+        <!-- Sun -->
+        <circle cx="75" cy="25" r="15" fill="url(#sunGradient)">
+          <animate
+            attributeName="opacity"
+            values="1;0.7;1"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Ground -->
+        <rect x="0" y="70" width="100" height="30" fill="#8B4513" />
+
+        <!-- Plants -->
+        <g id="plants">
+          <path
+            d="M10,70 Q15,60 20,70"
+            stroke="#228B22"
+            stroke-width="2"
+            fill="none"
+          />
+          <path
+            d="M30,70 Q35,55 40,70"
+            stroke="#228B22"
+            stroke-width="2"
+            fill="none"
+          />
+          <path
+            d="M50,70 Q55,58 60,70"
+            stroke="#228B22"
+            stroke-width="2"
+            fill="none"
+          />
+          <path
+            d="M70,70 Q75,62 80,70"
+            stroke="#228B22"
+            stroke-width="2"
+            fill="none"
+          />
+          <path
+            d="M90,70 Q95,65 100,70"
+            stroke="#228B22"
+            stroke-width="2"
+            fill="none"
+          />
+        </g>
+
+        <!-- Person (simplified representation) -->
+        <g id="person">
+          <circle cx="50" cy="55" r="5" fill="#FFA07A" />
+          <!-- Head -->
+          <line
+            x1="50"
+            y1="60"
+            x2="50"
+            y2="70"
+            stroke="#FFA07A"
+            stroke-width="2"
+          />
+          <!-- Body -->
+          <line
+            x1="45"
+            y1="65"
+            x2="55"
+            y2="65"
+            stroke="#FFA07A"
+            stroke-width="2"
+          />
+          <!-- Arms -->
+          <line
+            x1="50"
+            y1="70"
+            x2="45"
+            y2="80"
+            stroke="#FFA07A"
+            stroke-width="2"
+          />
+          <!-- Left leg -->
+          <line
+            x1="50"
+            y1="70"
+            x2="55"
+            y2="80"
+            stroke="#FFA07A"
+            stroke-width="2"
+          />
+          <!-- Right leg -->
+        </g>
+
+        <!-- Arabic text for "'Abasa" -->
+        <text
+          x="50"
+          y="95"
+          font-family="Scheherazade"
+          font-size="8"
+          fill="#FFFFFF"
+          text-anchor="middle"
+        >
+          عَبَسَ
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate 'Abasa</h2>
+        <div class="interactive-item" onclick="showReflection('equality')">
+          <h3>1. L'égalité devant Allah</h3>
+          <p>
+            L'importance de traiter tous les croyants avec respect et égalité.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('guidance')">
+          <h3>2. La guidance et l'avertissement</h3>
+          <p>Le rôle du Prophète dans la transmission du message divin.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('ingratitude')">
+          <h3>3. L'ingratitude de l'homme</h3>
+          <p>La tendance de l'être humain à oublier les bienfaits d'Allah.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('resurrection')">
+          <h3>4. La résurrection et le jugement</h3>
+          <p>Le rappel du Jour du Jugement et de ses conséquences.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('nature')">
+          <h3>5. Les signes dans la nature</h3>
+          <p>Les preuves de la puissance d'Allah dans la création.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate 'Abasa</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate 'Abasa.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s79.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s81.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate 'Abasa a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log("La récitation de la sourate 'Abasa a été mise en pause");
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate 'Abasa est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/80"),
+              axios.get("https://api.alquran.cloud/v1/surah/80/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "equality":
+            reflectionContent.innerHTML =
+              "La sourate 'Abasa commence par un incident impliquant le Prophète Muhammad (paix soit sur lui) et un aveugle pauvre nommé Abdullah ibn Umm Maktum. Cet épisode souligne l'importance de traiter tous les croyants avec un respect égal, indépendamment de leur statut social ou de leur richesse. Allah réprimande doucement le Prophète pour avoir accordé plus d'attention aux notables de La Mecque qu'à l'homme aveugle qui cherchait sincèrement la guidance. Cette leçon nous rappelle que la vraie valeur d'une personne aux yeux d'Allah réside dans sa piété et sa sincérité, et non dans son statut mondain. Elle nous encourage à être inclusifs dans notre da'wah (appel à l'Islam) et à ne jamais sous-estimer quiconque cherche la connaissance et la guidance.";
+            break;
+          case "guidance":
+            reflectionContent.innerHTML =
+              "La sourate 'Abasa clarifie le rôle du Prophète Muhammad (paix soit sur lui) dans la transmission du message divin. Elle souligne que sa mission principale est de transmettre le message et d'avertir, mais que le résultat final - la guidance ou l'égarement - dépend d'Allah. Cette révélation nous rappelle que notre responsabilité en tant que musulmans est de partager le message de l'Islam avec sagesse et belle exhortation, mais que nous ne pouvons pas forcer les autres à accepter la vérité. Elle nous encourage à être patients et persévérants dans notre da'wah, tout en reconnaissant que la guidance ultime vient d'Allah seul.";
+            break;
+          case "ingratitude":
+            reflectionContent.innerHTML =
+              "La sourate 'Abasa met en lumière l'ingratitude de l'être humain envers les nombreux bienfaits d'Allah. Elle nous rappelle comment Allah nous a créés, façonnés et pourvus, et pourtant, nous avons tendance à oublier ces faveurs et à nous montrer ingrats. Cette réflexion nous invite à développer une plus grande conscience des bénédictions d'Allah dans notre vie quotidienne et à cultiver un sentiment de gratitude constant. Elle nous encourage à reconnaître notre dépendance totale envers Allah et à exprimer notre reconnaissance non seulement par nos paroles, mais aussi par nos actions et notre obéissance à Ses commandements.";
+            break;
+          case "resurrection":
+            reflectionContent.innerHTML =
+              "La sourate 'Abasa contient un rappel puissant du Jour de la Résurrection et du Jugement. Elle décrit de manière vivante comment chaque personne sera préoccupée par son propre sort ce jour-là, oubliant même ses proches. Cette description saisissante nous pousse à réfléchir sur nos actions et nos priorités dans cette vie. Elle nous rappelle l'importance de nous préparer pour l'au-delà en accomplissant de bonnes actions, en évitant les péchés et en cherchant constamment le pardon d'Allah. Cette réflexion sur la résurrection et le jugement peut nous motiver à vivre une vie plus pieuse et à nous concentrer sur ce qui compte vraiment à long terme.";
+            break;
+          case "nature":
+            reflectionContent.innerHTML =
+              "La sourate 'Abasa attire notre attention sur les signes de la puissance et de la sagesse d'Allah dans la nature. Elle mentionne spécifiquement la création de la nourriture pour l'homme et les animaux, décrivant le processus de croissance des plantes. Cette réflexion sur la nature nous invite à observer et à méditer sur le monde qui nous entoure, à y voir les preuves de l'existence et de la grandeur d'Allah. Elle nous encourage à développer une plus grande appréciation pour la création d'Allah et à reconnaître notre responsabilité en tant que gardiens de la Terre. Cette conscience écologique, enracinée dans notre foi, peut nous inspirer à prendre mieux soin de l'environnement et à utiliser les ressources de la Terre de manière responsable et durable.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate 'Abasa.";
+        }
+      }
+    </script>
+  </body>
+</html>

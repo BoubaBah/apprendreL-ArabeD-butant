@@ -1,0 +1,460 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Fajr (L'Aube) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #1a1a2e;
+        color: #e0e0e0;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #f9c74f;
+        text-align: center;
+      }
+      .container {
+        background-color: #16213e;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #b2b2b2;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #2c3e50;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #f9c74f;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #b2b2b2;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #b2b2b2;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #f9c74f;
+        color: #1a1a2e;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #f3b63a;
+      }
+      .interactive-section {
+        background-color: #0f3460;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #1e4d7b;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #f9c74f;
+      }
+      .reflection-section {
+        background-color: #0f3460;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #f9c74f;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #b2b2b2;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #f9c74f;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Fajr (L'Aube)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/089.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Fajr - سورة الفجر</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 200 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #0f3460; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #16213e; stop-opacity: 1" />
+          </linearGradient>
+          <radialGradient
+            id="sun-gradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #f9c74f; stop-opacity: 1" />
+            <stop
+              offset="100%"
+              style="stop-color: #f3b63a; stop-opacity: 0.8"
+            />
+          </radialGradient>
+        </defs>
+
+        <!-- Night sky background -->
+        <rect width="200" height="100" fill="url(#sky-gradient)" />
+
+        <!-- Stars -->
+        <g id="stars">
+          <circle cx="20" cy="15" r="0.5" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="40" cy="10" r="0.5" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="60" cy="20" r="0.5" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="80" cy="15" r="0.5" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="4.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="100" cy="10" r="0.5" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3.8s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="120" cy="20" r="0.5" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="4.2s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="140" cy="15" r="0.5" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3.6s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="160" cy="10" r="0.5" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="4.7s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="180" cy="20" r="0.5" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3.9s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        </g>
+
+        <!-- Dawn (Al-Fajr) -->
+        <path
+          d="M0 70 Q100 40 200 70"
+          stroke="#f9c74f"
+          stroke-width="2"
+          fill="none"
+          opacity="0.5"
+        >
+          <animate
+            attributeName="d"
+            values="M0 70 Q100 40 200 70; M0 60 Q100 30 200 60; M0 70 Q100 40 200 70"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </path>
+
+        <!-- Sun (representing the dawn) -->
+        <circle cx="100" cy="70" r="10" fill="url(#sun-gradient)">
+          <animate
+            attributeName="cy"
+            values="75;70;75"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="r"
+            values="8;10;8"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Desert landscape -->
+        <path d="M0 80 Q50 70 100 85 T200 75 V100 H0 Z" fill="#d9a45e" />
+
+        <!-- Arabic text for "Al-Fajr" -->
+        <text
+          x="100"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#f9c74f"
+          text-anchor="middle"
+        >
+          الفجر
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Fajr</h2>
+        <div class="interactive-item" onclick="showReflection('oath')">
+          <h3>1. Le Serment de l'Aube</h3>
+          <p>Signification du serment par l'aube et d'autres éléments.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('history')">
+          <h3>2. Leçons de l'Histoire</h3>
+          <p>Exemples de civilisations passées et leur destin.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('test')">
+          <h3>3. L'Épreuve Divine</h3>
+          <p>La nature des tests d'Allah pour l'humanité.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('judgment')">
+          <h3>4. Le Jour du Jugement</h3>
+          <p>Description des événements du Jour de la Résurrection.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('soul')">
+          <h3>5. L'Âme Apaisée</h3>
+          <p>La récompense de l'âme en paix avec Allah.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Fajr</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Fajr.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s88.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s90.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Fajr a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Fajr a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Fajr est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/89"),
+              axios.get("https://api.alquran.cloud/v1/surah/89/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "oath":
+            reflectionContent.innerHTML =
+              "La sourate Al-Fajr s'ouvre par un serment puissant invoquant l'aube, les dix nuits (possiblement référant aux dix premiers jours de Dhul-Hijjah), le pair et l'impair, et la nuit quand elle s'écoule. Ce serment attire l'attention sur l'importance du temps et des cycles naturels créés par Allah. L'aube, en particulier, symbolise l'espoir, le renouveau et la transition de l'obscurité à la lumière, rappelant aux croyants la constante opportunité de renouveau spirituel et de retour vers Allah.";
+            break;
+          case "history":
+            reflectionContent.innerHTML =
+              "Al-Fajr rappelle l'histoire de peuples et de civilisations passés, notamment les 'Ad, les Thamud, et Pharaon. Ces exemples servent d'avertissement et de leçon pour l'humanité. Ils illustrent comment l'arrogance, la tyrannie et le rejet des messages divins ont conduit à la destruction de ces nations. Cette réflexion historique encourage les croyants à tirer des leçons du passé, à rester humbles et à adhérer aux enseignements divins pour éviter un sort similaire.";
+            break;
+          case "test":
+            reflectionContent.innerHTML =
+              "La sourate aborde la nature des épreuves divines, soulignant que Allah teste l'humanité de diverses manières. Elle mentionne comment les gens interprètent souvent mal ces tests, considérant l'abondance comme une faveur et la restriction comme une humiliation. Cette partie invite à une réflexion profonde sur la vraie nature des bénédictions et des épreuves, encourageant les croyants à maintenir une perspective équilibrée et à reconnaître que la vraie valeur réside dans la façon dont on répond à ces tests, plutôt que dans les circonstances matérielles.";
+            break;
+          case "judgment":
+            reflectionContent.innerHTML =
+              "Al-Fajr offre une description vivante du Jour du Jugement, évoquant comment l'Enfer sera amené ce jour-là, et comment l'homme se souviendra alors de ses actions, mais trop tard pour en tirer profit. Cette puissante imagerie du Jour de la Résurrection sert de rappel sérieux de la responsabilité individuelle et de l'importance de vivre une vie vertueuse. Elle encourage les croyants à rester vigilants et à se préparer constamment pour ce jour inévitable.";
+            break;
+          case "soul":
+            reflectionContent.innerHTML =
+              "La sourate se conclut par une belle description de l'âme apaisée (an-nafs al-mutma'innah), qui est invitée à retourner vers son Seigneur, satisfaite et agréée. Cette âme sereine représente l'état spirituel idéal du croyant, en paix avec Allah, avec soi-même et avec le décret divin. C'est une promesse réconfortante pour ceux qui ont vécu en accord avec les enseignements divins, offrant espoir et motivation pour persévérer dans la droiture malgré les difficultés de la vie.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Fajr.";
+        }
+      }
+    </script>
+  </body>
+</html>

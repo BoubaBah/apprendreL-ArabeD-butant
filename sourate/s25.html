@@ -1,0 +1,306 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Furqan (Le Discernement) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .key-themes {
+        margin-top: 30px;
+        background-color: #ecf0f1;
+        padding: 20px;
+        border-radius: 10px;
+      }
+      .theme {
+        margin-bottom: 15px;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+      .theme:hover {
+        transform: translateY(-5px);
+      }
+      .theme h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .furqan-meaning {
+        background-color: #3498db;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 30px;
+        text-align: center;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .fade-in {
+        animation: fadeIn 1s ease-in;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Furqan (الفرقان)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/025.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Furqan (Le Discernement) - سورة الفرقان</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <div class="furqan-meaning fade-in">
+        <h3>Signification d'Al-Furqan</h3>
+        <p>
+          "Al-Furqan" signifie "Le Discernement" ou "Le Critère". Ce nom fait
+          référence à la capacité du Coran à distinguer entre le vrai et le
+          faux, le bien et le mal, fournissant ainsi un guide moral et éthique
+          pour l'humanité.
+        </p>
+      </div>
+
+      <div class="key-themes">
+        <h2>Thèmes clés de la sourate</h2>
+        <div class="theme fade-in">
+          <h3>La Révélation Divine</h3>
+          <p>
+            La sourate met l'accent sur l'importance et l'authenticité de la
+            révélation coranique.
+          </p>
+        </div>
+        <div class="theme fade-in">
+          <h3>Unicité d'Allah</h3>
+          <p>Elle rappelle l'unicité d'Allah et réfute le polythéisme.</p>
+        </div>
+        <div class="theme fade-in">
+          <h3>Caractéristiques des croyants</h3>
+          <p>
+            La sourate décrit les qualités des vrais serviteurs du
+            Miséricordieux.
+          </p>
+        </div>
+        <div class="theme fade-in">
+          <h3>Signes dans la création</h3>
+          <p>
+            Elle attire l'attention sur les signes de la puissance d'Allah dans
+            la nature.
+          </p>
+        </div>
+        <div class="theme fade-in">
+          <h3>Avertissement et bonne nouvelle</h3>
+          <p>
+            La sourate contient des avertissements pour les mécréants et des
+            bonnes nouvelles pour les croyants.
+          </p>
+        </div>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s24.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s26.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Furqan a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Furqan a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Furqan est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/25"),
+              axios.get("https://api.alquran.cloud/v1/surah/25/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer pour l'animation des thèmes
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.style.opacity = 1;
+                entry.target.style.transform = "translateY(0)";
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document.querySelectorAll(".theme").forEach((theme) => {
+          theme.style.opacity = 0;
+          theme.style.transform = "translateY(20px)";
+          theme.style.transition = "opacity 0.5s, transform 0.5s";
+          observer.observe(theme);
+        });
+      });
+    </script>
+  </body>
+</html>

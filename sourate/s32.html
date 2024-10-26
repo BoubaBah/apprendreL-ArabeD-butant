@@ -1,0 +1,442 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Sourate As-Sajdah (La Prosternation) - Exploration Interactive
+    </title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #e8f6f3;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      #sajdah-animation {
+        width: 100%;
+        max-width: 400px;
+        height: 200px;
+        margin: 20px auto;
+        display: block;
+      }
+      .reflection-container {
+        background-color: #f9e79f;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-question {
+        font-weight: bold;
+        color: #34495e;
+        margin-bottom: 10px;
+      }
+      #reflection-input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #bdc3c7;
+      }
+      #reflection-submit {
+        background-color: #2ecc71;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #reflection-submit:hover {
+        background-color: #27ae60;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate As-Sajdah (السجدة)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/032.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate As-Sajdah - سورة السجدة</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="sajdah-animation"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect width="400" height="200" fill="#e8f6f3" />
+        <circle id="head" cx="200" cy="50" r="30" fill="#3498db" />
+        <path
+          id="body"
+          d="M200 80 L200 150"
+          stroke="#3498db"
+          stroke-width="10"
+          stroke-linecap="round"
+        />
+        <path
+          id="arms"
+          d="M170 100 Q200 120 230 100"
+          stroke="#3498db"
+          stroke-width="8"
+          stroke-linecap="round"
+          fill="none"
+        />
+        <path
+          id="legs"
+          d="M180 150 Q200 180 220 150"
+          stroke="#3498db"
+          stroke-width="8"
+          stroke-linecap="round"
+          fill="none"
+        />
+        <rect
+          id="prayer-mat"
+          x="100"
+          y="180"
+          width="200"
+          height="20"
+          fill="#e74c3c"
+          rx="5"
+          ry="5"
+        />
+      </svg>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate</h2>
+        <div class="interactive-item">
+          <h3>1. La création de l'univers</h3>
+          <p>
+            "Allah est Celui qui a créé les cieux et la terre et ce qui est
+            entre eux en six jours puis Il S'est établi sur le Trône..." (Verset
+            4)
+          </p>
+        </div>
+        <div class="interactive-item">
+          <h3>2. Le Jour du Jugement</h3>
+          <p>
+            "Puis Il organisera vos affaires du ciel à la terre, puis elles
+            remonteront vers Lui en un jour équivalant à mille ans de votre
+            calcul." (Verset 5)
+          </p>
+        </div>
+        <div class="interactive-item">
+          <h3>3. La création de l'homme</h3>
+          <p>
+            "Et Il a commencé la création de l'homme à partir de l'argile..."
+            (Verset 7)
+          </p>
+        </div>
+        <div class="interactive-item">
+          <h3>4. La résurrection</h3>
+          <p>
+            "Et ils disent: 'Quand nous serons perdus dans la terre,
+            redeviendrons-nous une création nouvelle?'..." (Verset 10)
+          </p>
+        </div>
+        <div class="interactive-item">
+          <h3>5. Les caractéristiques des croyants</h3>
+          <p>
+            "Seuls croient en Nos versets ceux qui, lorsqu'on les leur rappelle,
+            tombent prosternés et, par des louanges à leur Seigneur, célèbrent
+            Sa gloire et ne s'enflent pas d'orgueil." (Verset 15)
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-container fade-in">
+        <h2>Réflexion personnelle</h2>
+        <p class="reflection-question">
+          Comment la description de la création et de la résurrection dans cette
+          sourate influence-t-elle votre perspective sur la vie ?
+        </p>
+        <textarea
+          id="reflection-input"
+          rows="4"
+          placeholder="Partagez vos réflexions ici..."
+        ></textarea>
+        <button id="reflection-submit">Soumettre</button>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s31.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s33.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+        const reflectionInput = document.getElementById("reflection-input");
+        const reflectionSubmit = document.getElementById("reflection-submit");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate As-Sajdah a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate As-Sajdah a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate As-Sajdah est terminée");
+        });
+
+        reflectionSubmit.addEventListener("click", function () {
+          const reflection = reflectionInput.value;
+          if (reflection) {
+            console.log("Réflexion soumise:", reflection);
+            alert("Merci pour votre réflexion ! Elle a été enregistrée.");
+            reflectionInput.value = "";
+          } else {
+            alert("Veuillez entrer une réflexion avant de soumettre.");
+          }
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/32"),
+              axios.get("https://api.alquran.cloud/v1/surah/32/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Animation for sajdah
+        function animateSajdah() {
+          const head = document.getElementById("head");
+          const body = document.getElementById("body");
+          const arms = document.getElementById("arms");
+          const legs = document.getElementById("legs");
+
+          let progress = 0;
+          const duration = 2000; // 2 seconds
+          const startTime = Date.now();
+
+          function animate() {
+            const currentTime = Date.now();
+            progress = (currentTime - startTime) / duration;
+
+            if (progress < 1) {
+              const y = 50 + 100 * Math.sin(progress * Math.PI);
+              head.setAttribute("cy", y);
+              body.setAttribute("d", `M200 ${y + 30} L200 150`);
+              arms.setAttribute(
+                "d",
+                `M170 ${y + 50} Q200 ${y + 70} 230 ${y + 50}`
+              );
+              legs.setAttribute(
+                "d",
+                `M180 150 Q200 ${180 - 30 * progress} 220 150`
+              );
+
+              requestAnimationFrame(animate);
+            } else {
+              setTimeout(animateSajdah, 2000); // Repeat after 2 seconds
+            }
+          }
+
+          animate();
+        }
+
+        animateSajdah();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+    </script>
+  </body>
+</html>

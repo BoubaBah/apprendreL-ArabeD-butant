@@ -1,0 +1,460 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Muzzammil (L'Enveloppé) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Muzzammil (L'Enveloppé)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/073.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Muzzammil - سورة المزمل</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #1a237e; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #3949ab; stop-opacity: 1" />
+          </linearGradient>
+          <radialGradient
+            id="moonGlow"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #ffffff; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #f5f5f5; stop-opacity: 0" />
+          </radialGradient>
+          <filter id="starGlow">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" />
+          </filter>
+        </defs>
+
+        <!-- Night sky background -->
+        <rect width="100" height="100" fill="url(#skyGradient)" />
+
+        <!-- Stars -->
+        <g id="stars">
+          <circle
+            cx="10"
+            cy="15"
+            r="0.5"
+            fill="#ffffff"
+            filter="url(#starGlow)"
+          >
+            <animate
+              attributeName="opacity"
+              values="0.5;1;0.5"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle
+            cx="25"
+            cy="10"
+            r="0.3"
+            fill="#ffffff"
+            filter="url(#starGlow)"
+          >
+            <animate
+              attributeName="opacity"
+              values="0.5;1;0.5"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle
+            cx="40"
+            cy="20"
+            r="0.4"
+            fill="#ffffff"
+            filter="url(#starGlow)"
+          >
+            <animate
+              attributeName="opacity"
+              values="0.5;1;0.5"
+              dur="3.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle
+            cx="60"
+            cy="15"
+            r="0.3"
+            fill="#ffffff"
+            filter="url(#starGlow)"
+          >
+            <animate
+              attributeName="opacity"
+              values="0.5;1;0.5"
+              dur="4.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle
+            cx="75"
+            cy="25"
+            r="0.4"
+            fill="#ffffff"
+            filter="url(#starGlow)"
+          >
+            <animate
+              attributeName="opacity"
+              values="0.5;1;0.5"
+              dur="3.7s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle
+            cx="90"
+            cy="10"
+            r="0.3"
+            fill="#ffffff"
+            filter="url(#starGlow)"
+          >
+            <animate
+              attributeName="opacity"
+              values="0.5;1;0.5"
+              dur="4.2s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        </g>
+
+        <!-- Moon -->
+        <circle cx="75" cy="25" r="15" fill="#f5f5f5" />
+        <circle cx="75" cy="25" r="16" fill="url(#moonGlow)" opacity="0.7" />
+
+        <!-- Silhouette of a person wrapped in a cloak -->
+        <path d="M30 80 Q50 60 70 80 L65 90 H35 Z" fill="#2c3e50" />
+        <path d="M45 70 Q50 60 55 70 L53 75 H47 Z" fill="#34495e" />
+
+        <!-- Arabic text for "Al-Muzzammil" -->
+        <text
+          x="50"
+          y="40"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#ffffff"
+          text-anchor="middle"
+          dominant-baseline="middle"
+        >
+          المزمل
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Muzzammil</h2>
+        <div class="interactive-item" onclick="showReflection('night-prayer')">
+          <h3>1. La Prière Nocturne</h3>
+          <p>
+            L'importance de la prière de nuit (Qiyam al-Layl) et ses bénéfices
+            spirituels.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('quran-recitation')"
+        >
+          <h3>2. La Récitation du Coran</h3>
+          <p>L'importance de réciter le Coran avec attention et réflexion.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('patience')">
+          <h3>3. La Patience</h3>
+          <p>
+            L'importance de la patience face aux difficultés et aux opposants.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('prophetic-mission')"
+        >
+          <h3>4. La Mission Prophétique</h3>
+          <p>
+            Le rôle et les responsabilités du Prophète Muhammad (paix soit sur
+            lui).
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('charity')">
+          <h3>5. La Charité et la Purification</h3>
+          <p>L'importance de la charité et de la purification de l'âme.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Muzzammil</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Muzzammil.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s72.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s74.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Muzzammil a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Muzzammil a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Muzzammil est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/73"),
+              axios.get("https://api.alquran.cloud/v1/surah/73/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "night-prayer":
+            reflectionContent.innerHTML =
+              "La sourate Al-Muzzammil met l'accent sur l'importance de la prière nocturne (Qiyam al-Layl). Elle encourage le Prophète Muhammad (paix soit sur lui) et, par extension, les croyants, à se lever la nuit pour prier et réciter le Coran. Cette pratique est présentée comme un moyen de renforcer la connexion spirituelle avec Allah, de purifier l'âme et de préparer le cœur à recevoir la révélation divine. La prière nocturne est décrite comme un moment de tranquillité et de concentration intense, propice à une réflexion profonde et à une communion intime avec le Créateur. Cette pratique nous rappelle l'importance de consacrer du temps à notre développement spirituel, même lorsque le monde autour de nous est endormi.";
+            break;
+          case "quran-recitation":
+            reflectionContent.innerHTML =
+              "La sourate souligne l'importance de réciter le Coran avec attention et réflexion. Elle encourage une récitation lente et mesurée (tartil) qui permet une compréhension plus profonde du message divin. Cette approche de la récitation du Coran n'est pas seulement un exercice de lecture, mais une forme de méditation active sur les paroles d'Allah. Elle invite les croyants à s'immerger dans le texte sacré, à réfléchir sur ses significations et à laisser ses enseignements imprégner leur cœur et leur esprit. Cette pratique nous rappelle que le Coran est plus qu'un simple texte ; c'est une source de guidance, de réconfort et d'illumination spirituelle qui mérite notre attention et notre réflexion les plus profondes.";
+            break;
+          case "patience":
+            reflectionContent.innerHTML =
+              "La patience face aux difficultés et aux opposants est un thème central de cette sourate. Elle encourage le Prophète (paix soit sur lui) à supporter patiemment les railleries et l'opposition qu'il rencontre dans sa mission. Cette leçon s'étend à tous les croyants, nous rappelant que la patience est une vertu essentielle dans la vie d'un musulman. La sourate nous enseigne que les épreuves et les oppositions font partie du chemin de la foi et que la patience est la clé pour les surmonter. Elle nous rappelle que la victoire ultime appartient à Allah et à ceux qui restent fermes dans leur foi, malgré les défis. Cette patience n'est pas une résignation passive, mais une forme de résistance active et de confiance en Allah.";
+            break;
+          case "prophetic-mission":
+            reflectionContent.innerHTML =
+              "La sourate Al-Muzzammil aborde le rôle et les responsabilités du Prophète Muhammad (paix soit sur lui) dans sa mission prophétique. Elle souligne l'importance de sa préparation spirituelle pour porter le poids de la révélation et guider sa communauté. Cette sourate nous rappelle que le leadership spirituel exige une discipline personnelle rigoureuse et une connexion profonde avec Allah. Elle nous invite à réfléchir sur nos propres responsabilités en tant que porteurs du message de l'Islam dans nos communautés. Bien que nous ne soyons pas prophètes, nous avons tous un rôle à jouer dans la transmission et la mise en pratique des enseignements islamiques, ce qui nécessite une préparation et un engagement constants.";
+            break;
+          case "charity":
+            reflectionContent.innerHTML =
+              "La sourate met également l'accent sur l'importance de la charité et de la purification de l'âme. Elle encourage les croyants à donner généreusement de leurs biens pour la cause d'Allah. Cette charité est présentée non seulement comme un acte de générosité envers les autres, mais aussi comme un moyen de purification personnelle et de croissance spirituelle. La sourate nous rappelle que nos possessions matérielles sont un test et que la vraie richesse réside dans la générosité et la compassion envers les autres. Elle nous invite à réfléchir sur notre attachement aux biens de ce monde et à cultiver un esprit de partage et de solidarité. Cette pratique de la charité est présentée comme un investissement pour l'au-delà, nous rappelant que nos actions dans ce monde ont des conséquences éternelles.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Muzzammil.";
+        }
+      }
+    </script>
+  </body>
+</html>

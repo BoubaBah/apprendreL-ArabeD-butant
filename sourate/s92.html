@@ -1,0 +1,459 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Lail (La Nuit) - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #0f1624;
+        color: #e0e0e0;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #4a90e2;
+        text-align: center;
+      }
+      .container {
+        background-color: #1a2639;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #b2b2b2;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Amiri", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #2c3e50;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #4a90e2;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #b2b2b2;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #b2b2b2;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #4a90e2;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #357abd;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #4a90e2;
+        border-radius: 5px;
+      }
+      .theme-section {
+        background-color: #1e2a4a;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #2c3e50;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(74, 144, 226, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #4a90e2;
+      }
+      .reflection-section {
+        background-color: #1e2a4a;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #4a90e2;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #b2b2b2;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Amiri:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Lail (La Nuit)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/092.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Lail - سورة الليل</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 200 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #0f1624; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #1a2639; stop-opacity: 1" />
+          </linearGradient>
+          <radialGradient
+            id="moon-gradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #ffffff; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #e0e0e0; stop-opacity: 1" />
+          </radialGradient>
+        </defs>
+
+        <!-- Night sky background -->
+        <rect width="200" height="100" fill="url(#sky-gradient)" />
+
+        <!-- Stars -->
+        <g id="stars">
+          <circle cx="20" cy="15" r="1" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="40" cy="30" r="1" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="60" cy="10" r="1" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="80" cy="25" r="1" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="100" cy="15" r="1" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="4.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="120" cy="30" r="1" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3.8s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="140" cy="20" r="1" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="4.2s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="160" cy="35" r="1" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3.6s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="180" cy="25" r="1" fill="#ffffff">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="4.8s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        </g>
+
+        <!-- Moon -->
+        <circle cx="150" cy="30" r="15" fill="url(#moon-gradient)">
+          <animate
+            attributeName="cy"
+            values="30;28;30"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Crescent shadow -->
+        <path d="M165,30 a15,15 0 0,0 0,-30 a12,12 0 0,1 0,30" fill="#1a2639">
+          <animate
+            attributeName="d"
+            values="M165,30 a15,15 0 0,0 0,-30 a12,12 0 0,1 0,30;M165,28 a15,15 0 0,0 0,-28 a12,12 0 0,1 0,28;M165,30 a15,15 0 0,0 0,-30 a12,12 0 0,1 0,30"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </path>
+
+        <!-- Night landscape -->
+        <path
+          d="M0 70 Q 40 60 80 65 T 160 60 T 200 70 L 200 100 L 0 100 Z"
+          fill="#2c3e50"
+        />
+
+        <!-- Arabic text for "Al-Lail" -->
+        <text
+          x="100"
+          y="95"
+          font-family="Amiri"
+          font-size="10"
+          fill="#4a90e2"
+          text-anchor="middle"
+        >
+          الليل
+        </text>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Al-Lail</h2>
+        <div class="theme-item" onclick="showReflection('contrast')">
+          <h3>1. Contraste entre la nuit et le jour</h3>
+          <p>
+            Exploration du symbolisme de la nuit et du jour dans le contexte
+            spirituel.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('diversity')">
+          <h3>2. Diversité des efforts humains</h3>
+          <p>
+            Réflexion sur les différentes voies que les gens choisissent dans la
+            vie.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('guidance')">
+          <h3>3. La guidance divine</h3>
+          <p>L'importance de la guidance d'Allah dans la vie du croyant.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('charity')">
+          <h3>4. La charité et la générosité</h3>
+          <p>
+            Les vertus et les récompenses associées à la charité et à la
+            générosité.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('accountability')">
+          <h3>5. La responsabilité individuelle</h3>
+          <p>
+            L'accent mis sur la responsabilité personnelle dans les choix de
+            vie.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Lail</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Al-Lail.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s91.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s93.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Lail a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Lail a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Lail est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/92"),
+              axios.get("https://api.alquran.cloud/v1/surah/92/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "contrast":
+            reflectionContent.innerHTML =
+              "La sourate Al-Lail s'ouvre sur un serment puissant évoquant le contraste entre la nuit et le jour. Ce parallèle symbolique entre l'obscurité et la lumière sert de métaphore pour illustrer les différentes voies que les êtres humains peuvent emprunter dans leur vie spirituelle. La nuit peut représenter l'ignorance, le doute ou l'égarement, tandis que le jour symbolise la guidance, la connaissance et la foi. Cette dualité nous rappelle que chaque individu a le choix entre suivre le chemin de la lumière ou rester dans l'obscurité spirituelle.";
+            break;
+          case "diversity":
+            reflectionContent.innerHTML =
+              "La sourate met en lumière la diversité des efforts humains, soulignant que les gens agissent de manières différentes. Certains choisissent la voie de la piété et de la générosité, tandis que d'autres s'orientent vers l'avarice et le matérialisme. Cette diversité des comportements humains nous rappelle la liberté de choix accordée par Allah à l'humanité. Elle nous invite à réfléchir sur nos propres actions et motivations, et à évaluer si elles sont en harmonie avec les valeurs spirituelles et morales enseignées par l'Islam.";
+            break;
+          case "guidance":
+            reflectionContent.innerHTML =
+              "La sourate Al-Lail affirme clairement que la guidance vient d'Allah. Elle souligne que c'est la responsabilité de Dieu de guider l'humanité, mais que c'est à chaque individu de choisir d'accepter ou de rejeter cette guidance. Cette notion rappelle l'importance de rechercher activement la guidance divine dans notre vie quotidienne, à travers la prière, la réflexion sur le Coran, et la pratique des enseignements islamiques. Elle nous encourage également à être reconnaissants pour la guidance reçue et à partager cette lumière avec les autres.";
+            break;
+          case "charity":
+            reflectionContent.innerHTML =
+              "Un thème central de la sourate est l'importance de la charité et de la générosité. Elle décrit les vertus de ceux qui donnent de leurs biens pour la cause d'Allah, cherchant uniquement Sa satisfaction. La sourate promet que ces actes de générosité mèneront à la facilité et au bonheur dans cette vie et dans l'au-delà. Cette emphase sur la charité nous rappelle l'importance de partager nos ressources avec ceux qui sont dans le besoin, non seulement pour leur bénéfice, mais aussi pour notre propre croissance spirituelle et notre purification intérieure.";
+            break;
+          case "accountability":
+            reflectionContent.innerHTML =
+              "La sourate Al-Lail met fortement l'accent sur la responsabilité individuelle. Elle affirme que chaque personne sera responsable de ses propres actions et choix. Ce principe d'accountability personnelle est fondamental dans l'Islam. Il nous rappelle que nous sommes les architectes de notre propre destin spirituel et que nos actions dans cette vie auront des conséquences dans l'au-delà. Cette réflexion nous encourage à être vigilants dans nos choix quotidiens, à cultiver la conscience de Dieu (taqwa), et à nous efforcer constamment d'agir de manière juste et vertueuse.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Al-Lail.";
+        }
+      }
+    </script>
+  </body>
+</html>

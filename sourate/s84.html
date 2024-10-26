@@ -1,0 +1,394 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Inshiqaq (La Déchirure) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Inshiqaq (La Déchirure)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/084.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Inshiqaq - سورة الانشقاق</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 200 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #3498db; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #2c3e50; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="200" height="100" fill="url(#sky-gradient)" />
+
+        <!-- Stars -->
+        <g id="stars">
+          <circle cx="20" cy="15" r="1" fill="white">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="40" cy="25" r="1" fill="white">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="4s"
+              repeatCount="indefinite"
+              begin="1s"
+            />
+          </circle>
+          <circle cx="60" cy="10" r="1" fill="white">
+            <animate
+              attributeName="opacity"
+              values="0;1;0"
+              dur="3.5s"
+              repeatCount="indefinite"
+              begin="0.5s"
+            />
+          </circle>
+          <!-- Add more stars as needed -->
+        </g>
+
+        <!-- Moon -->
+        <circle cx="150" cy="30" r="15" fill="#f1c40f" />
+
+        <!-- Sky splitting animation -->
+        <path
+          d="M0,50 Q100,70 200,50"
+          stroke="white"
+          stroke-width="2"
+          fill="none"
+        >
+          <animate
+            attributeName="d"
+            values="M0,50 Q100,70 200,50;
+                                 M0,50 Q100,30 200,50;
+                                 M0,50 Q100,70 200,50"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </path>
+
+        <!-- Arabic text for "Al-Inshiqaq" -->
+        <text
+          x="100"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#FFFFFF"
+          text-anchor="middle"
+        >
+          الانشقاق
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Inshiqaq</h2>
+        <div class="interactive-item" onclick="showReflection('sky_split')">
+          <h3>1. Le ciel se fend</h3>
+          <p>Description des signes cosmiques du Jour du Jugement.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('accountability')"
+        >
+          <h3>2. La reddition des comptes</h3>
+          <p>Chacun devra rendre compte de ses actions.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('book_of_deeds')">
+          <h3>3. Le Livre des actions</h3>
+          <p>Évocation du registre où sont consignées les actions de chacun.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('stages_of_life')"
+        >
+          <h3>4. Les étapes de la vie</h3>
+          <p>Mention des différentes phases que traverse l'homme.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('afterlife')">
+          <h3>5. La vie après la mort</h3>
+          <p>
+            Description du sort des croyants et des mécréants dans l'au-delà.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Inshiqaq</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Inshiqaq.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s83.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s85.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Inshiqaq a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Inshiqaq a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Inshiqaq est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/84"),
+              axios.get("https://api.alquran.cloud/v1/surah/84/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "sky_split":
+            reflectionContent.innerHTML =
+              "La sourate Al-Inshiqaq s'ouvre sur une puissante image du ciel qui se fend, symbolisant le bouleversement cosmique qui marquera le Jour du Jugement. Cette description saisissante nous rappelle la fragilité de notre monde et la toute-puissance d'Allah. Elle nous invite à réfléchir sur notre place dans l'univers et à prendre conscience de la temporalité de notre existence terrestre face à l'éternité de l'au-delà.";
+            break;
+          case "accountability":
+            reflectionContent.innerHTML =
+              "Un thème central de cette sourate est la reddition des comptes. Chaque individu devra faire face à ses actions passées et en assumer la responsabilité. Cette réalité nous encourage à vivre notre vie de manière consciente, en pesant chacun de nos actes et en nous efforçant constamment de faire le bien. C'est un rappel puissant que nos choix quotidiens ont des conséquences éternelles.";
+            break;
+          case "book_of_deeds":
+            reflectionContent.innerHTML =
+              "La sourate évoque le Livre des actions, un registre où toutes nos actions sont consignées. Cette métaphore souligne l'importance de chaque acte, parole et intention dans notre vie. Elle nous invite à réfléchir sur ce que nous inscrivons dans ce livre jour après jour, et à nous efforcer de le remplir d'actes de bonté, de compassion et d'obéissance à Allah.";
+            break;
+          case "stages_of_life":
+            reflectionContent.innerHTML =
+              "Al-Inshiqaq fait allusion aux différentes étapes de la vie humaine, de la naissance à la mort, en passant par les luttes et les efforts de l'existence. Cette réflexion sur le parcours de la vie nous rappelle la nature transitoire de notre séjour sur terre et nous encourage à utiliser sagement le temps qui nous est imparti pour nous préparer à la vie éternelle.";
+            break;
+          case "afterlife":
+            reflectionContent.innerHTML =
+              "La sourate décrit le sort différent qui attend les croyants et les mécréants dans l'au-delà. Cette description sert à la fois d'avertissement et d'encouragement. Elle nous rappelle que nos actions ont des conséquences éternelles et nous motive à persévérer dans la foi et les bonnes œuvres, malgré les difficultés de la vie terrestre. C'est un appel à garder une perspective éternelle dans nos choix quotidiens.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Inshiqaq.";
+        }
+      }
+    </script>
+  </body>
+</html>

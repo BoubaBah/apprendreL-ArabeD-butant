@@ -1,0 +1,397 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Mumtahanah (L'Éprouvée) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Mumtahanah (L'Éprouvée)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/060.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Mumtahanah - سورة الممتحنة</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #87ceeb; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #e6e6fa; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="100" height="100" fill="url(#sky)" />
+
+        <!-- Sun -->
+        <circle cx="80" cy="20" r="8" fill="#FFD700">
+          <animate
+            attributeName="cy"
+            values="20;18;20"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Desert landscape -->
+        <path d="M0 70 Q25 60 50 70 T100 70 V100 H0 Z" fill="#D2B48C" />
+
+        <!-- Symbolic representation of testing/examination -->
+        <g id="balance-scale">
+          <line
+            x1="50"
+            y1="40"
+            x2="50"
+            y2="60"
+            stroke="#2c3e50"
+            stroke-width="2"
+          />
+          <line
+            x1="35"
+            y1="60"
+            x2="65"
+            y2="60"
+            stroke="#2c3e50"
+            stroke-width="2"
+          />
+          <circle cx="35" cy="65" r="5" fill="#3498db" />
+          <circle cx="65" cy="65" r="5" fill="#e74c3c" />
+          <animateTransform
+            attributeName="transform"
+            attributeType="XML"
+            type="rotate"
+            from="-5 50 60"
+            to="5 50 60"
+            dur="3s"
+            repeatCount="indefinite"
+            additive="sum"
+          />
+        </g>
+
+        <!-- Arabic text for "Al-Mumtahanah" -->
+        <text
+          x="50"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#2c3e50"
+          text-anchor="middle"
+        >
+          الممتحنة
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Mumtahanah</h2>
+        <div class="interactive-item" onclick="showReflection('loyalty')">
+          <h3>1. Loyauté et allégeance</h3>
+          <p>
+            L'importance de la loyauté envers Allah et la communauté des
+            croyants.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('relations')">
+          <h3>2. Relations avec les non-croyants</h3>
+          <p>
+            Directives sur les interactions avec ceux qui ne partagent pas la
+            foi.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('women')">
+          <h3>3. L'examen des femmes émigrantes</h3>
+          <p>
+            Le test de sincérité pour les femmes qui rejoignent la communauté
+            musulmane.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('justice')">
+          <h3>4. Justice et équité</h3>
+          <p>
+            L'importance de traiter tout le monde avec justice, même les
+            adversaires.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('forgiveness')">
+          <h3>5. Pardon et compassion</h3>
+          <p>
+            L'encouragement à pardonner et à montrer de la compassion envers les
+            autres.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">
+          Réflexions sur la sourate Al-Mumtahanah
+        </h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Mumtahanah.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s59.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s61.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Mumtahanah a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Mumtahanah a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Mumtahanah est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/60"),
+              axios.get("https://api.alquran.cloud/v1/surah/60/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "loyalty":
+            reflectionContent.innerHTML =
+              "La sourate Al-Mumtahanah met l'accent sur l'importance de la loyauté envers Allah et la communauté des croyants. Elle commence par avertir les croyants de ne pas prendre pour alliés les ennemis d'Allah et les leurs. Cette sourate enseigne que la vraie loyauté doit être envers Allah, Son Messager et les croyants. Elle encourage à examiner nos alliances et nos amitiés pour s'assurer qu'elles sont en accord avec notre foi. Cette réflexion sur la loyauté nous invite à évaluer nos relations et à nous assurer qu'elles renforcent notre engagement envers Allah plutôt que de l'affaiblir.";
+            break;
+          case "relations":
+            reflectionContent.innerHTML =
+              "Cette sourate fournit des directives importantes sur la manière d'interagir avec les non-croyants. Elle établit un équilibre entre le maintien de relations cordiales et la protection de la foi. La sourate enseigne que les musulmans peuvent avoir des relations amicales et justes avec ceux qui ne les combattent pas pour leur religion ou ne les chassent pas de leurs foyers. Cependant, elle met en garde contre l'alliance avec ceux qui sont ouvertement hostiles à l'Islam. Cette approche nuancée nous apprend l'importance de la coexistence pacifique tout en restant fermes dans nos principes religieux.";
+            break;
+          case "women":
+            reflectionContent.innerHTML =
+              "Un aspect unique de cette sourate est l'attention portée aux femmes émigrantes qui rejoignent la communauté musulmane. Elle prescrit un 'test' pour ces femmes pour s'assurer de la sincérité de leur foi. Ce passage souligne l'importance de l'intention et de la sincérité dans la conversion à l'Islam. Il montre également le respect accordé aux femmes dans l'Islam, reconnaissant leur capacité à faire des choix indépendants en matière de foi. Cette partie de la sourate nous rappelle l'importance de l'authenticité dans notre relation avec Allah.";
+            break;
+          case "justice":
+            reflectionContent.innerHTML =
+              "La sourate Al-Mumtahanah met en avant le principe de justice, même dans les relations avec ceux qui peuvent être considérés comme des adversaires. Elle encourage les croyants à agir avec équité envers tous, indépendamment de leurs croyances. Cette emphase sur la justice reflète un principe fondamental de l'Islam : traiter toutes les personnes avec équité et respect. Cela nous rappelle que la justice est une valeur universelle qui doit être appliquée dans toutes nos interactions, qu'elles soient avec des amis ou des adversaires.";
+            break;
+          case "forgiveness":
+            reflectionContent.innerHTML =
+              "Vers la fin de la sourate, il y a un appel au pardon et à la compassion. Elle encourage les croyants à pardonner à ceux qui ont pu leur causer du tort dans le passé, ouvrant ainsi la voie à la réconciliation. Ce message de pardon est particulièrement puissant dans le contexte des relations tendues décrites au début de la sourate. Il nous rappelle que le pardon est une force, pas une faiblesse, et qu'il peut être un moyen puissant de surmonter les différences et de construire des ponts entre les communautés.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Mumtahanah.";
+        }
+      }
+    </script>
+  </body>
+</html>

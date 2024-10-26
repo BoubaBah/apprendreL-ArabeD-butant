@@ -1,0 +1,407 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Mursalat (Les Envoyés) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Mursalat (Les Envoyés)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/077.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Mursalat - سورة المرسلات</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #1a237e; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #3949ab; stop-opacity: 1" />
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Background -->
+        <rect width="100" height="100" fill="url(#skyGradient)" />
+
+        <!-- Stars -->
+        <g id="stars">
+          <circle cx="10" cy="15" r="0.5" fill="#ffffff" />
+          <circle cx="25" cy="10" r="0.3" fill="#ffffff" />
+          <circle cx="40" cy="20" r="0.4" fill="#ffffff" />
+          <circle cx="60" cy="15" r="0.3" fill="#ffffff" />
+          <circle cx="75" cy="25" r="0.4" fill="#ffffff" />
+          <circle cx="90" cy="10" r="0.3" fill="#ffffff" />
+        </g>
+
+        <!-- Wind representation -->
+        <g id="wind" filter="url(#glow)">
+          <path
+            d="M10,30 Q30,20 50,30 T90,30"
+            stroke="#ffffff"
+            fill="none"
+            stroke-width="0.5"
+            opacity="0.7"
+          >
+            <animate
+              attributeName="d"
+              values="M10,30 Q30,20 50,30 T90,30;
+                                M10,35 Q30,25 50,35 T90,35;
+                                M10,30 Q30,20 50,30 T90,30"
+              dur="5s"
+              repeatCount="indefinite"
+            />
+          </path>
+          <path
+            d="M5,50 Q25,40 45,50 T85,50"
+            stroke="#ffffff"
+            fill="none"
+            stroke-width="0.5"
+            opacity="0.5"
+          >
+            <animate
+              attributeName="d"
+              values="M5,50 Q25,40 45,50 T85,50;
+                                M5,55 Q25,45 45,55 T85,55;
+                                M5,50 Q25,40 45,50 T85,50"
+              dur="7s"
+              repeatCount="indefinite"
+            />
+          </path>
+          <path
+            d="M15,70 Q35,60 55,70 T95,70"
+            stroke="#ffffff"
+            fill="none"
+            stroke-width="0.5"
+            opacity="0.6"
+          >
+            <animate
+              attributeName="d"
+              values="M15,70 Q35,60 55,70 T95,70;
+                                M15,75 Q35,65 55,75 T95,75;
+                                M15,70 Q35,60 55,70 T95,70"
+              dur="6s"
+              repeatCount="indefinite"
+            />
+          </path>
+        </g>
+
+        <!-- Arabic text for "Al-Mursalat" -->
+        <text
+          x="50"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          المرسلات
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Mursalat</h2>
+        <div class="interactive-item" onclick="showReflection('signs')">
+          <h3>1. Les signes de la nature</h3>
+          <p>Les vents et autres phénomènes naturels comme signes divins.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('judgment')">
+          <h3>2. Le Jour du Jugement</h3>
+          <p>La description du Jour de la Décision et ses événements.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('accountability')"
+        >
+          <h3>3. La responsabilité humaine</h3>
+          <p>Le rappel de la responsabilité de l'homme devant ses actes.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('consequences')">
+          <h3>4. Les conséquences des actions</h3>
+          <p>La description du sort des croyants et des mécréants.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('divine_power')">
+          <h3>5. La puissance divine</h3>
+          <p>Les manifestations de la puissance d'Allah dans la création.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Mursalat</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Mursalat.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s76.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s78.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Mursalat a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Mursalat a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Mursalat est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/77"),
+              axios.get("https://api.alquran.cloud/v1/surah/77/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "signs":
+            reflectionContent.innerHTML =
+              "La sourate Al-Mursalat commence par évoquer les vents et d'autres phénomènes naturels comme signes de la puissance divine. Ces références nous invitent à observer et à méditer sur le monde qui nous entoure. Les vents, symbolisant les messagers divins, nous rappellent que la nature elle-même témoigne de l'existence et de la grandeur d'Allah. Cette réflexion nous encourage à développer une conscience plus profonde de notre environnement et à reconnaître la présence divine dans chaque aspect de la création. En contemplant ces signes, nous sommes appelés à renforcer notre foi et notre compréhension de l'ordre divin qui régit l'univers.";
+            break;
+          case "judgment":
+            reflectionContent.innerHTML =
+              "La sourate met un accent particulier sur le Jour du Jugement, appelé ici le 'Jour de la Décision'. Elle décrit de manière vivante les événements qui marqueront ce jour, soulignant son importance et sa gravité. Cette description sert à éveiller la conscience des croyants et à les inciter à la réflexion sur leurs actions et leur préparation pour ce jour inévitable. La sourate nous rappelle que chacun de nos actes a des conséquences et que nous serons tenus responsables devant Allah. Cette réflexion sur le Jugement devrait nous motiver à vivre une vie vertueuse, en accord avec les enseignements divins, et à nous préparer constamment pour notre rencontre avec notre Créateur.";
+            break;
+          case "accountability":
+            reflectionContent.innerHTML =
+              "Un thème central de la sourate Al-Mursalat est la responsabilité de l'homme devant ses actes. Elle souligne que chaque individu sera tenu pour responsable de ses choix et de ses actions dans ce monde. Cette notion de responsabilité personnelle est fondamentale dans l'Islam et nous rappelle l'importance du libre arbitre. La sourate nous exhorte à réfléchir attentivement à nos décisions et à leurs conséquences, non seulement dans cette vie, mais aussi dans l'au-delà. Cette réflexion sur notre responsabilité devrait nous inciter à agir avec plus de conscience, d'intégrité et de compassion dans notre vie quotidienne, sachant que chaque acte, aussi petit soit-il, sera pris en compte.";
+            break;
+          case "consequences":
+            reflectionContent.innerHTML =
+              "La sourate Al-Mursalat offre un contraste saisissant entre le sort des croyants et celui des mécréants dans l'au-delà. Elle décrit les récompenses promises aux justes et les châtiments qui attendent ceux qui ont rejeté la vérité. Ces descriptions ne sont pas simplement destinées à effrayer ou à réconforter, mais à nous faire réfléchir sur les conséquences à long terme de nos choix et de nos actions. Cette réflexion sur les conséquences éternelles de nos actes devrait nous motiver à chercher constamment la voie de la droiture et de la piété. Elle nous rappelle également la miséricorde et la justice d'Allah, qui récompense généreusement ceux qui Le suivent et donne à chacun ce qu'il mérite.";
+            break;
+          case "divine_power":
+            reflectionContent.innerHTML =
+              "Tout au long de la sourate, on trouve des références à la puissance divine manifestée dans la création. Des phénomènes naturels aux événements du Jour du Jugement, la sourate souligne la grandeur et l'omnipotence d'Allah. Ces manifestations de la puissance divine servent à renforcer notre foi et à nous rappeler notre place dans l'ordre cosmique. En réfléchissant sur la puissance d'Allah, nous sommes invités à cultiver l'humilité et la gratitude. Cette contemplation de la puissance divine devrait nous inspirer à chercher la protection et la guidance d'Allah dans tous les aspects de notre vie, reconnaissant notre dépendance totale envers Lui et aspirant à vivre en harmonie avec Sa volonté.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Mursalat.";
+        }
+      }
+    </script>
+  </body>
+</html>

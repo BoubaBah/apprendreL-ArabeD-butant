@@ -1,0 +1,473 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Sourate An-Naziat (Les Anges qui arrachent les âmes) - Exploration
+      Interactive
+    </title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate An-Naziat (Les Anges qui arrachent les âmes)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/079.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate An-Naziat - سورة النازعات</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <radialGradient
+            id="skyGradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #1a237e; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #000000; stop-opacity: 1" />
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="1.5" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="100" height="100" fill="url(#skyGradient)" />
+
+        <!-- Stars -->
+        <g id="stars">
+          <circle cx="10" cy="10" r="0.5" fill="#ffffff" opacity="0.7">
+            <animate
+              attributeName="opacity"
+              values="0.7;0.2;0.7"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="25" cy="15" r="0.3" fill="#ffffff" opacity="0.7">
+            <animate
+              attributeName="opacity"
+              values="0.7;0.3;0.7"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="40" cy="5" r="0.4" fill="#ffffff" opacity="0.7">
+            <animate
+              attributeName="opacity"
+              values="0.7;0.4;0.7"
+              dur="5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="60" cy="20" r="0.3" fill="#ffffff" opacity="0.7">
+            <animate
+              attributeName="opacity"
+              values="0.7;0.2;0.7"
+              dur="3.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="75" cy="10" r="0.4" fill="#ffffff" opacity="0.7">
+            <animate
+              attributeName="opacity"
+              values="0.7;0.3;0.7"
+              dur="4.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="90" cy="15" r="0.3" fill="#ffffff" opacity="0.7">
+            <animate
+              attributeName="opacity"
+              values="0.7;0.4;0.7"
+              dur="3.8s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        </g>
+
+        <!-- Symbolic representation of angels -->
+        <g id="angels" fill="#ffffff" opacity="0.8" filter="url(#glow)">
+          <path
+            d="M20,80 Q30,70 40,80 T60,80 T80,80"
+            stroke="#ffffff"
+            stroke-width="0.5"
+            fill="none"
+          >
+            <animate
+              attributeName="d"
+              values="M20,80 Q30,70 40,80 T60,80 T80,80;
+                                     M20,75 Q30,85 40,75 T60,75 T80,75;
+                                     M20,80 Q30,70 40,80 T60,80 T80,80"
+              dur="10s"
+              repeatCount="indefinite"
+            />
+          </path>
+          <circle cx="20" cy="80" r="1">
+            <animate
+              attributeName="cy"
+              values="80;75;80"
+              dur="10s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="40" cy="80" r="1">
+            <animate
+              attributeName="cy"
+              values="80;75;80"
+              dur="10s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="60" cy="80" r="1">
+            <animate
+              attributeName="cy"
+              values="80;75;80"
+              dur="10s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="80" cy="80" r="1">
+            <animate
+              attributeName="cy"
+              values="80;75;80"
+              dur="10s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        </g>
+
+        <!-- Symbolic soul -->
+        <circle cx="50" cy="50" r="3" fill="#4fc3f7" opacity="0.7">
+          <animate
+            attributeName="cy"
+            values="50;45;50"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="opacity"
+            values="0.7;0.3;0.7"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Arabic text for "An-Naziat" -->
+        <text
+          x="50"
+          y="95"
+          font-family="Scheherazade"
+          font-size="8"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          النازعات
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate An-Naziat</h2>
+        <div class="interactive-item" onclick="showReflection('angels')">
+          <h3>1. Les Anges et leurs Rôles</h3>
+          <p>
+            Description des anges et leurs diverses fonctions dans l'univers.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('resurrection')">
+          <h3>2. La Résurrection</h3>
+          <p>La certitude et la réalité de la résurrection après la mort.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('pharaoh')">
+          <h3>3. L'Histoire de Pharaon</h3>
+          <p>Leçons tirées de l'histoire de Pharaon et de son arrogance.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('creation')">
+          <h3>4. La Création de l'Univers</h3>
+          <p>Réflexions sur la création et la puissance d'Allah.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('judgment')">
+          <h3>5. Le Jour du Jugement</h3>
+          <p>Description et importance du Jour du Jugement.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate An-Naziat</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate An-Naziat.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s78.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s80.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate An-Naziat a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate An-Naziat a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate An-Naziat est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/79"),
+              axios.get("https://api.alquran.cloud/v1/surah/79/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "angels":
+            reflectionContent.innerHTML =
+              "La sourate An-Naziat commence par une description poétique et mystérieuse des anges et de leurs différentes fonctions. Ces versets évoquent les anges qui arrachent les âmes avec force, ceux qui les recueillent avec douceur, et ceux qui s'empressent d'exécuter les ordres divins. Cette description nous rappelle l'existence d'un monde invisible et la complexité de la création d'Allah. Elle nous invite à réfléchir sur le rôle des anges dans l'ordre cosmique et dans notre propre existence. Cette réflexion peut nous aider à prendre conscience de la grandeur de la création d'Allah et de notre place dans cet univers vaste et complexe. Elle nous encourage également à reconnaître que nous ne sommes pas seuls dans ce monde et que des forces invisibles jouent un rôle important dans l'exécution du plan divin.";
+            break;
+          case "resurrection":
+            reflectionContent.innerHTML =
+              "La sourate An-Naziat met fortement l'accent sur la réalité et la certitude de la résurrection. Elle répond aux doutes des sceptiques en affirmant avec force que la résurrection aura lieu, décrivant ce jour comme un événement soudain et inévitable. Cette insistance sur la résurrection nous rappelle que notre existence ne se limite pas à cette vie terrestre, mais qu'il y a une vie après la mort où nous serons tenus responsables de nos actions. Cette croyance en la résurrection devrait nous inciter à mener une vie vertueuse et à nous préparer pour l'au-delà. Elle nous encourage à réfléchir sur le sens et le but de notre existence, et à orienter nos actions vers ce qui plaît à Allah et bénéficie à l'humanité. La certitude de la résurrection peut également apporter du réconfort face à la mort, en nous rappelant que la séparation n'est que temporaire et que nous serons tous réunis devant Allah.";
+            break;
+          case "pharaoh":
+            reflectionContent.innerHTML =
+              "La sourate An-Naziat rappelle l'histoire de Pharaon et sa confrontation avec Moïse. Cette narration sert d'avertissement contre l'arrogance et le refus de reconnaître la vérité. Pharaon est présenté comme un exemple de celui qui a défié Allah et a prétendu à la divinité, ce qui a conduit à sa destruction. Cette histoire nous invite à réfléchir sur les dangers de l'orgueil excessif et de l'abus de pouvoir. Elle nous rappelle que, quelle que soit notre position dans ce monde, nous restons tous des serviteurs d'Allah et devons reconnaître Sa suprématie. L'histoire de Pharaon nous encourage également à rester humbles, à accepter la vérité lorsqu'elle nous est présentée, et à ne pas nous laisser aveugler par notre propre importance. Elle souligne l'importance de suivre les messagers d'Allah et d'adhérer à Ses enseignements, plutôt que de suivre nos propres désirs égoïstes.";
+            break;
+          case "creation":
+            reflectionContent.innerHTML =
+              "La sourate An-Naziat nous invite à réfléchir sur la création de l'univers et la puissance d'Allah. Elle évoque la création des cieux, de la terre, des montagnes et de tout ce qui existe entre eux. Cette description de la création sert à rappeler aux hommes la toute-puissance d'Allah et Sa capacité à ressusciter les morts. En contemplant la grandeur et la complexité de l'univers, nous sommes amenés à reconnaître la sagesse et la puissance infinies du Créateur. Cette réflexion sur la création devrait renforcer notre foi et notre gratitude envers Allah. Elle nous encourage à observer le monde qui nous entoure avec émerveillement et à voir dans chaque aspect de la création un signe de la grandeur d'Allah. Cette perspective peut nous aider à développer un plus grand respect pour l'environnement et toutes les créatures d'Allah, nous incitant à être de meilleurs intendants de la Terre.";
+            break;
+          case "judgment":
+            reflectionContent.innerHTML =
+              "La sourate An-Naziat se termine par une description saisissante du Jour du Jugement. Elle évoque ce jour comme un événement terrifiant pour ceux qui ont nié la vérité, mais comme une récompense pour ceux qui ont craint Allah et résisté à leurs passions. Cette description du Jour du Jugement nous rappelle l'importance de nos actions dans cette vie et leurs conséquences éternelles. Elle nous encourage à vivre avec la conscience constante de notre responsabilité devant Allah et à nous préparer pour ce jour inévitable. La réflexion sur le Jour du Jugement peut nous motiver à faire de bonnes actions, à éviter le mal, et à chercher constamment le pardon et la miséricorde d'Allah. Elle nous rappelle également l'importance de la justice divine et que chacun sera jugé équitablement selon ses actes. Cette perspective peut nous aider à maintenir un équilibre dans notre vie, en nous concentrant non seulement sur les plaisirs temporaires de ce monde, mais aussi sur notre salut éternel dans l'au-delà.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate An-Naziat.";
+        }
+      }
+    </script>
+  </body>
+</html>

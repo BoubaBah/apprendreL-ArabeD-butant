@@ -1,0 +1,404 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Fil (L'Éléphant) - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #27ae60;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #27ae60;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #27ae60;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #219653;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #e8f5e9;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(39, 174, 96, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #27ae60;
+      }
+      .reflection-section {
+        background-color: #e8f5e9;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #27ae60;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Fil (L'Éléphant)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/105.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Fil - سورة الفيل</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #87ceeb; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #e6e6fa; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="400" height="200" fill="url(#sky-gradient)" />
+
+        <!-- Sun -->
+        <circle cx="350" cy="50" r="30" fill="#FFD700">
+          <animate
+            attributeName="cy"
+            from="50"
+            to="40"
+            dur="4s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Mountains -->
+        <path d="M0 200 L100 100 L200 180 L300 80 L400 200 Z" fill="#8B4513" />
+
+        <!-- Elephant -->
+        <g id="elephant" transform="translate(200, 150) scale(0.5)">
+          <path
+            d="M0,0 Q30,-30 60,0 T120,0 T180,0 T240,0 V60 H0 Z"
+            fill="#808080"
+          />
+          <ellipse cx="30" cy="30" rx="10" ry="20" fill="#696969" />
+          <path d="M240,0 Q270,-30 300,0 V60 H240 Z" fill="#808080" />
+          <path
+            d="M300,30 Q330,0 360,30"
+            fill="none"
+            stroke="#808080"
+            stroke-width="10"
+          />
+        </g>
+
+        <!-- Birds -->
+        <g id="birds">
+          <path
+            d="M20,40 Q30,30 40,40 Q50,30 60,40"
+            fill="none"
+            stroke="#000"
+            stroke-width="2"
+          >
+            <animateMotion
+              path="M0,0 L380,0"
+              dur="10s"
+              repeatCount="indefinite"
+            />
+          </path>
+          <path
+            d="M0,60 Q10,50 20,60 Q30,50 40,60"
+            fill="none"
+            stroke="#000"
+            stroke-width="2"
+          >
+            <animateMotion
+              path="M0,0 L400,0"
+              dur="8s"
+              repeatCount="indefinite"
+            />
+          </path>
+        </g>
+
+        <!-- Arabic text for "Al-Fil" -->
+        <text
+          x="200"
+          y="180"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          الفيل
+        </text>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Al-Fil</h2>
+        <div class="theme-item" onclick="showReflection('divine_protection')">
+          <h3>1. La Protection Divine</h3>
+          <p>Comment Allah a protégé la Kaaba de l'armée d'Abraha.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('power_faith')">
+          <h3>2. La Puissance de la Foi</h3>
+          <p>La victoire de la foi sur la force militaire.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('historical_event')">
+          <h3>3. Un Événement Historique</h3>
+          <p>
+            L'importance de l'Année de l'Éléphant dans l'histoire islamique.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('divine_intervention')">
+          <h3>4. L'Intervention Divine</h3>
+          <p>Les moyens inattendus par lesquels Allah peut intervenir.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('lessons_humanity')">
+          <h3>5. Leçons pour l'Humanité</h3>
+          <p>
+            Les enseignements tirés de cet événement pour les générations
+            futures.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Fil</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Al-Fil.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s104.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s106.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        // Animate elephant
+        const elephant = document.getElementById("elephant");
+        elephant.innerHTML += `
+            <animateTransform attributeName="transform"
+                              type="translate"
+                              from="-50,150"
+                              to="450,150"
+                              dur="20s"
+                              repeatCount="indefinite" />
+        `;
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Fil a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log("La récitation de la sourate Al-Fil a été mise en pause");
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Fil est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/105"),
+              axios.get("https://api.alquran.cloud/v1/surah/105/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "divine_protection":
+            reflectionContent.innerHTML =
+              "La sourate Al-Fil illustre de manière puissante la protection divine accordée à la Kaaba. Elle raconte comment Allah a défendu ce lieu sacré contre l'armée d'Abraha, qui était équipée d'éléphants et venait pour détruire la Kaaba. Cette protection miraculeuse démontre l'importance de ce sanctuaire dans l'Islam et rappelle aux croyants que la volonté d'Allah prévaut toujours sur les plans des hommes, aussi puissants soient-ils. Cet événement souligne également que la protection divine peut se manifester de manières inattendues et spectaculaires, renforçant ainsi la foi des croyants en la toute-puissance d'Allah.";
+            break;
+          case "power_faith":
+            reflectionContent.innerHTML =
+              "La sourate Al-Fil met en lumière la puissance de la foi face à la force militaire. L'armée d'Abraha, malgré sa puissance et ses éléphants, a été vaincue par l'intervention divine, illustrant que la vraie force réside dans la foi et la confiance en Allah. Cette histoire enseigne aux croyants que la foi peut triompher des obstacles apparemment insurmontables et que la victoire ultime appartient à ceux qui placent leur confiance en Allah. Elle encourage les musulmans à rester fermes dans leur foi, même face à des adversités écrasantes, sachant que le soutien divin peut venir de manières inattendues.";
+            break;
+          case "historical_event":
+            reflectionContent.innerHTML =
+              "L'Année de l'Éléphant, mentionnée dans cette sourate, est un événement historique crucial dans l'histoire islamique. Elle marque l'année de naissance du Prophète Muhammad (paix et bénédictions sur lui), soulignant ainsi le lien entre cet événement miraculeux et l'avènement de l'Islam. Cette coïncidence n'est pas fortuite et est souvent interprétée comme un signe divin annonçant l'importance de la mission du Prophète. La sourate Al-Fil rappelle ainsi aux musulmans l'importance de connaître et de méditer sur leur histoire, car elle contient des leçons précieuses et des signes de la sagesse divine.";
+            break;
+          case "divine_intervention":
+            reflectionContent.innerHTML =
+              "La sourate Al-Fil décrit une intervention divine spectaculaire et inattendue. Allah a utilisé de petits oiseaux portant des pierres d'argile pour défaire une armée puissante, démontrant que Ses moyens d'intervention peuvent être surprenants et apparemment insignifiants aux yeux des hommes. Cette histoire enseigne aux croyants que l'aide d'Allah peut venir sous des formes inattendues et que même les plus petites créatures peuvent devenir des instruments de Sa volonté. Elle encourage les musulmans à avoir confiance en Allah dans toutes les situations, sachant que Son pouvoir transcende les limites de la compréhension humaine.";
+            break;
+          case "lessons_humanity":
+            reflectionContent.innerHTML =
+              "La sourate Al-Fil offre de nombreuses leçons pour l'humanité. Elle rappelle l'importance de l'humilité face à la puissance divine et met en garde contre l'arrogance et l'orgueil. L'histoire d'Abraha et de son armée sert d'avertissement à ceux qui pensent pouvoir défier la volonté divine ou s'attaquer à ce qui est sacré. De plus, elle enseigne la patience et la confiance en Allah dans les moments difficiles, montrant que la délivrance peut venir de manière inattendue. Cette sourate encourage également la réflexion sur la nature éphémère du pouvoir humain face à la puissance éternelle d'Allah, invitant ainsi à une perspective plus humble et spirituelle de la vie.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Al-Fil.";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,183 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Écouter et Lire la Sourate An-Nisā' (Les Femmes)</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f8ff;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #1e3a8a;
+        text-align: center;
+      }
+      .player-container {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 100%;
+        max-width: 500px;
+      }
+      audio {
+        width: 100%;
+      }
+      .info {
+        margin-top: 20px;
+        text-align: center;
+        color: #34495e;
+      }
+      .arabic {
+        font-family: "Traditional Arabic", serif;
+        font-size: 24px;
+        margin-top: 10px;
+        text-align: right;
+        direction: rtl;
+      }
+      .verse-container {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 100%;
+        max-width: 800px;
+        max-height: 600px;
+        overflow-y: auto;
+      }
+      .verse {
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e0e7ff;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3b82f6;
+      }
+      .translation {
+        font-style: italic;
+        color: #64748b;
+      }
+      #loading {
+        text-align: center;
+        color: #3b82f6;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+      }
+      .nav-button {
+        background-color: #3b82f6;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .nav-button:hover {
+        background-color: #2563eb;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Sourate An-Nisā' (Les Femmes)</h1>
+    <div class="player-container">
+      <h2>Écouter</h2>
+      <audio controls>
+        <source
+          src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/004.mp3"
+          type="audio/mpeg"
+        />
+        Votre navigateur ne supporte pas l'élément audio.
+      </audio>
+    </div>
+    <div class="info">
+      <p>Sourate An-Nisā' (Les Femmes) - سورة النساء</p>
+      <p>Récitée par Mishary Rashid Alafasy</p>
+      <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+    </div>
+
+    <div class="verse-container">
+      <h2>Lire</h2>
+      <div id="loading">Chargement des versets...</div>
+      <div id="verses"></div>
+    </div>
+
+    <div class="navigation">
+      <a href="s3.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s5.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La lecture de la sourate An-Nisā' a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log("La lecture de la sourate An-Nisā' a été mise en pause");
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La lecture de la sourate An-Nisā' est terminée");
+        });
+
+        // Fonction pour charger les versets
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/4"),
+              axios.get("https://api.alquran.cloud/v1/surah/4/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic">${verse.text}</p>
+                        <p class="verse-number">Verset ${verse.numberInSurah}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+    </script>
+  </body>
+</html>

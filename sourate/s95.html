@@ -1,0 +1,371 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate At-Tin (Le Figuier) - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #3498db;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #3498db;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate At-Tin (Le Figuier)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/095.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate At-Tin - سورة التين</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #87ceeb; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #e6e6fa; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="400" height="200" fill="url(#sky-gradient)" />
+
+        <!-- Sun -->
+        <circle cx="350" cy="50" r="30" fill="#FFD700">
+          <animate
+            attributeName="cy"
+            values="50;40;50"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Mount Sinai -->
+        <path d="M0,200 L150,50 L300,200 Z" fill="#8B4513" />
+
+        <!-- Olive tree -->
+        <g transform="translate(250,130) scale(0.7)">
+          <path d="M0,70 Q-20,50 -40,70 Q-20,90 0,70 Z" fill="#556B2F" />
+          <path d="M0,70 Q20,50 40,70 Q20,90 0,70 Z" fill="#556B2F" />
+          <path d="M0,40 Q-25,20 -50,40 Q-25,60 0,40 Z" fill="#556B2F" />
+          <path d="M0,40 Q25,20 50,40 Q25,60 0,40 Z" fill="#556B2F" />
+          <rect x="-5" y="70" width="10" height="30" fill="#8B4513" />
+        </g>
+
+        <!-- Fig tree -->
+        <g transform="translate(100,140) scale(0.6)">
+          <path d="M-30,0 Q0,-40 30,0 Q0,40 -30,0 Z" fill="#228B22" />
+          <path d="M-20,30 Q0,-10 20,30 Q0,70 -20,30 Z" fill="#228B22" />
+          <rect x="-5" y="30" width="10" height="40" fill="#8B4513" />
+          <circle cx="-15" cy="10" r="5" fill="#8B0000" />
+          <circle cx="15" cy="10" r="5" fill="#8B0000" />
+          <circle cx="0" cy="25" r="5" fill="#8B0000" />
+        </g>
+
+        <!-- Arabic text for "At-Tin" -->
+        <text
+          x="200"
+          y="180"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#2c3e50"
+          text-anchor="middle"
+        >
+          التين
+        </text>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate At-Tin</h2>
+        <div class="theme-item" onclick="showReflection('creation')">
+          <h3>1. La Création parfaite de l'Homme</h3>
+          <p>Allah a créé l'homme dans la meilleure forme.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('decline')">
+          <h3>2. Le Déclin Moral</h3>
+          <p>
+            L'homme peut déchoir au plus bas s'il s'éloigne de la foi et des
+            bonnes œuvres.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('faith')">
+          <h3>3. L'Importance de la Foi et des Bonnes Actions</h3>
+          <p>
+            Ceux qui croient et font de bonnes œuvres auront une récompense
+            ininterrompue.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('justice')">
+          <h3>4. La Justice Divine</h3>
+          <p>Allah est le plus juste des juges.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('significance')">
+          <h3>5. La Signification des Lieux Saints</h3>
+          <p>
+            Référence au figuier, à l'olivier, au Mont Sinaï et à la ville sûre
+            (La Mecque).
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate At-Tin</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate At-Tin.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s94.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s96.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate At-Tin a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log("La récitation de la sourate At-Tin a été mise en pause");
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate At-Tin est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/95"),
+              axios.get("https://api.alquran.cloud/v1/surah/95/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "creation":
+            reflectionContent.innerHTML =
+              "La sourate At-Tin nous rappelle la perfection avec laquelle Allah a créé l'être humain. Cette affirmation souligne la dignité inhérente à chaque individu et la responsabilité qui accompagne ce don divin. En reconnaissant notre création dans 'la meilleure forme', nous sommes invités à réfléchir sur notre potentiel et notre capacité à incarner les plus nobles qualités. Cette réflexion devrait nous inciter à respecter notre corps, notre esprit et notre âme, et à les utiliser de manière à honorer le Créateur. Elle nous encourage également à voir la beauté et la valeur en chaque être humain, indépendamment des différences superficielles.";
+            break;
+          case "decline":
+            reflectionContent.innerHTML =
+              "La sourate évoque aussi la possibilité pour l'homme de 'déchoir au plus bas'. Ce contraste saisissant avec la 'meilleure forme' initiale nous alerte sur les conséquences de nos choix moraux et spirituels. Ce déclin n'est pas une fatalité, mais plutôt un avertissement contre les dangers de s'éloigner des principes éthiques et de la guidance divine. Cette réflexion nous invite à une introspection constante, à évaluer nos actions et nos intentions, et à nous efforcer continuellement de nous élever plutôt que de nous abaisser. Elle souligne l'importance de la vigilance spirituelle et morale dans notre parcours de vie.";
+            break;
+          case "faith":
+            reflectionContent.innerHTML =
+              "La sourate At-Tin met en lumière l'importance cruciale de la foi et des bonnes actions. Elle affirme que ceux qui croient et font de bonnes œuvres auront une récompense ininterrompue. Cette promesse divine souligne la valeur de l'intégrité et de la droiture dans notre vie quotidienne. Elle nous encourage à aligner nos croyances avec nos actions, créant ainsi une harmonie entre notre foi intérieure et notre comportement extérieur. Cette réflexion nous rappelle que la vraie foi se manifeste à travers des actes concrets de bonté, de compassion et de service envers les autres. Elle nous invite à chercher constamment des opportunités de faire le bien, sachant que ces actions ont une valeur éternelle.";
+            break;
+          case "justice":
+            reflectionContent.innerHTML =
+              "La sourate se conclut en affirmant qu'Allah est le plus juste des juges. Cette déclaration puissante nous rappelle l'omniscience et la parfaite équité de Dieu. Elle nous invite à avoir confiance en la justice divine, même lorsque nous sommes confrontés à des situations qui semblent injustes dans ce monde. Cette réflexion nous encourage à cultiver la patience et la persévérance face aux épreuves, sachant que le jugement final appartient à Allah. Elle nous incite également à nous efforcer d'être justes dans nos propres actions et jugements, en essayant d'incarner, dans la mesure de nos capacités humaines, cet attribut divin de justice.";
+            break;
+          case "significance":
+            reflectionContent.innerHTML =
+              "La sourate At-Tin commence par évoquer le figuier, l'olivier, le Mont Sinaï et la ville sûre (La Mecque). Ces références géographiques et botaniques ont une profonde signification symbolique et historique dans la tradition islamique. Elles relient divers prophètes et révélations, soulignant l'unité et la continuité du message divin à travers l'histoire. Le figuier et l'olivier peuvent symboliser l'abondance et la bénédiction, tandis que le Mont Sinaï rappelle la révélation donnée à Moïse. La ville sûre fait référence à La Mecque, lieu sacré de l'Islam. Cette réflexion nous invite à méditer sur l'interconnexion des traditions religieuses et l'universalité du message divin. Elle nous encourage à apprécier la richesse de notre héritage spirituel et à chercher la sagesse dans les signes que Dieu a placés dans la nature et l'histoire.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate At-Tin.";
+        }
+      }
+    </script>
+  </body>
+</html>

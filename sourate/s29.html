@@ -1,0 +1,346 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Ankabut (L'Araignée) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .spider-web {
+        width: 100%;
+        max-width: 300px;
+        height: 300px;
+        margin: 30px auto;
+        position: relative;
+      }
+      .theme-box {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+      .theme:hover {
+        transform: translateY(-5px);
+      }
+      .theme h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .fade-in {
+        animation: fadeIn 1s ease-in;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Ankabut (العنكبوت)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/029.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Ankabut (L'Araignée) - سورة العنكبوت</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <div class="spider-web">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient
+              id="web-gradient"
+              cx="50%"
+              cy="50%"
+              r="50%"
+              fx="50%"
+              fy="50%"
+            >
+              <stop
+                offset="0%"
+                style="stop-color: rgb(255, 255, 255); stop-opacity: 0"
+              />
+              <stop
+                offset="100%"
+                style="stop-color: rgb(200, 200, 200); stop-opacity: 0.7"
+              />
+            </radialGradient>
+          </defs>
+          <circle cx="50" cy="50" r="45" fill="url(#web-gradient)" />
+          <g stroke="#3498db" fill="none">
+            <circle cx="50" cy="50" r="45" />
+            <circle cx="50" cy="50" r="35" />
+            <circle cx="50" cy="50" r="25" />
+            <circle cx="50" cy="50" r="15" />
+            <line x1="5" y1="50" x2="95" y2="50" />
+            <line x1="50" y1="5" x2="50" y2="95" />
+            <line x1="14.64" y1="14.64" x2="85.36" y2="85.36" />
+            <line x1="85.36" y1="14.64" x2="14.64" y2="85.36" />
+          </g>
+          <circle cx="50" cy="50" r="3" fill="#3498db" />
+        </svg>
+      </div>
+
+      <div class="theme-box fade-in">
+        <h2>Thèmes principaux de la sourate</h2>
+        <div class="theme">
+          <h3>La foi et l'épreuve</h3>
+          <p>
+            La sourate commence en soulignant que la foi sera testée, comparant
+            la force de la foi à la fragilité de la toile d'araignée.
+          </p>
+        </div>
+        <div class="theme">
+          <h3>Histoires des prophètes</h3>
+          <p>
+            Elle mentionne plusieurs prophètes comme Noé, Abraham, Lot, et leurs
+            expériences face à l'adversité.
+          </p>
+        </div>
+        <div class="theme">
+          <h3>L'unicité d'Allah</h3>
+          <p>
+            La sourate réaffirme l'importance du monothéisme et rejette
+            l'idolâtrie.
+          </p>
+        </div>
+        <div class="theme">
+          <h3>La récompense des croyants</h3>
+          <p>
+            Elle promet une récompense aux croyants qui restent fermes dans leur
+            foi malgré les difficultés.
+          </p>
+        </div>
+        <div class="theme">
+          <h3>La nature temporaire de ce monde</h3>
+          <p>
+            Al-Ankabut rappelle que la vie de ce monde est éphémère et que
+            l'au-delà est la vraie demeure éternelle.
+          </p>
+        </div>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s28.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s30.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Ankabut a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Ankabut a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Ankabut est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/29"),
+              axios.get("https://api.alquran.cloud/v1/surah/29/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Animation de la toile d'araignée
+        const spiderWeb = document.querySelector(".spider-web svg");
+        spiderWeb.style.opacity = 0;
+        spiderWeb.style.transform = "scale(0.9)";
+        spiderWeb.style.transition =
+          "opacity 1s ease-in-out, transform 1s ease-in-out";
+
+        setTimeout(() => {
+          spiderWeb.style.opacity = 1;
+          spiderWeb.style.transform = "scale(1)";
+        }, 500);
+
+        // Intersection Observer pour l'animation des thèmes
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.style.opacity = 1;
+                entry.target.style.transform = "translateY(0)";
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document.querySelectorAll(".theme").forEach((theme) => {
+          theme.style.opacity = 0;
+          theme.style.transform = "translateY(20px)";
+          theme.style.transition = "opacity 0.5s, transform 0.5s";
+          observer.observe(theme);
+        });
+      });
+    </script>
+  </body>
+</html>

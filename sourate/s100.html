@@ -1,0 +1,452 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Adiyat (Les Coursiers) - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #3498db;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #3498db;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Adiyat (Les Coursiers)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/100.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Adiyat - سورة العاديات</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #1e3c72; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #2a5298; stop-opacity: 1" />
+          </linearGradient>
+          <radialGradient
+            id="sun-gradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #ffd700; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #ff8c00; stop-opacity: 1" />
+          </radialGradient>
+        </defs>
+
+        <!-- Sky -->
+        <rect width="400" height="200" fill="url(#sky-gradient)" />
+
+        <!-- Sun -->
+        <circle cx="350" cy="50" r="30" fill="url(#sun-gradient)">
+          <animate
+            attributeName="cy"
+            values="50;40;50"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Desert -->
+        <path
+          d="M0 150 Q100 120 200 150 T400 130 L400 200 L0 200 Z"
+          fill="#d2b48c"
+        />
+
+        <!-- Horses -->
+        <g id="horse1" transform="translate(50, 140) scale(0.5)">
+          <path
+            d="M0,0 C10,-10 20,-10 30,0 C40,10 50,10 60,0 C70,-10 80,-10 90,0 L90,20 L0,20 Z"
+            fill="#8b4513"
+          />
+          <circle cx="15" cy="5" r="5" fill="#000" />
+          <path
+            d="M0,20 L0,40 L10,40 L15,20 L75,20 L80,40 L90,40 L90,20"
+            fill="#8b4513"
+          />
+          <animateTransform
+            attributeName="transform"
+            type="translate"
+            from="50,140"
+            to="450,140"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </g>
+
+        <g id="horse2" transform="translate(20, 160) scale(0.4)">
+          <path
+            d="M0,0 C10,-10 20,-10 30,0 C40,10 50,10 60,0 C70,-10 80,-10 90,0 L90,20 L0,20 Z"
+            fill="#a0522d"
+          />
+          <circle cx="15" cy="5" r="5" fill="#000" />
+          <path
+            d="M0,20 L0,40 L10,40 L15,20 L75,20 L80,40 L90,40 L90,20"
+            fill="#a0522d"
+          />
+          <animateTransform
+            attributeName="transform"
+            type="translate"
+            from="20,160"
+            to="420,160"
+            dur="6s"
+            repeatCount="indefinite"
+          />
+        </g>
+
+        <!-- Dust -->
+        <g id="dust">
+          <circle cx="80" cy="170" r="2" fill="#d2b48c">
+            <animate
+              attributeName="cy"
+              from="170"
+              to="150"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="opacity"
+              from="1"
+              to="0"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="100" cy="175" r="1.5" fill="#d2b48c">
+            <animate
+              attributeName="cy"
+              from="175"
+              to="155"
+              dur="1.5s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="opacity"
+              from="1"
+              to="0"
+              dur="1.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="120" cy="172" r="2.5" fill="#d2b48c">
+            <animate
+              attributeName="cy"
+              from="172"
+              to="152"
+              dur="2.2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="opacity"
+              from="1"
+              to="0"
+              dur="2.2s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        </g>
+
+        <!-- Arabic text for "Al-Adiyat" -->
+        <text
+          x="200"
+          y="40"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          العاديات
+        </text>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Al-Adiyat</h2>
+        <div class="theme-item" onclick="showReflection('war_horses')">
+          <h3>1. Les chevaux de guerre</h3>
+          <p>Description des coursiers haletants dans la bataille.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('human_ingratitude')">
+          <h3>2. L'ingratitude humaine</h3>
+          <p>Critique de l'homme ingrat envers son Seigneur.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('love_of_wealth')">
+          <h3>3. L'amour des richesses</h3>
+          <p>Dénonciation de l'attachement excessif aux biens matériels.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('day_of_judgement')">
+          <h3>4. Le Jour du Jugement</h3>
+          <p>Rappel de la résurrection et du jugement final.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('divine_knowledge')">
+          <h3>5. La connaissance divine</h3>
+          <p>Affirmation de l'omniscience d'Allah.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Adiyat</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Al-Adiyat.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s99.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s101.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Adiyat a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Adiyat a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Adiyat est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/100"),
+              axios.get("https://api.alquran.cloud/v1/surah/100/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "war_horses":
+            reflectionContent.innerHTML =
+              "La sourate Al-Adiyat s'ouvre sur une image saisissante de chevaux de guerre haletants, galopant dans la bataille. Cette description vivante évoque la puissance, la détermination et le dévouement de ces nobles créatures. Dans le contexte islamique, cette image peut être interprétée comme une métaphore de la lutte spirituelle (jihad) contre nos propres défauts et tentations. Elle nous rappelle l'importance de la persévérance et de l'engagement dans notre quête de droiture et de proximité avec Allah. De plus, cette image puissante contraste avec l'ingratitude humaine mentionnée plus tard dans la sourate, soulignant la fidélité et le dévouement des créatures d'Allah par rapport à l'inconstance de l'homme.";
+            break;
+          case "human_ingratitude":
+            reflectionContent.innerHTML =
+              "La sourate met en lumière l'ingratitude de l'être humain envers son Créateur. Malgré les innombrables bénédictions et faveurs accordées par Allah, l'homme a tendance à être ingrat et à oublier la source de ces bienfaits. Cette critique nous invite à l'introspection et à la reconnaissance. Elle nous encourage à cultiver la gratitude dans nos cœurs et à exprimer notre reconnaissance envers Allah à travers nos paroles et nos actes. La gratitude n'est pas seulement une vertu morale, mais aussi un moyen d'accroître notre conscience spirituelle et de renforcer notre relation avec notre Créateur. En reconnaissant les faveurs d'Allah, nous sommes plus à même de les apprécier pleinement et d'en faire bon usage.";
+            break;
+          case "love_of_wealth":
+            reflectionContent.innerHTML =
+              "La sourate dénonce l'attachement excessif aux biens matériels, un thème récurrent dans le Coran. L'amour des richesses est présenté comme une faiblesse humaine qui peut détourner l'individu du véritable but de son existence. Cette critique nous invite à réévaluer notre relation avec les biens matériels et à nous rappeler que la vraie richesse réside dans la piété et les bonnes actions. L'Islam n'interdit pas la recherche de la prospérité, mais encourage un équilibre entre les préoccupations matérielles et spirituelles. Cette réflexion nous pousse à utiliser nos ressources de manière responsable, à pratiquer la générosité et à ne pas laisser l'amour des richesses obscurcir notre jugement ou notre sens moral.";
+            break;
+          case "day_of_judgement":
+            reflectionContent.innerHTML =
+              "La sourate Al-Adiyat rappelle l'inévitabilité du Jour du Jugement, un concept central dans la foi islamique. Ce jour, tous les secrets seront dévoilés et chaque âme sera confrontée à ses actions. Cette perspective eschatologique sert de rappel puissant de notre responsabilité individuelle et de l'importance de nos choix dans cette vie. Elle nous encourage à vivre avec conscience et intégrité, sachant que nous serons tenus responsables de nos actes. Ce rappel du Jour du Jugement n'est pas destiné à instiller la peur, mais plutôt à nous motiver à mener une vie vertueuse et à rechercher le pardon et la miséricorde d'Allah. C'est une invitation à l'introspection et à l'amélioration continue de soi-même.";
+            break;
+          case "divine_knowledge":
+            reflectionContent.innerHTML =
+              "La sourate se conclut en affirmant l'omniscience d'Allah, soulignant que rien n'échappe à Sa connaissance, pas même les secrets les plus intimes de nos cœurs. Cette affirmation de la connaissance divine complète est à la fois réconfortante et source d'humilité. Elle nous rappelle que nous ne pouvons rien cacher à Allah et que toutes nos actions, intentions et pensées sont connues de Lui. Cette conscience de l'omniprésence divine peut nous guider vers une plus grande sincérité dans nos actes et nos intentions. Elle nous encourage également à chercher refuge auprès d'Allah, sachant qu'Il connaît nos luttes intérieures et nos besoins les plus profonds. Cette connaissance divine est aussi une source d'espoir, car elle implique qu'Allah comprend parfaitement nos circonstances et nos intentions, même lorsque nous commettons des erreurs.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Al-Adiyat.";
+        }
+      }
+    </script>
+  </body>
+</html>

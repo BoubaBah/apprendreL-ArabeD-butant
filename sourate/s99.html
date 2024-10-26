@@ -1,0 +1,399 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Az-Zalzalah (Le Séisme) - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #3498db;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #3498db;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Az-Zalzalah (Le Séisme)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/099.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Az-Zalzalah - سورة الزلزلة</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #3498db; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #2c3e50; stop-opacity: 1" />
+          </linearGradient>
+          <filter id="earthquake-filter">
+            <feTurbulence
+              type="turbulence"
+              baseFrequency="0.05"
+              numOctaves="2"
+              result="turbulence"
+            />
+            <feDisplacementMap
+              in2="turbulence"
+              in="SourceGraphic"
+              scale="5"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+        </defs>
+
+        <!-- Sky -->
+        <rect width="400" height="200" fill="url(#sky-gradient)" />
+
+        <!-- Earth -->
+        <g filter="url(#earthquake-filter)">
+          <path
+            d="M0 140 Q100 120 200 150 T400 130 L400 200 L0 200 Z"
+            fill="#8B4513"
+          />
+          <path
+            d="M0 160 Q100 140 200 170 T400 150 L400 200 L0 200 Z"
+            fill="#A0522D"
+          />
+        </g>
+
+        <!-- Falling rocks -->
+        <circle cx="50" cy="50" r="5" fill="#696969">
+          <animate
+            attributeName="cy"
+            from="50"
+            to="200"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <circle cx="150" cy="30" r="7" fill="#808080">
+          <animate
+            attributeName="cy"
+            from="30"
+            to="200"
+            dur="1.5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <circle cx="250" cy="70" r="6" fill="#A9A9A9">
+          <animate
+            attributeName="cy"
+            from="70"
+            to="200"
+            dur="2.2s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <circle cx="350" cy="40" r="4" fill="#D3D3D3">
+          <animate
+            attributeName="cy"
+            from="40"
+            to="200"
+            dur="1.8s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Arabic text for "Az-Zalzalah" -->
+        <text
+          x="200"
+          y="40"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          الزلزلة
+        </text>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Az-Zalzalah</h2>
+        <div class="theme-item" onclick="showReflection('earthquake')">
+          <h3>1. Le séisme apocalyptique</h3>
+          <p>
+            Description du tremblement de terre marquant le Jour du Jugement.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('earth_testimony')">
+          <h3>2. Le témoignage de la Terre</h3>
+          <p>La Terre révélant les actions de l'humanité.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('accountability')">
+          <h3>3. La responsabilité individuelle</h3>
+          <p>Chaque personne confrontée à ses actes, bons ou mauvais.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('smallest_deeds')">
+          <h3>4. L'importance des petites actions</h3>
+          <p>La valeur de chaque acte, même le plus infime.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('judgement_day')">
+          <h3>5. Le Jour du Jugement</h3>
+          <p>L'établissement de la justice divine et la rétribution finale.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Az-Zalzalah</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Az-Zalzalah.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s98.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s100.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Az-Zalzalah a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Az-Zalzalah a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Az-Zalzalah est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/99"),
+              axios.get("https://api.alquran.cloud/v1/surah/99/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "earthquake":
+            reflectionContent.innerHTML =
+              "La sourate Az-Zalzalah s'ouvre sur une description saisissante du séisme apocalyptique qui marquera le début du Jour du Jugement. Cette image puissante du tremblement de terre nous rappelle la fragilité de notre existence terrestre et l'inévitabilité du Jour dernier. Elle nous invite à réfléchir sur notre préparation spirituelle face à cet événement majeur et à reconsidérer nos priorités dans la vie. Ce séisme symbolise également le bouleversement total de l'ordre établi, annonçant une nouvelle réalité où les vérités cachées seront révélées.";
+            break;
+          case "earth_testimony":
+            reflectionContent.innerHTML =
+              "Un aspect unique de cette sourate est la personnification de la Terre, qui est décrite comme révélant ses nouvelles et témoignant des actions de l'humanité. Cette image puissante nous rappelle que nos actes, même les plus secrets, laissent une trace indélébile. Elle souligne l'omniscience d'Allah et l'impossibilité d'échapper à la responsabilité de nos actions. Cette notion nous encourage à vivre avec intégrité et conscience, sachant que la Terre elle-même sera témoin de nos actes au Jour du Jugement.";
+            break;
+          case "accountability":
+            reflectionContent.innerHTML =
+              "La sourate met l'accent sur la responsabilité individuelle, soulignant que chaque personne sera confrontée à ses actes, qu'ils soient bons ou mauvais. Cette notion de responsabilité personnelle est fondamentale dans l'islam. Elle nous rappelle que nous sommes les artisans de notre destinée éternelle et que nous ne pouvons pas rejeter la faute sur les autres ou sur les circonstances. Cette perspective nous encourage à prendre le contrôle de nos vies, à faire des choix conscients et à assumer la responsabilité de nos actions.";
+            break;
+          case "smallest_deeds":
+            reflectionContent.innerHTML =
+              "Un enseignement clé de cette sourate est l'importance accordée aux actions, même les plus infimes. Elle nous rappelle que chaque acte, aussi petit soit-il, sera pris en compte et aura des conséquences. Cette notion nous encourage à ne pas sous-estimer la valeur des petits gestes de bonté et à être vigilants même dans les actions apparemment insignifiantes. Elle nous invite à cultiver une conscience constante de nos actes et à chercher à accumuler de bonnes actions, même modestes, car elles pèseront dans la balance au Jour du Jugement.";
+            break;
+          case "judgement_day":
+            reflectionContent.innerHTML =
+              "La sourate Az-Zalzalah évoque de manière puissante le Jour du Jugement, un concept central dans la foi islamique. Elle décrit un jour où toutes les actions seront exposées et jugées avec une justice parfaite. Cette perspective eschatologique nous rappelle l'importance de vivre notre vie présente avec une conscience aiguë de l'au-delà. Elle nous encourage à nous préparer pour ce jour inévitable en menant une vie vertueuse et en cherchant constamment le pardon et la miséricorde d'Allah. Cette notion de jugement final nous invite également à maintenir un équilibre entre l'espoir en la miséricorde d'Allah et la crainte respectueuse de Sa justice.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Az-Zalzalah.";
+        }
+      }
+    </script>
+  </body>
+</html>

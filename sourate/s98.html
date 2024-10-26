@@ -1,0 +1,375 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Bayyinah (La Preuve) - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #3498db;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #3498db;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Bayyinah (La Preuve)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/098.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Bayyinah - سورة البينة</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #4a69bd; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #78e08f; stop-opacity: 1" />
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Background -->
+        <rect width="400" height="200" fill="url(#sky-gradient)" />
+
+        <!-- Sun (representing the clear proof) -->
+        <circle cx="200" cy="100" r="60" fill="#ffeaa7" filter="url(#glow)" />
+        <circle cx="200" cy="100" r="55" fill="#fdcb6e" />
+
+        <!-- Rays of light (representing guidance) -->
+        <g stroke="#fff" stroke-width="2" opacity="0.7">
+          <line x1="200" y1="20" x2="200" y2="0" />
+          <line x1="270" y1="30" x2="290" y2="10" />
+          <line x1="320" y1="100" x2="340" y2="100" />
+          <line x1="270" y1="170" x2="290" y2="190" />
+          <line x1="200" y1="180" x2="200" y2="200" />
+          <line x1="130" y1="170" x2="110" y2="190" />
+          <line x1="80" y1="100" x2="60" y2="100" />
+          <line x1="130" y1="30" x2="110" y2="10" />
+        </g>
+
+        <!-- Scrolls (representing the scriptures) -->
+        <rect
+          x="160"
+          y="90"
+          width="80"
+          height="20"
+          fill="#dfe6e9"
+          rx="5"
+          ry="5"
+        />
+        <rect
+          x="165"
+          y="95"
+          width="70"
+          height="10"
+          fill="#b2bec3"
+          rx="2"
+          ry="2"
+        />
+
+        <!-- Arabic text for "Al-Bayyinah" -->
+        <text
+          x="200"
+          y="180"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#2d3436"
+          text-anchor="middle"
+        >
+          البينة
+        </text>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Al-Bayyinah</h2>
+        <div class="theme-item" onclick="showReflection('clear_proof')">
+          <h3>1. La preuve évidente (Al-Bayyinah)</h3>
+          <p>L'importance de la preuve claire dans la religion.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('unity_religion')">
+          <h3>2. L'unité de la religion</h3>
+          <p>Le message commun à toutes les révélations divines.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('sincere_worship')">
+          <h3>3. Le culte sincère</h3>
+          <p>L'importance de l'adoration pure et sincère d'Allah.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('best_creation')">
+          <h3>4. Les meilleures des créatures</h3>
+          <p>La récompense des croyants vertueux.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('divine_judgement')">
+          <h3>5. Le jugement divin</h3>
+          <p>Les conséquences de l'acceptation ou du rejet du message divin.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Bayyinah</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Al-Bayyinah.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s97.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s99.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Bayyinah a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Bayyinah a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Bayyinah est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/98"),
+              axios.get("https://api.alquran.cloud/v1/surah/98/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "clear_proof":
+            reflectionContent.innerHTML =
+              "La sourate Al-Bayyinah met l'accent sur l'importance d'une preuve claire (Al-Bayyinah) dans la religion. Cette preuve est incarnée par le Messager d'Allah (que la paix soit sur lui) et le message qu'il apporte. Cela nous rappelle que la foi islamique n'est pas basée sur des spéculations ou des mythes, mais sur des preuves tangibles et une révélation divine claire. Cette notion nous invite à réfléchir sur les fondements de notre foi et à chercher la compréhension et la clarté dans notre pratique religieuse. Elle nous encourage également à être ouverts à la vérité et à la rechercher activement, plutôt que de nous contenter de suivre aveuglément les traditions.";
+            break;
+          case "unity_religion":
+            reflectionContent.innerHTML =
+              "La sourate souligne l'unité fondamentale du message divin à travers toutes les révélations. Elle mentionne que les gens du Livre (Juifs et Chrétiens) et les polythéistes ont reçu le même message essentiel : adorer Allah seul avec sincérité. Cette perspective nous rappelle l'universalité du message divin et l'importance de reconnaître nos points communs avec les autres traditions monothéistes. Elle nous invite à promouvoir le dialogue interreligieux et la compréhension mutuelle, tout en restant fermes dans notre propre foi. Cette unité de message souligne également la cohérence de la guidance divine à travers l'histoire de l'humanité.";
+            break;
+          case "sincere_worship":
+            reflectionContent.innerHTML =
+              "La sourate met l'accent sur l'importance du culte sincère et pur envers Allah. Elle mentionne que les gens n'ont été ordonnés que d'adorer Allah, Lui vouant un culte exclusif et sincère. Cette emphase sur la sincérité nous rappelle que l'islam n'est pas seulement un ensemble de rituels extérieurs, mais une relation profonde et sincère avec le Créateur. Elle nous encourage à examiner nos intentions dans notre adoration et à purifier nos cœurs de toute forme d'ostentation ou d'associationnisme. Cette notion de culte sincère s'étend à tous les aspects de notre vie, nous invitant à vivre avec intégrité et à chercher constamment la satisfaction d'Allah dans tout ce que nous faisons.";
+            break;
+          case "best_creation":
+            reflectionContent.innerHTML =
+              "La sourate décrit les croyants qui font de bonnes œuvres comme les meilleures des créatures. Cette description nous rappelle la grande valeur que l'islam accorde à la foi combinée aux bonnes actions. Elle nous encourage à nous efforcer constamment d'améliorer notre caractère et nos actions, sachant que cela nous élève aux yeux d'Allah. Cette notion nous rappelle également notre responsabilité en tant que représentants d'Allah sur terre, nous invitant à incarner les meilleures qualités humaines et à être des modèles pour les autres. Elle souligne l'importance de l'équilibre entre la foi intérieure et les actions extérieures dans la vie d'un croyant.";
+            break;
+          case "divine_judgement":
+            reflectionContent.innerHTML =
+              "La sourate évoque le jugement divin, mentionnant la récompense des croyants et le châtiment des mécréants. Cette référence au jugement final nous rappelle l'importance de la responsabilité individuelle dans l'islam. Elle nous encourage à vivre notre vie avec conscience, sachant que chacune de nos actions a des conséquences. Cette notion de jugement divin nous invite également à la compassion et à la justice dans nos interactions avec les autres, sachant que nous serons tous jugés équitablement par Allah. Elle nous rappelle aussi l'importance de la repentance et de la recherche constante du pardon d'Allah, sachant que Sa miséricorde surpasse Sa colère.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Al-Bayyinah.";
+        }
+      }
+    </script>
+  </body>
+</html>

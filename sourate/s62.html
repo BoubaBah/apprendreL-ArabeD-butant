@@ -1,0 +1,381 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Jumu'ah (Le Vendredi) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Jumu'ah (Le Vendredi)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/062.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Jumu'ah - سورة الجمعة</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #87ceeb; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #e6e6fa; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="100" height="100" fill="url(#sky)" />
+
+        <!-- Sun -->
+        <circle cx="80" cy="20" r="8" fill="#FFD700">
+          <animate
+            attributeName="cy"
+            values="20;18;20"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Mosque silhouette -->
+        <path d="M10 70 Q25 50 40 70 T70 70 V100 H10 Z" fill="#2c3e50" />
+        <path d="M40 70 Q55 40 70 70 V100 H40 Z" fill="#34495e" />
+        <rect x="48" y="80" width="4" height="20" fill="#ecf0f1" />
+        <circle cx="50" cy="50" r="8" fill="#3498db" />
+
+        <!-- People going to prayer -->
+        <g id="people">
+          <circle cx="20" cy="85" r="2" fill="#3498db" />
+          <circle cx="30" cy="87" r="2" fill="#3498db" />
+          <circle cx="40" cy="86" r="2" fill="#3498db" />
+          <animateTransform
+            attributeName="transform"
+            attributeType="XML"
+            type="translate"
+            values="0,0; 20,0; 40,0"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </g>
+
+        <!-- Arabic text for "Al-Jumu'ah" -->
+        <text
+          x="50"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#ecf0f1"
+          text-anchor="middle"
+        >
+          الجمعة
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Jumu'ah</h2>
+        <div class="interactive-item" onclick="showReflection('friday_prayer')">
+          <h3>1. L'importance de la prière du vendredi</h3>
+          <p>
+            Le rassemblement communautaire et son rôle dans la vie des croyants.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('divine_mission')"
+        >
+          <h3>2. La mission divine du Prophète</h3>
+          <p>
+            Le rôle de Muhammad (saws) dans la purification et l'enseignement.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('knowledge_action')"
+        >
+          <h3>3. La connaissance et l'action</h3>
+          <p>L'importance d'agir selon la connaissance acquise.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('worldly_distractions')"
+        >
+          <h3>4. Les distractions mondaines</h3>
+          <p>
+            L'avertissement contre la négligence des obligations religieuses.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('balance')">
+          <h3>5. L'équilibre entre la vie mondaine et spirituelle</h3>
+          <p>Rechercher la grâce d'Allah tout en se souvenant de Lui.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Jumu'ah</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Jumu'ah.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s61.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s63.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Jumu'ah a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Jumu'ah a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Jumu'ah est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/62"),
+              axios.get("https://api.alquran.cloud/v1/surah/62/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "friday_prayer":
+            reflectionContent.innerHTML =
+              "La sourate Al-Jumu'ah met en lumière l'importance cruciale de la prière du vendredi dans la vie des musulmans. Ce rassemblement hebdomadaire n'est pas qu'un simple rituel, mais une occasion de renforcer les liens communautaires, d'approfondir la compréhension spirituelle et de renouveler l'engagement envers Allah. La sourate souligne l'obligation de répondre à l'appel à la prière, mettant en avant la priorité que les croyants doivent accorder à leur vie spirituelle par rapport aux préoccupations mondaines. Cette réflexion nous invite à considérer comment nous pouvons tirer le meilleur parti de ces rassemblements, non seulement pour notre croissance personnelle, mais aussi pour le renforcement de la cohésion et de la solidarité au sein de la communauté musulmane.";
+            break;
+          case "divine_mission":
+            reflectionContent.innerHTML =
+              "La sourate Al-Jumu'ah rappelle la mission divine confiée au Prophète Muhammad (saws). Elle met en évidence son rôle crucial dans la purification des âmes et l'enseignement de la sagesse divine. Cette mission ne se limitait pas à la simple transmission d'un message, mais incluait également la transformation profonde des individus et de la société. La sourate nous invite à réfléchir sur la façon dont nous pouvons continuer à honorer et à mettre en pratique cet héritage prophétique dans notre vie quotidienne. Elle nous encourage à chercher constamment la purification de nos cœurs et l'acquisition de connaissances bénéfiques, tout en nous efforçant de les partager avec les autres de manière bienveillante et sage.";
+            break;
+          case "knowledge_action":
+            reflectionContent.innerHTML =
+              "Un thème central de la sourate Al-Jumu'ah est l'importance d'agir selon la connaissance acquise. Elle critique sévèrement ceux qui portent le savoir sans le mettre en pratique, les comparant à des ânes portant des livres. Cette métaphore puissante nous rappelle que la véritable valeur de la connaissance réside dans son application pratique. La sourate nous encourage à réfléchir sur la façon dont nous intégrons les enseignements islamiques dans notre vie quotidienne. Elle nous invite à nous demander si nous sommes de simples porteurs passifs de savoir ou si nous nous efforçons activement de transformer notre connaissance en actions vertueuses et en comportements éthiques qui reflètent véritablement les principes de l'Islam.";
+            break;
+          case "worldly_distractions":
+            reflectionContent.innerHTML =
+              "La sourate Al-Jumu'ah met en garde contre les distractions mondaines qui peuvent détourner les croyants de leurs obligations religieuses. Elle décrit une scène où certains quittent la prière du vendredi attirés par le commerce ou le divertissement. Cette mise en garde reste particulièrement pertinente dans notre monde moderne, rempli de distractions constantes et d'engagements matériels pressants. La sourate nous invite à réfléchir sur nos priorités et à examiner comment nous équilibrons nos responsabilités spirituelles avec nos préoccupations mondaines. Elle nous encourage à cultiver une conscience qui place la recherche de la satisfaction d'Allah au-dessus des gains matériels temporaires, tout en reconnaissant la nécessité de s'engager dans les affaires du monde de manière équilibrée et éthique.";
+            break;
+          case "balance":
+            reflectionContent.innerHTML =
+              "La sourate Al-Jumu'ah souligne l'importance de trouver un équilibre harmonieux entre la vie mondaine et la vie spirituelle. Elle encourage les croyants à rechercher la grâce d'Allah à travers leurs activités quotidiennes, tout en se souvenant constamment de Lui. Ce concept d'équilibre est crucial dans l'Islam, qui ne prône ni l'ascétisme total ni la poursuite effrénée des plaisirs mondains. La sourate nous invite à réfléchir sur la façon dont nous pouvons intégrer le souvenir d'Allah dans tous les aspects de notre vie, transformant ainsi nos activités quotidiennes en actes d'adoration. Elle nous encourage à voir notre travail, nos interactions sociales et même nos loisirs comme des opportunités de plaire à Allah et de servir Sa création, créant ainsi une synergie entre notre quête spirituelle et notre engagement dans le monde.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Jumu'ah.";
+        }
+      }
+    </script>
+  </body>
+</html>

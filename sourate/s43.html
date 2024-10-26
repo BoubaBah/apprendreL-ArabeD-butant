@@ -1,0 +1,406 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Az-Zukhruf (L'Ornement) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #fdf2e9;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #d35400;
+      }
+      #ornament-canvas {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .reflection-section {
+        background-color: #e8f8f5;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #16a085;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Az-Zukhruf (L'Ornement)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/043.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Az-Zukhruf - سورة الزخرف</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <canvas id="ornament-canvas"></canvas>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate</h2>
+        <div class="interactive-item" onclick="showReflection('revelation')">
+          <h3>1. La révélation et le Coran</h3>
+          <p>L'importance du Coran comme guide pour l'humanité.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('monotheism')">
+          <h3>2. Le monothéisme et l'idolâtrie</h3>
+          <p>La critique de l'association et l'appel à l'unicité d'Allah.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('prophets')">
+          <h3>3. Les histoires des prophètes</h3>
+          <p>
+            Mentions d'Ibrahim et de Moïse comme exemples pour les croyants.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('afterlife')">
+          <h3>4. L'au-delà et le Jugement</h3>
+          <p>
+            Rappels de la vie après la mort et de la responsabilité des actes.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('wealth')">
+          <h3>5. La richesse et les ornements</h3>
+          <p>Réflexions sur la nature éphémère des biens matériels.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section fade-in">
+        <h2 class="reflection-title">Réflexions sur Az-Zukhruf</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Az-Zukhruf.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s42.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s44.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+        const canvas = document.getElementById("ornament-canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Set canvas size
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        // Ornament animation
+        function drawOrnament() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // Draw background
+          const gradient = ctx.createLinearGradient(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+          gradient.addColorStop(0, "#f39c12");
+          gradient.addColorStop(1, "#d35400");
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          // Draw ornamental patterns
+          const time = Date.now() * 0.001;
+          const centerX = canvas.width / 2;
+          const centerY = canvas.height / 2;
+
+          for (let i = 0; i < 12; i++) {
+            const angle = (i / 12) * Math.PI * 2 + time;
+            const x = centerX + Math.cos(angle) * 100;
+            const y = centerY + Math.sin(angle) * 100;
+
+            ctx.beginPath();
+            ctx.arc(x, y, 20, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(x, y);
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+          }
+
+          // Draw central ornament
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, 50, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, 40, 0, Math.PI * 2);
+          ctx.strokeStyle = "#d35400";
+          ctx.lineWidth = 3;
+          ctx.stroke();
+
+          requestAnimationFrame(drawOrnament);
+        }
+
+        drawOrnament();
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Az-Zukhruf a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Az-Zukhruf a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Az-Zukhruf est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/43"),
+              axios.get("https://api.alquran.cloud/v1/surah/43/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "revelation":
+            reflectionContent.innerHTML =
+              "La sourate Az-Zukhruf met en lumière l'importance du Coran comme guide pour l'humanité. Elle souligne que cette révélation est un livre clair et compréhensible, envoyé par Allah pour guider les gens vers la vérité. La sourate invite à réfléchir sur la sagesse contenue dans le Coran et à le considérer comme une source de guidance et de connaissance. Elle rappelle aussi que le rejet du message divin a des conséquences graves, tout en encourageant à l'accepter et à le suivre pour le bien-être dans ce monde et dans l'au-delà.";
+            break;
+          case "monotheism":
+            reflectionContent.innerHTML =
+              "Un thème central de Az-Zukhruf est la critique de l'idolâtrie et l'appel au monothéisme pur. La sourate remet en question les croyances polythéistes, notamment l'attribution de filles à Allah et l'adoration des anges. Elle souligne l'absurdité de ces croyances et rappelle que Allah est le seul digne d'adoration. La sourate encourage à réfléchir sur la création comme preuve de l'unicité d'Allah et invite à abandonner les fausses divinités pour se tourner vers le Créateur unique.";
+            break;
+          case "prophets":
+            reflectionContent.innerHTML =
+              "Az-Zukhruf fait référence à plusieurs prophètes, notamment Ibrahim (Abraham) et Musa (Moïse), comme exemples pour les croyants. Ces récits servent à illustrer la continuité du message divin à travers l'histoire et à tirer des leçons de la vie des prophètes. La sourate rappelle comment ces messagers ont appelé leurs peuples au monothéisme et ont fait face à l'opposition. Ces histoires sont présentées comme des sources d'inspiration et d'enseignement pour les musulmans, les encourageant à rester fermes dans leur foi malgré les défis.";
+            break;
+          case "afterlife":
+            reflectionContent.innerHTML =
+              "La sourate Az-Zukhruf contient de nombreux rappels sur la vie après la mort et le Jour du Jugement. Elle souligne l'importance de se préparer pour l'au-delà en menant une vie vertueuse et en suivant les enseignements divins. La sourate décrit les récompenses promises aux croyants dans le Paradis, tout en avertissant des conséquences du rejet de la vérité. Ces passages visent à éveiller la conscience des gens sur la temporalité de la vie terrestre et l'importance de se concentrer sur ce qui a une valeur éternelle.";
+            break;
+          case "wealth":
+            reflectionContent.innerHTML =
+              "Un thème intéressant de Az-Zukhruf est sa réflexion sur la richesse et les ornements de la vie mondaine. La sourate tire son nom (L'Ornement) de ce thème. Elle met en garde contre l'attachement excessif aux biens matériels et aux plaisirs terrestres, rappelant leur nature éphémère. Az-Zukhruf encourage à voir au-delà des apparences et à comprendre que la vraie valeur réside dans la piété et les bonnes actions. Cette perspective invite à un équilibre entre l'appréciation des bienfaits d'Allah dans ce monde et la préparation pour la vie éternelle.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Az-Zukhruf.";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,415 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Ad-Duha (Le Jour Montant) - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #3498db;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #3498db;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Ad-Duha (Le Jour Montant)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/093.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Ad-Duha - سورة الضحى</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #ff7f50; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #ffd700; stop-opacity: 1" />
+          </linearGradient>
+          <radialGradient
+            id="sun-gradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #ffffff; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #ffd700; stop-opacity: 1" />
+          </radialGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="400" height="200" fill="url(#sky-gradient)" />
+
+        <!-- Sun -->
+        <circle cx="200" cy="100" r="60" fill="url(#sun-gradient)">
+          <animate
+            attributeName="r"
+            values="60;65;60"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Mountains -->
+        <path
+          d="M0,200 L100,100 L150,150 L200,50 L250,150 L300,100 L400,200 Z"
+          fill="#2c3e50"
+          opacity="0.7"
+        />
+
+        <!-- Arabic text for "Ad-Duha" -->
+        <text
+          x="200"
+          y="180"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          الضحى
+        </text>
+
+        <!-- Light rays -->
+        <g>
+          <line
+            x1="200"
+            y1="100"
+            x2="150"
+            y2="50"
+            stroke="#fff"
+            stroke-width="2"
+            opacity="0.7"
+          >
+            <animate
+              attributeName="opacity"
+              values="0.7;0.2;0.7"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </line>
+          <line
+            x1="200"
+            y1="100"
+            x2="250"
+            y2="50"
+            stroke="#fff"
+            stroke-width="2"
+            opacity="0.7"
+          >
+            <animate
+              attributeName="opacity"
+              values="0.7;0.2;0.7"
+              dur="3.5s"
+              repeatCount="indefinite"
+            />
+          </line>
+          <line
+            x1="200"
+            y1="100"
+            x2="200"
+            y2="20"
+            stroke="#fff"
+            stroke-width="2"
+            opacity="0.7"
+          >
+            <animate
+              attributeName="opacity"
+              values="0.7;0.2;0.7"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </line>
+        </g>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Ad-Duha</h2>
+        <div class="theme-item" onclick="showReflection('reassurance')">
+          <h3>1. Réconfort et Réassurance</h3>
+          <p>
+            Allah rassure le Prophète Muhammad (paix soit sur lui) de Son
+            soutien continu.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('gratitude')">
+          <h3>2. Gratitude envers les Bénédictions Divines</h3>
+          <p>Rappel des faveurs passées et futures d'Allah.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('compassion')">
+          <h3>3. Compassion envers les Démunis</h3>
+          <p>Encouragement à prendre soin des orphelins et des nécessiteux.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('patience')">
+          <h3>4. Patience dans l'Adversité</h3>
+          <p>Leçon sur l'endurance face aux difficultés.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('guidance')">
+          <h3>5. Guidance Divine</h3>
+          <p>Allah guide et élève ceux qui Le cherchent sincèrement.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Ad-Duha</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Ad-Duha.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s92.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s94.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Ad-Duha a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Ad-Duha a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Ad-Duha est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/93"),
+              axios.get("https://api.alquran.cloud/v1/surah/93/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "reassurance":
+            reflectionContent.innerHTML =
+              "La sourate Ad-Duha commence par un puissant message de réconfort adressé au Prophète Muhammad (paix soit sur lui), et par extension à tous les croyants. Allah jure par le jour montant et la nuit quand elle s'étend, soulignant l'alternance naturelle entre la lumière et l'obscurité, entre les moments de clarté et ceux qui semblent plus sombres dans nos vies. Ce serment est suivi de l'assurance que Allah n'a ni abandonné ni délaissé Son Prophète. Cette réassurance divine nous rappelle que, même dans nos moments les plus difficiles, quand nous pouvons nous sentir seuls ou abandonnés, Allah est toujours présent, veillant sur nous avec Sa miséricorde infinie.";
+            break;
+          case "gratitude":
+            reflectionContent.innerHTML =
+              "La sourate Ad-Duha met l'accent sur l'importance de la gratitude envers les bénédictions divines. Elle rappelle au Prophète, et à nous tous, les faveurs passées d'Allah et promet que l'avenir sera encore meilleur. Cette perspective encourage une attitude de reconnaissance constante envers notre Créateur, nous invitant à voir Sa main bienveillante dans tous les aspects de notre vie. La gratitude n'est pas seulement une réponse aux bénédictions évidentes, mais aussi une façon de percevoir les épreuves comme des opportunités de croissance et de rapprochement avec Allah. En cultivant la gratitude, nous ouvrons nos cœurs à recevoir davantage de la générosité divine et nous trouvons la paix intérieure, même face aux défis de la vie.";
+            break;
+          case "compassion":
+            reflectionContent.innerHTML =
+              "Un thème central de la sourate Ad-Duha est l'appel à la compassion, particulièrement envers les plus vulnérables de la société. Allah ordonne spécifiquement de ne pas repousser l'orphelin et de ne pas rudoyer le mendiant. Ce commandement souligne l'importance de la responsabilité sociale dans l'Islam et nous rappelle que notre foi doit se traduire par des actions concrètes de bonté et de générosité envers ceux qui sont dans le besoin. Cette injonction nous invite à réfléchir sur notre rôle dans la communauté et à chercher activement des moyens d'aider et de soutenir les moins fortunés, reconnaissant que la vraie richesse réside dans la capacité à donner et à se soucier des autres.";
+            break;
+          case "patience":
+            reflectionContent.innerHTML =
+              "La sourate Ad-Duha enseigne une leçon profonde sur la patience face à l'adversité. En rappelant au Prophète les difficultés qu'il a traversées et comment Allah l'a toujours soutenu, la sourate nous encourage à endurer les épreuves avec constance et foi. Elle nous rappelle que les périodes difficiles sont temporaires et que le soulagement viendra, tout comme le jour succède à la nuit. Cette perspective nous aide à développer une résilience spirituelle, sachant que chaque épreuve est une opportunité de croissance et de rapprochement avec Allah. La patience n'est pas une attente passive, mais une confiance active en la sagesse et la miséricorde divines, même lorsque nous ne comprenons pas immédiatement le but de nos difficultés.";
+            break;
+          case "guidance":
+            reflectionContent.innerHTML =
+              "La sourate Ad-Duha met en lumière le thème de la guidance divine, rappelant comment Allah a guidé le Prophète Muhammad (paix soit sur lui) tout au long de sa vie. Cette guidance n'est pas réservée uniquement aux prophètes, mais est offerte à tous ceux qui la cherchent sincèrement. La sourate nous encourage à reconnaître comment Allah nous guide dans notre vie quotidienne, que ce soit à travers les enseignements de l'Islam, les expériences de vie, ou les moments de clarté spirituelle. Elle nous rappelle que la véritable élévation vient de suivre la guidance d'Allah, en alignant nos actions et nos intentions avec Sa volonté. En cherchant constamment cette guidance, nous pouvons trouver notre chemin à travers les complexités de la vie et progresser vers une compréhension plus profonde de notre but en tant que serviteurs d'Allah.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Ad-Duha.";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,391 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Sourate Al-Humazah (Les Calomniateurs) - Expérience Interactive
+    </title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #e74c3c;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #e74c3c;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #e74c3c;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #c0392b;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(231, 76, 60, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #e74c3c;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #e74c3c;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Humazah (Les Calomniateurs)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/104.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Humazah - سورة الهمزة</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <radialGradient
+            id="fire-gradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #ff4500; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #ff8c00; stop-opacity: 1" />
+          </radialGradient>
+        </defs>
+
+        <!-- Background -->
+        <rect width="400" height="200" fill="#2c3e50" />
+
+        <!-- Fire -->
+        <g id="fire">
+          <path d="M150,200 Q200,100 250,200" fill="url(#fire-gradient)">
+            <animate
+              attributeName="d"
+              values="M150,200 Q200,100 250,200;
+                                     M150,200 Q200,50 250,200;
+                                     M150,200 Q200,100 250,200"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </path>
+        </g>
+
+        <!-- Coins falling -->
+        <g id="coins"></g>
+
+        <!-- Arabic text for "Al-Humazah" -->
+        <text
+          x="200"
+          y="180"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          الهمزة
+        </text>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Al-Humazah</h2>
+        <div class="theme-item" onclick="showReflection('slander')">
+          <h3>1. La condamnation de la médisance</h3>
+          <p>Les conséquences négatives de la calomnie et de la diffamation.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('wealth')">
+          <h3>2. L'attachement excessif aux richesses</h3>
+          <p>
+            Les dangers de l'obsession pour l'accumulation de biens matériels.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('punishment')">
+          <h3>3. Le châtiment divin</h3>
+          <p>
+            La description du feu de l'Enfer comme punition pour les
+            transgresseurs.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('morality')">
+          <h3>4. L'importance de l'éthique sociale</h3>
+          <p>L'appel à une conduite morale et respectueuse envers autrui.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('accountability')">
+          <h3>5. La responsabilité individuelle</h3>
+          <p>
+            Le rappel que chacun sera jugé pour ses actions et ses intentions.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Humazah</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Al-Humazah.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s103.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s105.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        // Create falling coins
+        const coinsGroup = document.getElementById("coins");
+        for (let i = 0; i < 10; i++) {
+          const coin = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+          coin.setAttribute("cx", Math.random() * 400);
+          coin.setAttribute("cy", -10);
+          coin.setAttribute("r", 5);
+          coin.setAttribute("fill", "#ffd700");
+          coinsGroup.appendChild(coin);
+
+          // Animate coin falling
+          const animate = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "animate"
+          );
+          animate.setAttribute("attributeName", "cy");
+          animate.setAttribute("from", "-10");
+          animate.setAttribute("to", "210");
+          animate.setAttribute("dur", `${3 + Math.random() * 2}s`);
+          animate.setAttribute("repeatCount", "indefinite");
+          coin.appendChild(animate);
+        }
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Humazah a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Humazah a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Humazah est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/104"),
+              axios.get("https://api.alquran.cloud/v1/surah/104/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "slander":
+            reflectionContent.innerHTML =
+              "La sourate Al-Humazah commence par une forte condamnation de ceux qui se livrent à la médisance et à la calomnie. Ces comportements sont présentés comme des actes graves qui portent atteinte à la dignité et à l'honneur d'autrui. La sourate nous rappelle l'importance de contrôler notre langue et nos actions, en évitant de propager des rumeurs ou de nuire à la réputation des autres. Elle souligne que ces actes ne sont pas sans conséquences et qu'ils sont sévèrement jugés par Dieu. Cette mise en garde nous invite à réfléchir sur l'impact de nos paroles et à cultiver une communication plus positive et respectueuse au sein de la société.";
+            break;
+          case "wealth":
+            reflectionContent.innerHTML =
+              "La sourate met en lumière les dangers de l'attachement excessif aux richesses matérielles. Elle critique ceux qui passent leur temps à accumuler des biens et à les compter, pensant que leur fortune les rendra immortels ou les protégera de tout mal. Cette obsession pour la richesse est présentée comme une illusion qui détourne l'homme de valeurs plus importantes et de sa responsabilité spirituelle. La sourate nous rappelle que les biens matériels sont éphémères et que leur accumulation ne garantit ni le bonheur ni la sécurité véritable. Elle nous encourage à chercher un équilibre entre nos besoins matériels et nos aspirations spirituelles, en accordant plus d'importance à la générosité et aux actions vertueuses qu'à l'accumulation de richesses.";
+            break;
+          case "punishment":
+            reflectionContent.innerHTML =
+              "La sourate décrit de manière vivide le châtiment qui attend ceux qui persistent dans leurs mauvaises actions, notamment la médisance et l'attachement excessif aux richesses. Le feu de l'Enfer est décrit comme 'al-hutamah', un feu qui brise et consume tout. Cette description saisissante vise à éveiller la conscience des gens sur la gravité de leurs actes et les conséquences de leurs choix. La sourate souligne que ce châtiment n'est pas une simple punition physique, mais qu'il atteint également le cœur, siège des intentions et des désirs. Cette image puissante nous invite à une introspection profonde et à une réévaluation de nos priorités et de nos comportements.";
+            break;
+          case "morality":
+            reflectionContent.innerHTML =
+              "À travers sa condamnation de la médisance et de l'obsession pour la richesse, la sourate Al-Humazah met en avant l'importance d'une éthique sociale solide. Elle nous rappelle que nos interactions avec les autres et notre attitude envers les biens matériels sont des aspects cruciaux de notre moralité. La sourate encourage implicitement des valeurs telles que le respect mutuel, l'honnêteté, la modestie et la générosité. Elle nous invite à construire une société basée sur la bienveillance et le respect de la dignité humaine, plutôt que sur la compétition malsaine et la dégradation d'autrui. Ce message souligne l'importance de cultiver des relations harmonieuses et de contribuer positivement à notre communauté.";
+            break;
+          case "accountability":
+            reflectionContent.innerHTML =
+              "La sourate Al-Humazah met l'accent sur la responsabilité individuelle de chacun pour ses actions et ses intentions. Elle rappelle que chaque personne sera jugée pour ce qu'elle a fait et dit, soulignant ainsi l'importance de l'autoréflexion et de la conscience de soi. Ce thème de responsabilité personnelle nous encourage à être vigilants dans nos actions quotidiennes, à examiner nos motivations et à nous efforcer constamment d'améliorer notre caractère. La sourate nous rappelle que nos choix et nos comportements ont des conséquences, non seulement dans ce monde, mais aussi dans l'au-delà. Cette perspective encourage une vie menée avec intégrité, compassion et conscience des autres, en gardant toujours à l'esprit notre responsabilité ultime devant Dieu.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Al-Humazah.";
+        }
+      }
+    </script>
+  </body>
+</html>

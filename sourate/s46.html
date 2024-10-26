@@ -1,0 +1,391 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Ahqaf (Les Dunes) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0e6d2;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #4a4a4a;
+      }
+      h1,
+      h2 {
+        color: #8b4513;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #6d4c41;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #d7ccc8;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #795548;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #6d4c41;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #795548;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #8d6e63;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #6d4c41;
+      }
+      .interactive-section {
+        background-color: #fff3e0;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #5d4037;
+      }
+      .reflection-section {
+        background-color: #ffecb3;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #ff6f00;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #4e342e;
+      }
+      #dunes-canvas {
+        width: 100%;
+        height: 200px;
+        margin: 20px 0;
+        border: 1px solid #d7ccc8;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Ahqaf (Les Dunes)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/046.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Ahqaf - سورة الأحقاف</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <canvas id="dunes-canvas"></canvas>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate</h2>
+        <div class="interactive-item" onclick="showReflection('revelation')">
+          <h3>1. La révélation et le Coran</h3>
+          <p>L'importance et l'authenticité du message divin.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('creation')">
+          <h3>2. La création et ses signes</h3>
+          <p>Réflexions sur la création de l'univers et de l'humanité.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('peoplead')">
+          <h3>3. Le peuple de 'Ad</h3>
+          <p>L'histoire et les leçons du peuple de 'Ad.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('parenthood')">
+          <h3>4. Relations parents-enfants</h3>
+          <p>L'importance de la gratitude envers les parents.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('accountability')"
+        >
+          <h3>5. Responsabilité et jugement</h3>
+          <p>
+            La notion de responsabilité individuelle et du Jour du Jugement.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section fade-in">
+        <h2 class="reflection-title">Réflexions sur Al-Ahqaf</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Ahqaf.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s45.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s47.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+        const canvas = document.getElementById("dunes-canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Set canvas size
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        // Dunes animation
+        function drawDunes() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // Sky
+          let gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+          gradient.addColorStop(0, "#87CEEB");
+          gradient.addColorStop(1, "#E6C78F");
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          // Sun
+          ctx.fillStyle = "#FDB813";
+          ctx.beginPath();
+          ctx.arc(canvas.width - 50, 50, 30, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Dunes
+          ctx.fillStyle = "#D2B48C";
+          for (let i = 0; i < 3; i++) {
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height - 50 * i);
+            for (let x = 0; x < canvas.width; x += 10) {
+              let y = Math.sin(x / 50 + i) * 20 + canvas.height - 50 * i;
+              ctx.lineTo(x, y);
+            }
+            ctx.lineTo(canvas.width, canvas.height);
+            ctx.lineTo(0, canvas.height);
+            ctx.fill();
+          }
+        }
+
+        drawDunes();
+
+        window.addEventListener("resize", function () {
+          canvas.width = canvas.offsetWidth;
+          canvas.height = canvas.offsetHeight;
+          drawDunes();
+        });
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Ahqaf a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Ahqaf a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Ahqaf est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/46"),
+              axios.get("https://api.alquran.cloud/v1/surah/46/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "revelation":
+            reflectionContent.innerHTML =
+              "Al-Ahqaf met l'accent sur l'importance et l'authenticité de la révélation divine, en particulier le Coran. La sourate affirme que le Coran est une révélation d'Allah, guidant vers la vérité et le droit chemin. Elle souligne que le Prophète Muhammad (paix sur lui) n'est qu'un messager, transmettant fidèlement ce qui lui a été révélé. Cette sourate invite les gens à réfléchir sur le message du Coran et à reconnaître sa sagesse et sa vérité, rappelant que la révélation est une miséricorde et un guide pour l'humanité.";
+            break;
+          case "creation":
+            reflectionContent.innerHTML =
+              "La sourate invite à la réflexion sur la création de l'univers et de l'humanité comme signes de la puissance et de la sagesse d'Allah. Elle incite les gens à observer et à méditer sur le monde qui les entoure, y voyant des preuves de l'existence et de l'unicité du Créateur. Al-Ahqaf rappelle que la création n'est pas vaine, mais qu'elle a un but précis, et que chaque élément de l'univers témoigne de la grandeur divine. Cette réflexion sur la création est présentée comme un moyen de renforcer la foi et la gratitude envers Allah.";
+            break;
+          case "peoplead":
+            reflectionContent.innerHTML =
+              "Al-Ahqaf fait référence au peuple de 'Ad, une ancienne civilisation arabe mentionnée dans le Coran. L'histoire de ce peuple est présentée comme un avertissement et une leçon. Les 'Ad, malgré leur puissance et leur prospérité, ont rejeté le message de leur prophète Hud et ont été détruits pour leur arrogance et leur désobéissance. Cette narration sert à rappeler les conséquences du rejet de la vérité et l'importance d'écouter les avertissements divins. Elle souligne également que la force matérielle ne protège pas contre le jugement d'Allah.";
+            break;
+          case "parenthood":
+            reflectionContent.innerHTML =
+              "La sourate accorde une attention particulière aux relations entre parents et enfants, en mettant l'accent sur la gratitude et le respect dus aux parents. Elle recommande la bonté envers les parents, en particulier la mère, reconnaissant les difficultés de la grossesse et de l'éducation des enfants. Al-Ahqaf encourage les enfants à être reconnaissants envers leurs parents et à les traiter avec gentillesse, tout en soulignant que cette obligation est secondaire par rapport à l'obéissance à Allah. Ce thème renforce l'importance des liens familiaux dans l'éthique islamique.";
+            break;
+          case "accountability":
+            reflectionContent.innerHTML =
+              "Al-Ahqaf met en avant le concept de responsabilité individuelle et du Jour du Jugement. Elle rappelle que chaque personne sera tenue responsable de ses actes et de ses choix devant Allah. La sourate souligne l'inévitabilité du jugement final et encourage les croyants à vivre leur vie présente avec conscience et droiture. Elle met en garde contre les conséquences de l'incroyance et des mauvaises actions, tout en promettant une récompense pour ceux qui croient et font de bonnes œuvres. Ce thème vise à inciter à la réflexion sur les conséquences éternelles de nos actions terrestres.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Ahqaf.";
+        }
+      }
+    </script>
+  </body>
+</html>

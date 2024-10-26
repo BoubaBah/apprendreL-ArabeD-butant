@@ -1,0 +1,405 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Falaq (L'Aube Naissante) - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f8ff;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #1e90ff;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(30, 144, 255, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #4169e1;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 400px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #87cefa;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #1e90ff;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #4169e1;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #1e90ff;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #1e90ff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #4169e1;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #e6f2ff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(30, 144, 255, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #1e90ff;
+      }
+      .reflection-section {
+        background-color: #e6f2ff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #1e90ff;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #4169e1;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Falaq (L'Aube Naissante)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/113.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Falaq - سورة الفلق</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #00008b; stop-opacity: 1" />
+            <stop offset="50%" style="stop-color: #4169e1; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #87ceeb; stop-opacity: 1" />
+          </linearGradient>
+          <radialGradient
+            id="sun-gradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #ffd700; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #ffa500; stop-opacity: 1" />
+          </radialGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="400" height="200" fill="url(#sky-gradient)" />
+
+        <!-- Stars -->
+        <g id="stars"></g>
+
+        <!-- Mountains -->
+        <path d="M0,200 L100,100 L200,180 L300,80 L400,200 Z" fill="#2F4F4F" />
+
+        <!-- Sun -->
+        <circle cx="200" cy="150" r="30" fill="url(#sun-gradient)">
+          <animate
+            attributeName="cy"
+            from="150"
+            to="100"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Arabic text -->
+        <text
+          x="200"
+          y="50"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ
+        </text>
+
+        <!-- Light rays -->
+        <g id="light-rays"></g>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Al-Falaq</h2>
+        <div class="theme-item" onclick="showReflection('protection')">
+          <h3>1. La recherche de protection divine</h3>
+          <p>L'importance de chercher refuge auprès d'Allah contre les maux.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('darkness')">
+          <h3>2. La protection contre l'obscurité</h3>
+          <p>Symbolisme de l'obscurité et la recherche de lumière divine.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('envy')">
+          <h3>3. La protection contre l'envie</h3>
+          <p>Les dangers de l'envie et comment s'en protéger.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('magic')">
+          <h3>4. La protection contre la magie</h3>
+          <p>
+            La réalité de la sorcellerie et la protection divine contre elle.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('daily')">
+          <h3>5. Application quotidienne</h3>
+          <p>
+            L'utilisation de cette sourate dans la vie quotidienne pour la
+            protection.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Falaq</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Al-Falaq.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s112.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s114.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        // Create stars
+        const starsGroup = document.getElementById("stars");
+        for (let i = 0; i < 50; i++) {
+          const star = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+          star.setAttribute("cx", Math.random() * 400);
+          star.setAttribute("cy", Math.random() * 100);
+          star.setAttribute("r", Math.random() * 1.5);
+          star.setAttribute("fill", "#ffffff");
+          starsGroup.appendChild(star);
+        }
+
+        // Create light rays
+        const lightRaysGroup = document.getElementById("light-rays");
+        for (let i = 0; i < 12; i++) {
+          const ray = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
+          );
+          const angle = (i * 30 * Math.PI) / 180;
+          const x1 = 200 + 30 * Math.cos(angle);
+          const y1 = 150 + 30 * Math.sin(angle);
+          const x2 = 200 + 50 * Math.cos(angle);
+          const y2 = 150 + 50 * Math.sin(angle);
+          ray.setAttribute("x1", x1);
+          ray.setAttribute("y1", y1);
+          ray.setAttribute("x2", x2);
+          ray.setAttribute("y2", y2);
+          ray.setAttribute("stroke", "#FFD700");
+          ray.setAttribute("stroke-width", "1");
+          ray.setAttribute("opacity", "0.5");
+          lightRaysGroup.appendChild(ray);
+        }
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Falaq a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Falaq a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Falaq est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/113"),
+              axios.get("https://api.alquran.cloud/v1/surah/113/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "protection":
+            reflectionContent.innerHTML =
+              "La sourate Al-Falaq met l'accent sur l'importance de chercher refuge auprès d'Allah contre divers types de mal. Elle commence par 'Dis: «Je cherche protection auprès du Seigneur de l'aube naissante»', soulignant que la véritable protection ne peut venir que d'Allah. Cette sourate nous enseigne à reconnaître notre vulnérabilité face aux forces négatives et à nous tourner vers Allah pour trouver force et sécurité.";
+            break;
+          case "darkness":
+            reflectionContent.innerHTML =
+              "La mention de l'aube naissante (Al-Falaq) est significative car elle symbolise la transition de l'obscurité à la lumière. Cette image puissante nous rappelle que, tout comme l'aube dissipe l'obscurité, la protection d'Allah peut dissiper les ténèbres spirituelles et les difficultés dans nos vies. Cela encourage les croyants à rester optimistes même dans les moments les plus sombres, sachant que la lumière d'Allah est toujours présente.";
+            break;
+          case "envy":
+            reflectionContent.innerHTML =
+              "La sourate mentionne spécifiquement la protection contre 'l'envieux lorsqu'il envie'. Cela souligne les dangers spirituels et psychologiques de l'envie, non seulement pour celui qui en est la cible, mais aussi pour l'envieux lui-même. Cette partie de la sourate nous invite à cultiver la contentement et la gratitude pour ce qu'Allah nous a accordé, tout en cherchant Sa protection contre les effets néfastes de l'envie des autres.";
+            break;
+          case "magic":
+            reflectionContent.innerHTML =
+              "Al-Falaq fait référence à la protection contre 'celles qui soufflent sur les nœuds', une allusion à la pratique de la sorcellerie. Cela reconnaît la réalité des forces occultes tout en affirmant que la protection ultime vient d'Allah. Cette partie de la sourate rappelle aux croyants de placer leur confiance en Allah plutôt que de craindre les pratiques occultes ou d'y recourir.";
+            break;
+          case "daily":
+            reflectionContent.innerHTML =
+              "La sourate Al-Falaq, avec sa sourate sœur An-Nas, est souvent récitée comme une forme de protection quotidienne, particulièrement le matin et le soir. Son utilisation régulière dans la vie d'un musulman sert de rappel constant de la dépendance à Allah et de la nécessité de chercher Sa protection dans tous les aspects de la vie. Elle encourage une conscience spirituelle continue et un lien avec le Créateur face aux défis quotidiens.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Al-Falaq.";
+        }
+      }
+    </script>
+  </body>
+</html>

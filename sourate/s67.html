@@ -1,0 +1,467 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Mulk (La Royauté) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Mulk (La Royauté)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/067.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Mulk - سورة الملك</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #1a2a6c; stop-opacity: 1" />
+            <stop offset="50%" style="stop-color: #b21f1f; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #fdbb2d; stop-opacity: 1" />
+          </linearGradient>
+          <radialGradient
+            id="sunGlow"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: yellow; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: orange; stop-opacity: 0" />
+          </radialGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="100" height="100" fill="url(#skyGradient)" />
+
+        <!-- Stars -->
+        <g id="stars">
+          <circle cx="10" cy="10" r="0.5" fill="white" opacity="0.7">
+            <animate
+              attributeName="opacity"
+              values="0.7;0.2;0.7"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="25" cy="15" r="0.3" fill="white" opacity="0.5">
+            <animate
+              attributeName="opacity"
+              values="0.5;0.1;0.5"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="40" cy="8" r="0.4" fill="white" opacity="0.6">
+            <animate
+              attributeName="opacity"
+              values="0.6;0.2;0.6"
+              dur="3.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="60" cy="12" r="0.3" fill="white" opacity="0.4">
+            <animate
+              attributeName="opacity"
+              values="0.4;0.1;0.4"
+              dur="4.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="80" cy="18" r="0.5" fill="white" opacity="0.7">
+            <animate
+              attributeName="opacity"
+              values="0.7;0.3;0.7"
+              dur="3.8s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        </g>
+
+        <!-- Sun -->
+        <circle
+          cx="50"
+          cy="25"
+          r="10"
+          fill="yellow"
+          stroke="orange"
+          stroke-width="2"
+        >
+          <animate
+            attributeName="r"
+            values="10;11;10"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <circle cx="50" cy="25" r="15" fill="url(#sunGlow)" opacity="0.5">
+          <animate
+            attributeName="r"
+            values="15;17;15"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Mountains -->
+        <path
+          d="M0,100 L20,70 L40,85 L60,65 L80,80 L100,60 L100,100 Z"
+          fill="#34495e"
+        />
+        <path
+          d="M0,100 L30,75 L50,90 L70,70 L100,85 L100,100 Z"
+          fill="#2c3e50"
+        />
+
+        <!-- Arabic text for "Al-Mulk" -->
+        <text
+          x="50"
+          y="50"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="white"
+          text-anchor="middle"
+          dominant-baseline="middle"
+        >
+          الملك
+        </text>
+
+        <!-- Crown symbol -->
+        <path
+          d="M40,60 L45,55 L50,60 L55,55 L60,60 L57,65 L43,65 Z"
+          fill="gold"
+          stroke="goldenrod"
+          stroke-width="0.5"
+        >
+          <animateTransform
+            attributeName="transform"
+            attributeType="XML"
+            type="rotate"
+            from="0 50 62.5"
+            to="10 50 62.5"
+            dur="2s"
+            repeatCount="indefinite"
+            additive="sum"
+          />
+          <animateTransform
+            attributeName="transform"
+            attributeType="XML"
+            type="rotate"
+            from="10 50 62.5"
+            to="0 50 62.5"
+            dur="2s"
+            repeatCount="indefinite"
+            additive="sum"
+            begin="1s"
+          />
+        </path>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Mulk</h2>
+        <div class="interactive-item" onclick="showReflection('creation')">
+          <h3>1. La création et la puissance d'Allah</h3>
+          <p>La perfection et l'harmonie dans la création d'Allah.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('accountability')"
+        >
+          <h3>2. La responsabilité et le jugement</h3>
+          <p>
+            L'importance de la responsabilité individuelle et du jugement divin.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('gratitude')">
+          <h3>3. La gratitude envers Allah</h3>
+          <p>L'appel à la reconnaissance des bienfaits d'Allah.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('reflection')">
+          <h3>4. La réflexion et l'observation</h3>
+          <p>
+            L'importance de réfléchir sur les signes d'Allah dans l'univers.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('warning')">
+          <h3>5. Avertissement et espoir</h3>
+          <p>
+            Le rappel des conséquences de l'incroyance et la promesse de la
+            miséricorde divine.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Mulk</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Mulk.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s66.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s68.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Mulk a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Mulk a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Mulk est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/67"),
+              axios.get("https://api.alquran.cloud/v1/surah/67/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "creation":
+            reflectionContent.innerHTML =
+              "La sourate Al-Mulk commence par souligner la perfection et l'harmonie dans la création d'Allah. Elle invite les croyants à observer l'univers et à réfléchir sur sa complexité et sa beauté. La sourate mentionne spécifiquement la création des sept cieux superposés, sans faille ni imperfection, comme preuve de la puissance et de la sagesse d'Allah. Cette réflexion sur la création vise à renforcer la foi du croyant et à l'encourager à reconnaître la grandeur d'Allah à travers Ses œuvres. Elle rappelle que tout ce qui existe dans l'univers est sous le contrôle absolu d'Allah, le Tout-Puissant.";
+            break;
+          case "accountability":
+            reflectionContent.innerHTML =
+              "Un thème central de la sourate Al-Mulk est la responsabilité individuelle et le jugement divin. Elle rappelle aux croyants que la vie est un test et que chacun sera jugé selon ses actions. La sourate met en garde contre les conséquences de l'incroyance et des mauvaises actions, tout en encourageant les bonnes œuvres. Elle souligne que la connaissance et le pouvoir d'Allah englobent tout, y compris les pensées les plus secrètes. Cette conscience de la responsabilité et du jugement à venir est destinée à motiver les croyants à mener une vie vertueuse et à s'efforcer constamment de plaire à Allah.";
+            break;
+          case "gratitude":
+            reflectionContent.innerHTML =
+              "La sourate Al-Mulk appelle à la gratitude envers Allah pour Ses innombrables bienfaits. Elle attire l'attention sur les bénédictions que nous tenons souvent pour acquises, comme la capacité de marcher sur la terre, de respirer l'air, et de bénéficier des ressources de la planète. La sourate rappelle que c'est Allah qui pourvoit à toutes les créatures et qui leur accorde Ses faveurs. Cette reconnaissance des bienfaits d'Allah devrait conduire à une profonde gratitude, qui se manifeste non seulement en paroles mais aussi en actes, en utilisant ces bénédictions d'une manière qui plaît à Allah et bénéficie à la création.";
+            break;
+          case "reflection":
+            reflectionContent.innerHTML =
+              "La sourate Al-Mulk encourage fortement la réflexion et l'observation des signes d'Allah dans l'univers. Elle invite les croyants à regarder autour d'eux, à observer le ciel, les étoiles, les oiseaux, et à réfléchir sur la perfection de leur création. Cette invitation à la réflexion n'est pas une simple contemplation passive, mais un exercice actif de l'intellect pour comprendre la sagesse et la puissance derrière la création. La sourate suggère que cette réflexion profonde peut conduire à une compréhension plus profonde de la réalité divine et renforcer la foi du croyant. Elle souligne l'importance de l'utilisation de la raison et de l'observation dans le cheminement spirituel.";
+            break;
+          case "warning":
+            reflectionContent.innerHTML =
+              "La sourate Al-Mulk contient à la fois des avertissements sérieux et des messages d'espoir. Elle met en garde contre les conséquences de l'incroyance et de la désobéissance à Allah, décrivant le sort terrible qui attend ceux qui rejettent la vérité. Cependant, ces avertissements sont équilibrés par des rappels de la miséricorde et du pardon d'Allah. La sourate encourage les croyants à se tourner vers Allah avec sincérité, assurant que Son pardon et Sa miséricorde sont vastes pour ceux qui se repentent et cherchent Sa guidance. Ce mélange d'avertissement et d'espoir vise à inspirer une crainte respectueuse d'Allah tout en encourageant les croyants à ne jamais désespérer de Sa miséricorde.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Mulk.";
+        }
+      }
+    </script>
+  </body>
+</html>

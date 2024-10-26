@@ -1,0 +1,424 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Hadid (Le Fer) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #333;
+      }
+      h1,
+      h2 {
+        color: #4a4a4a;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #4a4a4a;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e0e0e0;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #4a4a4a;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #666;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #4a4a4a;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #4a4a4a;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #666;
+      }
+      .interactive-section {
+        background-color: #e8e8e8;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #4a4a4a;
+      }
+      .reflection-section {
+        background-color: #e8e8e8;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #4a4a4a;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #333;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #4a4a4a;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Hadid (Le Fer)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/057.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Hadid - سورة الحديد</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #4a4a4a; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #a0a0a0; stop-opacity: 1" />
+          </linearGradient>
+          <radialGradient
+            id="sunGradient"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #ffd700; stop-opacity: 1" />
+            <stop
+              offset="100%"
+              style="stop-color: #ffa500; stop-opacity: 0.8"
+            />
+          </radialGradient>
+        </defs>
+
+        <!-- Sky background -->
+        <rect x="0" y="0" width="100" height="100" fill="url(#skyGradient)" />
+
+        <!-- Iron ore in the ground -->
+        <path d="M0,80 Q25,70 50,80 T100,80 L100,100 L0,100 Z" fill="#8B4513" />
+        <ellipse cx="25" cy="85" rx="10" ry="5" fill="#A52A2A" />
+        <ellipse cx="75" cy="87" rx="12" ry="6" fill="#A52A2A" />
+
+        <!-- Iron structures -->
+        <g id="ironStructure">
+          <line
+            x1="20"
+            y1="60"
+            x2="20"
+            y2="80"
+            stroke="#708090"
+            stroke-width="2"
+          />
+          <line
+            x1="15"
+            y1="65"
+            x2="25"
+            y2="65"
+            stroke="#708090"
+            stroke-width="2"
+          />
+          <line
+            x1="17"
+            y1="70"
+            x2="23"
+            y2="70"
+            stroke="#708090"
+            stroke-width="2"
+          />
+        </g>
+        <use href="#ironStructure" x="30" y="5" />
+        <use href="#ironStructure" x="60" y="-10" />
+
+        <!-- Symbolic representation of iron atoms -->
+        <g id="ironAtom">
+          <circle cx="0" cy="0" r="2" fill="#C0C0C0" />
+          <circle cx="3" cy="0" r="1" fill="#A9A9A9" />
+          <circle cx="-2" cy="2" r="1" fill="#A9A9A9" />
+          <circle cx="-2" cy="-2" r="1" fill="#A9A9A9" />
+        </g>
+        <use href="#ironAtom" x="40" y="40">
+          <animateTransform
+            attributeName="transform"
+            type="rotate"
+            from="0 40 40"
+            to="360 40 40"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </use>
+        <use href="#ironAtom" x="60" y="30">
+          <animateTransform
+            attributeName="transform"
+            type="rotate"
+            from="0 60 30"
+            to="-360 60 30"
+            dur="8s"
+            repeatCount="indefinite"
+          />
+        </use>
+
+        <!-- Arabic text for "Al-Hadid" -->
+        <text
+          x="50"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#FFFFFF"
+          text-anchor="middle"
+        >
+          الحديد
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Hadid</h2>
+        <div
+          class="interactive-item"
+          onclick="showReflection('divine_sovereignty')"
+        >
+          <h3>1. La Souveraineté Divine</h3>
+          <p>Exploration de la toute-puissance d'Allah sur la création.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('faith_and_charity')"
+        >
+          <h3>2. Foi et Charité</h3>
+          <p>L'importance de croire et de dépenser dans la voie d'Allah.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('light_and_guidance')"
+        >
+          <h3>3. Lumière et Guidance</h3>
+          <p>Le Coran comme source de lumière et de direction.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('iron_metaphor')">
+          <h3>4. La Métaphore du Fer</h3>
+          <p>Le fer comme symbole de force et d'utilité.</p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('prophetic_mission')"
+        >
+          <h3>5. La Mission Prophétique</h3>
+          <p>Le rôle des prophètes dans la guidance de l'humanité.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Hadid</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Hadid.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s56.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s58.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Hadid a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Hadid a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Hadid est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/57"),
+              axios.get("https://api.alquran.cloud/v1/surah/57/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "divine_sovereignty":
+            reflectionContent.innerHTML =
+              "La sourate Al-Hadid commence par affirmer la souveraineté absolue d'Allah sur toute la création. Elle souligne que tout ce qui est dans les cieux et sur la terre glorifie Allah, reconnaissant Sa grandeur et Sa puissance. Cette affirmation établit le cadre pour le reste de la sourate, rappelant aux croyants la présence omniprésente et la domination d'Allah sur tous les aspects de l'existence. Elle invite à la réflexion sur la nature éphémère de la vie terrestre par rapport à l'éternité et la puissance d'Allah.";
+            break;
+          case "faith_and_charity":
+            reflectionContent.innerHTML =
+              "Un thème central de la sourate est l'importance de la foi sincère et de la générosité dans la voie d'Allah. Elle encourage les croyants à dépenser de leurs biens pour la cause d'Allah, promettant une récompense multiple pour ceux qui le font avec sincérité. La sourate met en contraste ceux qui ont cru et dépensé avant la conquête (de La Mecque) avec ceux qui l'ont fait après, soulignant la valeur supérieure des actions accomplies dans des moments de difficulté. Ce thème rappelle l'importance de la foi active et de la générosité comme expressions tangibles de la croyance.";
+            break;
+          case "light_and_guidance":
+            reflectionContent.innerHTML =
+              "Al-Hadid présente le Coran et la guidance prophétique comme une lumière qui guide les croyants des ténèbres vers la lumière. Cette métaphore de la lumière est utilisée pour illustrer comment la révélation divine illumine le chemin de la vérité et de la droiture. La sourate invite les croyants à suivre cette lumière et à ne pas laisser leurs cœurs s'endurcir comme ceux qui ont reçu les Écritures avant eux. Ce thème souligne l'importance de rester réceptif à la guidance divine et de maintenir un cœur souple et ouvert à la foi.";
+            break;
+          case "iron_metaphor":
+            reflectionContent.innerHTML =
+              "La sourate tire son nom de la mention du fer (Al-Hadid) dans le verset 25. Le fer est présenté comme un matériau doté d'une grande force et de nombreux avantages pour l'humanité. Cette métaphore souligne l'importance de la force dans la défense de la vérité et de la justice, tout en reconnaissant les multiples utilisations bénéfiques du fer dans la vie quotidienne. Ce passage invite à réfléchir sur la façon dont les dons d'Allah, qu'ils soient matériels ou spirituels, doivent être utilisés pour le bien de l'humanité et pour soutenir la cause de la vérité.";
+            break;
+          case "prophetic_mission":
+            reflectionContent.innerHTML =
+              "La sourate Al-Hadid met en lumière le rôle crucial des prophètes dans la transmission du message divin à l'humanité. Elle mentionne spécifiquement Noé et Abraham, ainsi que la lignée de prophètes qui les ont suivis, culminant avec Jésus et Muhammad (paix soit sur eux). La mission prophétique est présentée comme un moyen de guider l'humanité vers la justice et l'équité. Ce thème souligne l'importance de suivre l'exemple des prophètes et de mettre en pratique leurs enseignements dans la vie quotidienne, tout en reconnaissant la continuité du message divin à travers l'histoire.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Hadid.";
+        }
+      }
+    </script>
+  </body>
+</html>

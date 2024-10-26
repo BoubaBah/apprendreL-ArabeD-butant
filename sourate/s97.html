@@ -1,0 +1,397 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Qadr (La Destinée) - Expérience Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+      }
+      .theme-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .theme-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .theme-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+      }
+      .theme-item h3 {
+        margin-top: 0;
+        color: #3498db;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #3498db;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Qadr (La Destinée)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/097.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Qadr - سورة القدر</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 400 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #001f3f; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #0074d9; stop-opacity: 1" />
+          </linearGradient>
+          <radialGradient
+            id="moon-glow"
+            cx="50%"
+            cy="50%"
+            r="50%"
+            fx="50%"
+            fy="50%"
+          >
+            <stop offset="0%" style="stop-color: #ffffff; stop-opacity: 0.7" />
+            <stop offset="100%" style="stop-color: #ffffff; stop-opacity: 0" />
+          </radialGradient>
+        </defs>
+
+        <!-- Night sky background -->
+        <rect width="400" height="200" fill="url(#sky-gradient)" />
+
+        <!-- Stars -->
+        <g id="stars"></g>
+
+        <!-- Moon -->
+        <circle cx="300" cy="50" r="30" fill="#FFFFFF" />
+        <circle cx="300" cy="50" r="40" fill="url(#moon-glow)" />
+
+        <!-- Laylat al-Qadr descending light -->
+        <path
+          d="M200,0 Q230,100 200,200"
+          stroke="#FFFFFF"
+          stroke-width="2"
+          fill="none"
+          opacity="0.5"
+        >
+          <animate
+            attributeName="d"
+            values="M200,0 Q230,100 200,200;M200,0 Q170,100 200,200;M200,0 Q230,100 200,200"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </path>
+
+        <!-- Arabic text for "Al-Qadr" -->
+        <text
+          x="200"
+          y="180"
+          font-family="Scheherazade"
+          font-size="24"
+          fill="#FFFFFF"
+          text-anchor="middle"
+        >
+          القدر
+        </text>
+      </svg>
+
+      <div class="theme-section">
+        <h2>Thèmes principaux de la sourate Al-Qadr</h2>
+        <div class="theme-item" onclick="showReflection('laylat_al_qadr')">
+          <h3>1. La nuit du Destin (Laylat al-Qadr)</h3>
+          <p>L'importance et la valeur de cette nuit bénie.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('revelation')">
+          <h3>2. La révélation du Coran</h3>
+          <p>Le début de la révélation du Coran pendant cette nuit.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('angels')">
+          <h3>3. La descente des anges</h3>
+          <p>
+            La présence des anges et de l'Esprit (Jibrîl) durant cette nuit.
+          </p>
+        </div>
+        <div class="theme-item" onclick="showReflection('blessings')">
+          <h3>4. Les bénédictions divines</h3>
+          <p>La paix et les bénédictions associées à cette nuit spéciale.</p>
+        </div>
+        <div class="theme-item" onclick="showReflection('time_value')">
+          <h3>5. La valeur du temps</h3>
+          <p>L'importance d'une seule nuit comparée à mille mois.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Qadr</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu et sa
+          signification dans la sourate Al-Qadr.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s96.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s98.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        // Generate stars
+        const starsGroup = document.getElementById("stars");
+        for (let i = 0; i < 50; i++) {
+          const star = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+          star.setAttribute("cx", Math.random() * 400);
+          star.setAttribute("cy", Math.random() * 200);
+          star.setAttribute("r", Math.random() * 1.5 + 0.5);
+          star.setAttribute("fill", "#FFFFFF");
+          star.setAttribute("opacity", Math.random() * 0.8 + 0.2);
+          starsGroup.appendChild(star);
+
+          // Add twinkling animation
+          const animate = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "animate"
+          );
+          animate.setAttribute("attributeName", "opacity");
+          animate.setAttribute(
+            "values",
+            `${star.getAttribute("opacity")};0;${star.getAttribute("opacity")}`
+          );
+          animate.setAttribute("dur", `${Math.random() * 3 + 2}s`);
+          animate.setAttribute("repeatCount", "indefinite");
+          star.appendChild(animate);
+        }
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Qadr a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Qadr a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Qadr est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/97"),
+              axios.get("https://api.alquran.cloud/v1/surah/97/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "laylat_al_qadr":
+            reflectionContent.innerHTML =
+              "La Nuit du Destin, ou Laylat al-Qadr, est décrite comme une nuit meilleure que mille mois. Cette comparaison souligne l'immense importance et la valeur spirituelle de cette nuit bénie. Elle nous invite à réfléchir sur la manière dont nous utilisons notre temps et nos ressources spirituelles. Cette nuit représente une opportunité exceptionnelle pour le culte, la réflexion et le rapprochement avec Allah. Elle nous enseigne que la qualité du temps passé en dévotion peut surpasser la quantité, nous encourageant à chercher des moments de profonde connexion spirituelle tout au long de notre vie. La Nuit du Destin nous rappelle également la miséricorde et la générosité d'Allah, qui offre cette occasion unique de purification et d'élévation spirituelle.";
+            break;
+          case "revelation":
+            reflectionContent.innerHTML =
+              "La sourate Al-Qadr fait référence au début de la révélation du Coran durant cette nuit bénie. Ce fait souligne l'importance capitale du Coran dans la vie des musulmans et dans l'histoire de l'humanité. La révélation du Coran marque un tournant dans l'histoire spirituelle de l'humanité, apportant guidance, sagesse et lumière. Cette mention nous rappelle la valeur inestimable du Coran et nous encourage à nous y attacher, à le lire, à le comprendre et à l'appliquer dans notre vie quotidienne. Elle nous invite également à réfléchir sur le processus de révélation divine et sur notre responsabilité en tant que récipiendaires de ce message divin. La commémoration annuelle de cet événement durant le Ramadan nous offre l'opportunité de renouveler notre engagement envers le Livre d'Allah.";
+            break;
+          case "angels":
+            reflectionContent.innerHTML =
+              "La sourate mentionne la descente des anges et de l'Esprit (généralement interprété comme étant l'ange Jibrîl) durant la Nuit du Destin. Cette description évoque une image puissante de la présence divine et de l'activité spirituelle intense durant cette nuit. La présence des anges symbolise la proximité du monde céleste avec le monde terrestre durant ce moment sacré. Elle nous rappelle que nous ne sommes pas seuls dans notre quête spirituelle et que le soutien divin est particulièrement présent durant cette nuit. Cette mention des anges nous encourage également à purifier nos cœurs et nos actions, sachant que nous sommes en présence de ces êtres célestes. Elle nous invite à créer une atmosphère de paix et de spiritualité dans nos foyers et nos communautés, reflétant l'harmonie du royaume céleste.";
+            break;
+          case "blessings":
+            reflectionContent.innerHTML =
+              "La sourate décrit la Nuit du Destin comme une période de paix jusqu'à l'aube. Cette paix (salam) englobe tous les aspects de la vie - spirituel, émotionnel et social. Elle représente les bénédictions divines qui descendent sur terre durant cette nuit. Cette description nous encourage à rechercher et à apprécier cette paix divine, non seulement durant la Nuit du Destin, mais aussi dans notre vie quotidienne. Elle nous rappelle que la véritable paix vient d'Allah et que notre quête spirituelle devrait viser à atteindre cet état de tranquillité intérieure. Les bénédictions mentionnées nous invitent également à être reconnaissants envers Allah pour Ses dons innombrables et à partager ces bénédictions avec les autres, créant ainsi une communauté de paix et d'harmonie.";
+            break;
+          case "time_value":
+            reflectionContent.innerHTML =
+              "La comparaison de la Nuit du Destin à mille mois nous enseigne une leçon profonde sur la valeur du temps. Elle nous montre que la valeur du temps ne se mesure pas seulement en quantité, mais aussi en qualité et en impact spirituel. Cette comparaison nous encourage à réfléchir sur la manière dont nous utilisons notre temps et à chercher des moments de grande valeur spirituelle dans notre vie quotidienne. Elle nous rappelle que même un court moment, s'il est vécu avec une intention pure et une conscience profonde, peut avoir un impact immense sur notre vie spirituelle. Cette leçon s'applique au-delà de la Nuit du Destin, nous invitant à vivre chaque moment de notre vie avec conscience et à chercher constamment des opportunités d'élévation spirituelle et de bonnes actions.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu et sa signification dans la sourate Al-Qadr.";
+        }
+      }
+    </script>
+  </body>
+</html>

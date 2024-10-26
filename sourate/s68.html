@@ -1,0 +1,416 @@
+<html>
+  <head>
+  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Al-Qalam (La Plume) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Al-Qalam (La Plume)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/068.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Al-Qalam - سورة القلم</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient
+            id="paperGradient"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
+          >
+            <stop offset="0%" style="stop-color: #f1e5d1; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #d3b88c; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+
+        <!-- Paper background -->
+        <rect width="100" height="100" fill="url(#paperGradient)" />
+
+        <!-- Ink spots -->
+        <circle cx="10" cy="90" r="3" fill="#1a1a1a" opacity="0.7">
+          <animate
+            attributeName="r"
+            values="3;3.5;3"
+            dur="4s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <circle cx="85" cy="15" r="2" fill="#1a1a1a" opacity="0.5">
+          <animate
+            attributeName="r"
+            values="2;2.5;2"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Quill -->
+        <path
+          d="M30,80 Q40,70 50,75 Q60,80 70,70"
+          stroke="#4a4a4a"
+          stroke-width="1"
+          fill="none"
+        />
+        <path d="M70,70 L75,65 L73,71 L78,69 L70,70" fill="#4a4a4a" />
+
+        <!-- Arabic text for "Al-Qalam" -->
+        <text
+          x="50"
+          y="30"
+          font-family="Scheherazade"
+          font-size="12"
+          fill="#1a1a1a"
+          text-anchor="middle"
+          dominant-baseline="middle"
+        >
+          القلم
+        </text>
+
+        <!-- Animated writing -->
+        <path
+          d="M20,50 Q35,48 50,50 Q65,52 80,50"
+          stroke="#1a1a1a"
+          stroke-width="0.5"
+          fill="none"
+        >
+          <animate
+            attributeName="d"
+            values="M20,50 Q35,48 50,50 Q65,52 80,50;
+                                 M20,50 Q35,52 50,50 Q65,48 80,50;
+                                 M20,50 Q35,48 50,50 Q65,52 80,50"
+            dur="6s"
+            repeatCount="indefinite"
+          />
+        </path>
+
+        <!-- Ink droplets -->
+        <circle cx="70" cy="70" r="0.5" fill="#1a1a1a">
+          <animate
+            attributeName="cy"
+            values="70;100;70"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="opacity"
+            values="1;0;1"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <circle cx="72" cy="70" r="0.3" fill="#1a1a1a">
+          <animate
+            attributeName="cy"
+            values="70;100;70"
+            dur="2.5s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="opacity"
+            values="1;0;1"
+            dur="2.5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate Al-Qalam</h2>
+        <div class="interactive-item" onclick="showReflection('character')">
+          <h3>1. L'excellence du caractère</h3>
+          <p>L'importance d'un comportement moral exemplaire.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('patience')">
+          <h3>2. La patience face à l'adversité</h3>
+          <p>L'appel à la persévérance dans les épreuves.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('judgment')">
+          <h3>3. Le jugement divin</h3>
+          <p>La rétribution divine pour les actions bonnes et mauvaises.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('prophethood')">
+          <h3>4. La défense du Prophète</h3>
+          <p>La réaffirmation de la mission prophétique de Muhammad (saw).</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('arrogance')">
+          <h3>5. Les dangers de l'arrogance</h3>
+          <p>Mise en garde contre l'orgueil et ses conséquences.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate Al-Qalam</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Al-Qalam.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s67.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s69.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Al-Qalam a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Al-Qalam a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Al-Qalam est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/68"),
+              axios.get("https://api.alquran.cloud/v1/surah/68/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "character":
+            reflectionContent.innerHTML =
+              "La sourate Al-Qalam met en avant l'importance d'un caractère moral exemplaire, en particulier à travers l'éloge du Prophète Muhammad (saw). Le verset 4 déclare : 'Et tu es certes, d'une moralité éminente.' Cette affirmation souligne que l'excellence morale est un attribut essentiel pour tous les croyants, pas seulement pour les prophètes. La sourate encourage les musulmans à cultiver des qualités telles que l'honnêteté, la bonté, la patience et la justice dans leur vie quotidienne. Elle rappelle que le caractère d'une personne est un reflet de sa foi et de sa relation avec Allah.";
+            break;
+          case "patience":
+            reflectionContent.innerHTML =
+              "La sourate Al-Qalam appelle à la patience face à l'adversité, en prenant l'exemple du Prophète Younous (Jonas). Elle encourage les croyants à rester fermes dans leur foi et leurs principes, même face aux critiques et aux difficultés. La sourate rappelle que la patience n'est pas une faiblesse, mais une force qui permet de surmonter les épreuves avec dignité. Elle enseigne que la persévérance dans l'obéissance à Allah et dans la pratique du bien finira par porter ses fruits, même si les résultats ne sont pas immédiatement visibles.";
+            break;
+          case "judgment":
+            reflectionContent.innerHTML =
+              "Le thème du jugement divin est central dans la sourate Al-Qalam. Elle rappelle que chaque action, bonne ou mauvaise, sera jugée par Allah avec justice. La sourate utilise l'exemple des propriétaires du jardin pour illustrer comment l'arrogance et l'ingratitude peuvent conduire à la perte de bénédictions divines. Elle souligne l'importance de la responsabilité individuelle et collective, encourageant les croyants à vivre dans la conscience constante du jugement à venir. Cette réflexion sur le jugement divin est destinée à motiver les croyants à mener une vie vertueuse et à éviter les actions qui déplaisent à Allah.";
+            break;
+          case "prophethood":
+            reflectionContent.innerHTML =
+              "La sourate Al-Qalam défend vigoureusement le Prophète Muhammad (saw) contre les accusations de ses détracteurs. Elle réaffirme la véracité de sa mission prophétique et rejette catégoriquement les allégations de folie ou d'imposture. La sourate rappelle que le Prophète est un messager choisi par Allah, doté d'une moralité exemplaire et d'une sagesse profonde. Elle encourage les croyants à suivre son exemple et à rester fermes dans leur soutien à sa mission, malgré l'opposition qu'ils pourraient rencontrer. Cette défense du Prophète sert également à renforcer la foi des croyants et à les rassurer sur la vérité du message qu'il a apporté.";
+            break;
+          case "arrogance":
+            reflectionContent.innerHTML =
+              "La sourate Al-Qalam met en garde contre les dangers de l'arrogance et de l'orgueil. Elle utilise l'histoire des propriétaires du jardin pour illustrer comment l'arrogance peut aveugler les gens et les conduire à la ruine. La sourate enseigne que l'humilité et la reconnaissance envers Allah sont essentielles pour maintenir Ses bénédictions. Elle rappelle que toute chose appartient à Allah et que l'être humain n'est qu'un intendant temporaire des biens qui lui sont confiés. Cette mise en garde contre l'arrogance encourage les croyants à cultiver l'humilité, la gratitude et la conscience de leur dépendance envers Allah dans tous les aspects de leur vie.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Al-Qalam.";
+        }
+      }
+    </script>
+  </body>
+</html>

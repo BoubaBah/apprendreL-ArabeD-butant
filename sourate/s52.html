@@ -1,0 +1,423 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate At-Tur (Le Mont) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #3498db;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #e8f6f3;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #16a085;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #2c3e50;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #bdc3c7;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate At-Tur (Le Mont)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/052.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate At-Tur - سورة الطور</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #87ceeb; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #e0f6ff; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="100" height="100" fill="url(#skyGradient)" />
+
+        <!-- Sun -->
+        <circle cx="75" cy="25" r="10" fill="#FFD700">
+          <animate
+            attributeName="cy"
+            values="25;23;25"
+            dur="4s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Mount Tur -->
+        <path d="M0,100 L30,40 L50,60 L70,30 L100,100 Z" fill="#8B4513">
+          <animate
+            attributeName="d"
+            values="M0,100 L30,40 L50,60 L70,30 L100,100 Z;M0,100 L35,45 L55,65 L75,35 L100,100 Z;M0,100 L30,40 L50,60 L70,30 L100,100 Z"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </path>
+
+        <!-- Clouds -->
+        <path
+          d="M20,40 Q30,35 40,40 T60,40 T80,40"
+          fill="#FFFFFF"
+          opacity="0.7"
+        >
+          <animate
+            attributeName="d"
+            values="M20,40 Q30,35 40,40 T60,40 T80,40;M15,40 Q25,45 35,40 T55,40 T75,40;M20,40 Q30,35 40,40 T60,40 T80,40"
+            dur="20s"
+            repeatCount="indefinite"
+          />
+        </path>
+
+        <!-- Arabic text for "At-Tur" -->
+        <text
+          x="50"
+          y="90"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#2c3e50"
+          text-anchor="middle"
+        >
+          الطور
+        </text>
+      </svg>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate At-Tur</h2>
+        <div class="interactive-item" onclick="showReflection('divine_oath')">
+          <h3>1. Le Serment Divin</h3>
+          <p>
+            Allah jure par le Mont Tur et d'autres éléments sacrés pour attester
+            de la vérité de Son message.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('day_of_judgment')"
+        >
+          <h3>2. Le Jour du Jugement</h3>
+          <p>
+            Description vivante des événements du Jour du Jugement et de ses
+            conséquences.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('paradise_and_hell')"
+        >
+          <h3>3. Le Paradis et l'Enfer</h3>
+          <p>
+            Contraste entre les délices du Paradis pour les croyants et les
+            tourments de l'Enfer pour les mécréants.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('refutation_of_disbelief')"
+        >
+          <h3>4. Réfutation de l'Incroyance</h3>
+          <p>
+            Réponses aux arguments des mécréants et affirmation de la vérité du
+            message prophétique.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('divine_attributes')"
+        >
+          <h3>5. Les Attributs Divins</h3>
+          <p>
+            Mise en évidence de la puissance, de la miséricorde et de la sagesse
+            d'Allah.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section fade-in">
+        <h2 class="reflection-title">Réflexions sur la sourate At-Tur</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate At-Tur.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s51.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s53.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate At-Tur a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log("La récitation de la sourate At-Tur a été mise en pause");
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate At-Tur est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/52"),
+              axios.get("https://api.alquran.cloud/v1/surah/52/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "divine_oath":
+            reflectionContent.innerHTML =
+              "La sourate At-Tur commence par une série de serments divins, jurant notamment par le Mont Tur, lieu sacré où Moïse a reçu la révélation. Ces serments soulignent l'importance du message à venir et attirent l'attention sur la puissance et la sagesse d'Allah. Ils invitent à réfléchir sur la signification profonde de ces éléments dans l'histoire sacrée et dans la création divine.";
+            break;
+          case "day_of_judgment":
+            reflectionContent.innerHTML =
+              "La sourate offre une description vivante et saisissante du Jour du Jugement. Elle évoque le bouleversement cosmique qui l'accompagnera et les conséquences pour l'humanité. Cette description sert à la fois d'avertissement et d'encouragement, rappelant l'inévitabilité de ce jour et l'importance de s'y préparer par la foi et les bonnes actions.";
+            break;
+          case "paradise_and_hell":
+            reflectionContent.innerHTML =
+              "At-Tur présente un contraste frappant entre les délices du Paradis réservés aux croyants et les tourments de l'Enfer pour les mécréants. La description du Paradis est particulièrement détaillée, évoquant un lieu de paix, de bonheur et de récompenses infinies. Cette juxtaposition sert à motiver les croyants à persévérer dans leur foi et leurs bonnes œuvres, tout en avertissant les incroyants des conséquences de leur rejet.";
+            break;
+          case "refutation_of_disbelief":
+            reflectionContent.innerHTML =
+              "La sourate consacre une partie importante à réfuter les arguments et les attitudes des mécréants. Elle répond à leurs doutes et à leurs accusations, notamment concernant la véracité du message prophétique. Cette réfutation est accompagnée d'invitations à la réflexion et au raisonnement, démontrant la logique et la cohérence du message divin face aux contradictions de l'incroyance.";
+            break;
+          case "divine_attributes":
+            reflectionContent.innerHTML =
+              "Tout au long de la sourate, les attributs divins sont mis en évidence. La puissance d'Allah est manifestée dans Sa capacité à créer et à juger. Sa miséricorde est évoquée dans la description des récompenses du Paradis. Sa sagesse est soulignée dans l'ordonnancement de l'univers et dans la justesse de Ses jugements. Ces rappels des attributs divins servent à renforcer la foi et à encourager une relation plus profonde avec le Créateur.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate At-Tur.";
+        }
+      }
+    </script>
+  </body>
+</html>

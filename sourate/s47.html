@@ -1,0 +1,378 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate Muhammad - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0e6d2;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #4a4a4a;
+      }
+      h1,
+      h2 {
+        color: #2e7d32;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #33691e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #c8e6c9;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #1b5e20;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #33691e;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #2e7d32;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #45a049;
+      }
+      .interactive-section {
+        background-color: #e8f5e9;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2e7d32;
+      }
+      .reflection-section {
+        background-color: #c8e6c9;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #1b5e20;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #33691e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 200px;
+        margin: 20px 0;
+        border: 1px solid #a5d6a7;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate Muhammad</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/047.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate Muhammad - سورة محمد</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="swordGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color: #c0c0c0; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #f0f0f0; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="100" height="100" fill="#e8f5e9" />
+        <path d="M50 10 L90 90 L10 90 Z" fill="#4caf50" opacity="0.3" />
+        <path d="M50 20 L80 80 L20 80 Z" fill="#2e7d32" opacity="0.5" />
+        <line
+          x1="50"
+          y1="30"
+          x2="50"
+          y2="70"
+          stroke="url(#swordGradient)"
+          stroke-width="4"
+          stroke-linecap="round"
+        >
+          <animate
+            attributeName="y2"
+            values="70;65;70"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+        </line>
+        <circle cx="50" cy="25" r="5" fill="#f0f0f0">
+          <animate
+            attributeName="r"
+            values="5;6;5"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+        </circle>
+      </svg>
+
+      <div class="interactive-section fade-in">
+        <h2>Thèmes principaux de la sourate</h2>
+        <div class="interactive-item" onclick="showReflection('faith')">
+          <h3>1. La foi et l'incroyance</h3>
+          <p>Contraste entre les croyants et les mécréants.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('jihad')">
+          <h3>2. Le jihad et la lutte</h3>
+          <p>L'importance de la lutte dans la voie d'Allah.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('revelation')">
+          <h3>3. La révélation et le message</h3>
+          <p>L'importance de suivre la révélation divine.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('hypocrites')">
+          <h3>4. Les hypocrites</h3>
+          <p>Mise en garde contre l'hypocrisie et ses conséquences.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('reward')">
+          <h3>5. Récompense et châtiment</h3>
+          <p>Les conséquences des actes dans l'au-delà.</p>
+        </div>
+      </div>
+
+      <div class="reflection-section fade-in">
+        <h2 class="reflection-title">Réflexions sur la sourate Muhammad</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate Muhammad.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s46.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s48.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate Muhammad a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate Muhammad a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate Muhammad est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/47"),
+              axios.get("https://api.alquran.cloud/v1/surah/47/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse fade-in";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+
+            // Trigger fade-in effect for verses
+            setTimeout(() => {
+              document
+                .querySelectorAll(".verse")
+                .forEach((el) => el.classList.add("visible"));
+            }, 100);
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => observer.observe(el));
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "faith":
+            reflectionContent.innerHTML =
+              "La sourate Muhammad établit un contraste saisissant entre les croyants et les mécréants. Elle souligne que les actions des mécréants seront vaines, tandis que celles des croyants seront récompensées. La sourate encourage les croyants à rester fermes dans leur foi et à suivre la guidance d'Allah, tout en avertissant les mécréants des conséquences de leur rejet de la vérité. Cette dichotomie sert à renforcer l'importance de la foi et de l'obéissance à Allah dans la vie d'un musulman.";
+            break;
+          case "jihad":
+            reflectionContent.innerHTML =
+              "Le concept de jihad, ou de lutte dans la voie d'Allah, est un thème central de cette sourate. Elle met l'accent sur l'importance de défendre la foi et de résister à l'oppression. La sourate encourage les croyants à être courageux face à l'adversité et à persévérer dans leur engagement envers Allah. Cependant, il est important de noter que le jihad dans l'Islam ne se limite pas à la lutte armée, mais englobe également la lutte spirituelle et morale contre ses propres désirs et faiblesses.";
+            break;
+          case "revelation":
+            reflectionContent.innerHTML =
+              "La sourate Muhammad met en évidence l'importance de suivre la révélation divine et le message apporté par le Prophète Muhammad (paix sur lui). Elle souligne que la guidance vient d'Allah et que ceux qui suivent cette guidance seront sur le droit chemin. La sourate encourage les croyants à s'attacher fermement aux enseignements du Coran et à les mettre en pratique dans leur vie quotidienne. Elle rappelle également que le rejet de cette révélation mène à l'égarement et à la perte.";
+            break;
+          case "hypocrites":
+            reflectionContent.innerHTML =
+              "La sourate met en garde contre l'hypocrisie et ses dangers. Elle décrit les caractéristiques des hypocrites, ceux qui prétendent croire mais dont les cœurs sont remplis de doute et de trahison. La sourate avertit les croyants de se méfier de telles personnes et souligne les conséquences néfastes de l'hypocrisie, tant pour l'individu que pour la communauté. Elle encourage la sincérité dans la foi et les actions, rappelant que Allah connaît ce qui est dans les cœurs.";
+            break;
+          case "reward":
+            reflectionContent.innerHTML =
+              "Un thème récurrent dans la sourate Muhammad est celui de la récompense et du châtiment dans l'au-delà. Elle promet des récompenses généreuses pour les croyants qui font de bonnes œuvres et avertit des punitions sévères qui attendent les mécréants et les hypocrites. Cette dualité sert à motiver les croyants à persévérer dans leur foi et leurs bonnes actions, tout en rappelant la justice divine qui prévaudra ultimement. La sourate encourage ainsi une perspective à long terme, orientée vers la vie après la mort.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate Muhammad.";
+        }
+      }
+    </script>
+  </body>
+</html>

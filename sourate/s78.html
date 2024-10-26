@@ -1,0 +1,402 @@
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sourate An-Naba (La Nouvelle) - Exploration Interactive</title>
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2c3e50;
+      }
+      h1,
+      h2 {
+        color: #34495e;
+        text-align: center;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+      }
+      .player-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .info {
+        text-align: center;
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+      .arabic {
+        font-family: "Scheherazade", serif;
+        font-size: 28px;
+        margin-top: 15px;
+        text-align: right;
+        direction: rtl;
+        line-height: 1.8;
+      }
+      .verse-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 15px;
+      }
+      .verse {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+      .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 10px;
+      }
+      .translation {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+      #loading {
+        text-align: center;
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      .nav-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #2980b9;
+      }
+      .interactive-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .interactive-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .interactive-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-item h3 {
+        margin-top: 0;
+        color: #2c3e50;
+      }
+      .reflection-section {
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+      .reflection-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      #reflection-content {
+        font-style: italic;
+        color: #34495e;
+      }
+      #surah-visual {
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        .arabic {
+          font-size: 24px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Sourate An-Naba (La Nouvelle)</h1>
+    <div class="container">
+      <div class="player-container">
+        <h2>Écouter la récitation</h2>
+        <audio controls>
+          <source
+            src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/078.mp3"
+            type="audio/mpeg"
+          />
+          Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+      </div>
+      <div class="info">
+        <p>Sourate An-Naba - سورة النبأ</p>
+        <p>Récitée par Mishary Rashid Alafasy</p>
+        <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      </div>
+
+      <svg
+        id="surah-visual"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #1a237e; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #3949ab; stop-opacity: 1" />
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="1.5" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Sky background -->
+        <rect width="100" height="100" fill="url(#skyGradient)" />
+
+        <!-- Stars -->
+        <g id="stars">
+          <circle cx="10" cy="10" r="0.5" fill="#ffffff" />
+          <circle cx="25" cy="15" r="0.3" fill="#ffffff" />
+          <circle cx="40" cy="5" r="0.4" fill="#ffffff" />
+          <circle cx="60" cy="20" r="0.3" fill="#ffffff" />
+          <circle cx="75" cy="10" r="0.4" fill="#ffffff" />
+          <circle cx="90" cy="15" r="0.3" fill="#ffffff" />
+        </g>
+
+        <!-- Mountains -->
+        <path
+          d="M0,100 L20,70 L40,85 L60,60 L80,80 L100,65 L100,100 Z"
+          fill="#4a148c"
+        />
+        <path
+          d="M0,100 L30,80 L50,90 L70,75 L90,85 L100,70 L100,100 Z"
+          fill="#6a1b9a"
+          opacity="0.7"
+        />
+
+        <!-- Sun or Moon -->
+        <circle cx="75" cy="25" r="10" fill="#ffd54f" filter="url(#glow)">
+          <animate
+            attributeName="cy"
+            values="25;23;25"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <!-- Clouds -->
+        <g fill="#ffffff" opacity="0.7">
+          <ellipse cx="20" cy="30" rx="10" ry="5">
+            <animate
+              attributeName="cx"
+              values="20;25;20"
+              dur="10s"
+              repeatCount="indefinite"
+            />
+          </ellipse>
+          <ellipse cx="55" cy="20" rx="15" ry="7">
+            <animate
+              attributeName="cx"
+              values="55;60;55"
+              dur="12s"
+              repeatCount="indefinite"
+            />
+          </ellipse>
+        </g>
+
+        <!-- Arabic text for "An-Naba" -->
+        <text
+          x="50"
+          y="95"
+          font-family="Scheherazade"
+          font-size="10"
+          fill="#ffffff"
+          text-anchor="middle"
+        >
+          النبأ
+        </text>
+      </svg>
+
+      <div class="interactive-section">
+        <h2>Thèmes principaux de la sourate An-Naba</h2>
+        <div class="interactive-item" onclick="showReflection('creation')">
+          <h3>1. La Création d'Allah</h3>
+          <p>
+            Les merveilles de la création comme signes de la puissance divine.
+          </p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('resurrection')">
+          <h3>2. La Résurrection</h3>
+          <p>La réalité et l'inévitabilité du Jour de la Résurrection.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('judgment')">
+          <h3>3. Le Jour du Jugement</h3>
+          <p>La description du Jour du Jugement et ses événements.</p>
+        </div>
+        <div class="interactive-item" onclick="showReflection('paradise_hell')">
+          <h3>4. Le Paradis et l'Enfer</h3>
+          <p>
+            La description des récompenses et des châtiments dans l'au-delà.
+          </p>
+        </div>
+        <div
+          class="interactive-item"
+          onclick="showReflection('divine_justice')"
+        >
+          <h3>5. La Justice Divine</h3>
+          <p>
+            L'affirmation de la justice parfaite d'Allah dans le jugement final.
+          </p>
+        </div>
+      </div>
+
+      <div class="reflection-section">
+        <h2 class="reflection-title">Réflexions sur la sourate An-Naba</h2>
+        <p id="reflection-content">
+          Cliquez sur un thème ci-dessus pour explorer son contenu dans la
+          sourate An-Naba.
+        </p>
+      </div>
+
+      <div class="verse-container">
+        <h2>Lire les versets</h2>
+        <div id="loading">Chargement des versets...</div>
+        <div id="verses"></div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <a href="s77.html" class="nav-button"
+        >Sourate précédente</a
+      >
+      <a href="s79.html" class="nav-button"
+        >Sourate suivante</a
+      >
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.querySelector("audio");
+        const versesContainer = document.getElementById("verses");
+        const loadingElement = document.getElementById("loading");
+
+        audio.addEventListener("play", function () {
+          console.log("La récitation de la sourate An-Naba a commencé");
+        });
+
+        audio.addEventListener("pause", function () {
+          console.log(
+            "La récitation de la sourate An-Naba a été mise en pause"
+          );
+        });
+
+        audio.addEventListener("ended", function () {
+          console.log("La récitation de la sourate An-Naba est terminée");
+        });
+
+        async function loadVerses() {
+          try {
+            const [arabicResponse, frenchResponse] = await Promise.all([
+              axios.get("https://api.alquran.cloud/v1/surah/78"),
+              axios.get("https://api.alquran.cloud/v1/surah/78/fr.hamidullah"),
+            ]);
+
+            const arabicVerses = arabicResponse.data.data.ayahs;
+            const frenchVerses = frenchResponse.data.data.ayahs;
+
+            loadingElement.style.display = "none";
+
+            arabicVerses.forEach((verse, index) => {
+              const verseElement = document.createElement("div");
+              verseElement.className = "verse";
+              verseElement.innerHTML = `
+                        <p class="arabic"><span class="verse-number">${verse.numberInSurah}.</span> ${verse.text}</p>
+                        <p class="translation">${frenchVerses[index].text}</p>
+                    `;
+              versesContainer.appendChild(verseElement);
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement des versets:", error);
+            loadingElement.textContent =
+              "Erreur lors du chargement des versets. Veuillez réessayer.";
+          }
+        }
+
+        loadVerses();
+      });
+
+      function showReflection(theme) {
+        const reflectionContent = document.getElementById("reflection-content");
+        switch (theme) {
+          case "creation":
+            reflectionContent.innerHTML =
+              "La sourate An-Naba commence par attirer notre attention sur les merveilles de la création d'Allah. Elle évoque la terre, les montagnes, notre création en couples, le sommeil, la nuit et le jour, les sept cieux, le soleil éclatant, et les nuages porteurs de pluie. Ces versets nous invitent à réfléchir sur la perfection et la complexité de l'univers qui nous entoure. En contemplant ces signes, nous sommes amenés à reconnaître la puissance, la sagesse et la miséricorde infinies d'Allah. Cette réflexion devrait renforcer notre foi et notre gratitude envers le Créateur, tout en nous encourageant à prendre soin de Sa création et à l'utiliser avec respect et modération.";
+            break;
+          case "resurrection":
+            reflectionContent.innerHTML =
+              "La sourate An-Naba met l'accent sur la réalité et l'inévitabilité de la Résurrection. Elle répond aux doutes des sceptiques en affirmant que ce jour viendra certainement. Cette emphase sur la Résurrection nous rappelle que notre existence ne se limite pas à cette vie terrestre, mais qu'il y a une vie après la mort où nous serons tenus responsables de nos actions. Cette croyance en la Résurrection devrait nous inciter à mener une vie vertueuse et à nous préparer pour l'au-delà. Elle nous encourage à réfléchir sur le sens et le but de notre existence, et à orienter nos actions vers ce qui plaît à Allah et bénéficie à l'humanité.";
+            break;
+          case "judgment":
+            reflectionContent.innerHTML =
+              "La sourate An-Naba offre une description vivante du Jour du Jugement. Elle évoque le son de la trompette, l'ouverture des cieux, la transformation des montagnes en mirage, et le rassemblement de toutes les âmes. Cette description saisissante vise à éveiller notre conscience et à nous faire réaliser l'importance de ce jour. Le Jour du Jugement représente le moment où chacun sera confronté à ses actions et où la justice divine sera pleinement manifestée. Cette réflexion sur le Jugement devrait nous inciter à l'introspection, à l'amélioration de nous-mêmes et à la recherche du pardon d'Allah. Elle nous rappelle l'importance de vivre chaque jour comme s'il pouvait être notre dernier, en nous efforçant constamment de faire le bien et d'éviter le mal.";
+            break;
+          case "paradise_hell":
+            reflectionContent.innerHTML =
+              "La sourate An-Naba présente un contraste saisissant entre les descriptions du Paradis et de l'Enfer. Le Paradis est décrit comme un lieu de paix, de bonheur et de satisfaction totale, avec des jardins, des vignes, et des coupes pleines. En revanche, l'Enfer est présenté comme un lieu de châtiment sévère, avec une chaleur brûlante et une boisson bouillante. Ces descriptions ne sont pas simplement destinées à effrayer ou à réconforter, mais à nous faire réfléchir sur les conséquences éternelles de nos choix dans cette vie. Elles nous encouragent à aspirer au Paradis en menant une vie vertueuse et en recherchant le plaisir d'Allah, tout en nous mettant en garde contre les actions qui pourraient nous conduire à l'Enfer. Cette réflexion devrait nous motiver à examiner constamment nos intentions et nos actions, en nous efforçant de les aligner sur ce qui plaît à Allah.";
+            break;
+          case "divine_justice":
+            reflectionContent.innerHTML =
+              "La sourate An-Naba affirme la justice parfaite d'Allah dans le jugement final. Elle souligne que chacun recevra exactement ce qu'il mérite, sans la moindre injustice. Cette assurance de la justice divine est à la fois réconfortante et intimidante. Elle nous rappelle que rien de ce que nous faisons n'échappe à Allah et que chaque action, bonne ou mauvaise, sera prise en compte. Cette réflexion sur la justice divine devrait nous inciter à être justes et équitables dans nos propres actions et jugements. Elle nous encourage également à avoir confiance en Allah, même face à l'injustice apparente dans ce monde, sachant que la justice ultime sera rendue dans l'au-delà. En fin de compte, cette croyance en la justice parfaite d'Allah devrait nous motiver à vivre avec intégrité, compassion et droiture, en cherchant toujours à plaire à notre Créateur.";
+            break;
+          default:
+            reflectionContent.innerHTML =
+              "Cliquez sur un thème ci-dessus pour explorer son contenu dans la sourate An-Naba.";
+        }
+      }
+    </script>
+  </body>
+</html>
