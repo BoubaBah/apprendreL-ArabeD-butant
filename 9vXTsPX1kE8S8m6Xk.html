@@ -1,0 +1,347 @@
+<html><head><base href="https://websim.ai/quran/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Écouter le Coran - Le Noble Coran</title>
+<style>
+    :root {
+        --bg-color: #f0f8ff;
+        --text-color: #333;
+        --header-color: #1a237e;
+        --container-bg: #fff;
+        --item-bg: #e8eaf6;
+        --button-bg: #3f51b5;
+        --button-color: white;
+    }
+    body {
+        font-family: 'Noto Sans', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    h1, h2 {
+        color: var(--header-color);
+        text-align: center;
+    }
+    .container {
+        background-color: var(--container-bg);
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(26, 35, 126, 0.1);
+        margin-top: 20px;
+        width: 90%;
+        max-width: 800px;
+    }
+    .search-container {
+        margin-bottom: 20px;
+    }
+    #searchInput {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+    }
+    .surah-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    .surah-item {
+        background-color: var(--item-bg);
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+    }
+    .surah-item h3 {
+        margin-top: 0;
+    }
+    audio {
+        width: 100%;
+        margin-top: 10px;
+        -webkit-appearance: none;
+    }
+    audio::-webkit-media-controls-panel {
+        background-color: var(--item-bg);
+    }
+    @supports (-webkit-appearance:none) {
+        .surah-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        audio {
+            min-width: 200px;
+        }
+    }
+    .nav-button {
+        display: inline-block;
+        background-color: var(--button-bg);
+        color: var(--button-color);
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        margin-top: 20px;
+    }
+    .nav-button:hover {
+        background-color: var(--header-color);
+    }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Scheherazade:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Écouter le Coran</h1>
+    
+    <div class="container">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Rechercher une sourate...">
+        </div>
+
+        <div class="surah-grid" id="surahGrid">
+            <!-- Surah items will be dynamically added here -->
+        </div>
+    </div>
+
+    <a href="index.html" class="nav-button">Retour à l'index des sourates</a>
+
+    <script>
+        const surahs = [
+            { id: 1, name: "Al-Fatihah", arabicName: "الفاتحة" },
+            { id: 2, name: "Al-Baqarah", arabicName: "البقرة" },
+            { id: 3, name: "Al-Imran", arabicName: "آل عمران" },
+            { id: 4, name: "An-Nisa", arabicName: "النساء" },
+            { id: 5, name: "Al-Ma'idah", arabicName: "المائدة" },
+            { id: 6, name: "Al-An'am", arabicName: "الأنعام" },
+            { id: 7, name: "Al-A'raf", arabicName: "الأعراف" },
+            { id: 8, name: "Al-Anfal", arabicName: "الأنفال" },
+            { id: 9, name: "At-Tawbah", arabicName: "التوبة" },
+            { id: 10, name: "Yunus", arabicName: "يونس" },
+            { id: 11, name: "Hud", arabicName: "هود" },
+            { id: 12, name: "Yusuf", arabicName: "يوسف" },
+            { id: 13, name: "Ar-Ra'd", arabicName: "الرعد" },
+            { id: 14, name: "Ibrahim", arabicName: "إبراهيم" },
+            { id: 15, name: "Al-Hijr", arabicName: "الحجر" },
+            { id: 16, name: "An-Nahl", arabicName: "النحل" },
+            { id: 17, name: "Al-Isra", arabicName: "الإسراء" },
+            { id: 18, name: "Al-Kahf", arabicName: "الكهف" },
+            { id: 19, name: "Maryam", arabicName: "مريم" },
+            { id: 20, name: "Ta-Ha", arabicName: "طه" },
+            { id: 21, name: "Al-Anbiya", arabicName: "الأنبياء" },
+            { id: 22, name: "Al-Hajj", arabicName: "الحج" },
+            { id: 23, name: "Al-Mu'minun", arabicName: "المؤمنون" },
+            { id: 24, name: "An-Nur", arabicName: "النور" },
+            { id: 25, name: "Al-Furqan", arabicName: "الفرقان" },
+            { id: 26, name: "Ash-Shu'ara", arabicName: "الشعراء" },
+            { id: 27, name: "An-Naml", arabicName: "النمل" },
+            { id: 28, name: "Al-Qasas", arabicName: "القصص" },
+            { id: 29, name: "Al-Ankabut", arabicName: "العنكبوت" },
+            { id: 30, name: "Ar-Rum", arabicName: "الروم" },
+            { id: 31, name: "Luqman", arabicName: "لقمان" },
+            { id: 32, name: "As-Sajda", arabicName: "السجدة" },
+            { id: 33, name: "Al-Ahzab", arabicName: "الأحزاب" },
+            { id: 34, name: "Saba", arabicName: "سبأ" },
+            { id: 35, name: "Fatir", arabicName: "فاطر" },
+            { id: 36, name: "Ya-Sin", arabicName: "يس" },
+            { id: 37, name: "As-Saffat", arabicName: "الصافات" },
+            { id: 38, name: "Sad", arabicName: "ص" },
+            { id: 39, name: "Az-Zumar", arabicName: "الزمر" },
+            { id: 40, name: "Ghafir", arabicName: "غافر" },
+            { id: 41, name: "Fussilat", arabicName: "فصلت" },
+            { id: 42, name: "Ash-Shura", arabicName: "الشورى" },
+            { id: 43, name: "Az-Zukhruf", arabicName: "الزخرف" },
+            { id: 44, name: "Ad-Dukhan", arabicName: "الدخان" },
+            { id: 45, name: "Al-Jathiya", arabicName: "الجاثية" },
+            { id: 46, name: "Al-Ahqaf", arabicName: "الأحقاف" },
+            { id: 47, name: "Muhammad", arabicName: "محمد" },
+            { id: 48, name: "Al-Fath", arabicName: "الفتح" },
+            { id: 49, name: "Al-Hujurat", arabicName: "الحجرات" },
+            { id: 50, name: "Qaf", arabicName: "ق" },
+            { id: 51, name: "Adh-Dhariyat", arabicName: "الذاريات" },
+            { id: 52, name: "At-Tur", arabicName: "الطُّور" },
+            { id: 53, name: "An-Najm", arabicName: "النجم" },
+            { id: 54, name: "Al-Qamar", arabicName: "القمر" },
+            { id: 55, name: "Ar-Rahman", arabicName: "الرحمن" },
+            { id: 56, name: "Al-Waqia", arabicName: "الواقعة" },
+            { id: 57, name: "Al-Hadid", arabicName: "الحديد" },
+            { id: 58, name: "Al-Mujadila", arabicName: "المجادلة" },
+            { id: 59, name: "Al-Hashr", arabicName: "الحشر" },
+            { id: 60, name: "Al-Mumtahina", arabicName: "الممتحنة" },
+            { id: 61, name: "As-Saff", arabicName: "الصف" },
+            { id: 62, name: "Al-Jumu'a", arabicName: "الجمعة" },
+            { id: 63, name: "Al-Munafiqun", arabicName: "المنافقون" },
+            { id: 64, name: "At-Taghabun", arabicName: "التغابن" },
+            { id: 65, name: "At-Talaq", arabicName: "الطلاق" },
+            { id: 66, name: "At-Tahrim", arabicName: "التحريم" },
+            { id: 67, name: "Al-Mulk", arabicName: "الملك" },
+            { id: 68, name: "Al-Qalam", arabicName: "القلم" },
+            { id: 69, name: "Al-Haaqqa", arabicName: "الحاقة" },
+            { id: 70, name: "Al-Ma'arij", arabicName: "المعارج" },
+            { id: 71, name: "Nuh", arabicName: "نوح" },
+            { id: 72, name: "Al-Jinn", arabicName: "الجن" },
+            { id: 73, name: "Al-Muzzammil", arabicName: "المزمل" },
+            { id: 74, name: "Al-Muddathir", arabicName: "مدثر" },
+            { id: 75, name: "Al-Qiyama", arabicName: "القيامة" },
+            { id: 76, name: "Al-Insan", arabicName: "الإنسان" },
+            { id: 77, name: "Al-Mursalat", arabicName: "المرسلات" },
+            { id: 78, name: "An-Naba", arabicName: "النبأ" },
+            { id: 79, name: "An-Nazi'at", arabicName: "النازعات" },
+            { id: 80, name: "Abasa", arabicName: "عبس" },
+            { id: 81, name: "At-Takwir", arabicName: "التكوير" },
+            { id: 82, name: "Al-Infitar", arabicName: "الإنفطار" },
+            { id: 83, name: "Al-Mutaffifin", arabicName: "المطففين" },
+            { id: 84, name: "Al-Inshiqaq", arabicName: "الإنشقاء" },
+            { id: 85, name: "Al-Burooj", arabicName: "البروج" },
+            { id: 86, name: "At-Tariq", arabicName: "الطارق" },
+            { id: 87, name: "Al-A'la", arabicName: "الأعلى" },
+            { id: 88, name: "Al-Ghashiya", arabicName: "الغاشية" },
+            { id: 89, name: "Al-Fajr", arabicName: "الفجر" },
+            { id: 90, name: "Al-Balad", arabicName: "البلد" },
+            { id: 91, name: "Ash-Shams", arabicName: "الشمس" },
+            { id: 92, name: "Al-Lail", arabicName: "الليل" },
+            { id: 93, name: "Ad-Duha", arabicName: "الضحى" },
+            { id: 94, name: "Al-Inshirah", arabicName: "الشرح" },
+            { id: 95, name: "At-Tin", arabicName: "التين" },
+            { id: 96, name: "Al-Alaq", arabicName: "العلق" },
+            { id: 97, name: "Al-Qadr", arabicName: "القدر" },
+            { id: 98, name: "Al-Bayyina", arabicName: "البينة" },
+            { id: 99, name: "Az-Zalzala", arabicName: "الزلزلة" },
+            { id: 100, name: "Al-Adiyat", arabicName: "العاديات" },
+            { id: 101, name: "Al-Qari'a", arabicName: "القارعة" },
+            { id: 102, name: "At-Takathur", arabicName: "التكاثر" },
+            { id: 103, name: "Al-Asr", arabicName: "العصر" },
+            { id: 104, name: "Al-Humaza", arabicName: "الهمزة" },
+            { id: 105, name: "Al-Fil", arabicName: "الفيل" },
+            { id: 106, name: "Quraish", arabicName: "قريش" },
+            { id: 107, name: "Al-Ma'un", arabicName: "الماعون" },
+            { id: 108, name: "Al-Kawthar", arabicName: "الكوثر" },
+            { id: 109, name: "Al-Kafirun", arabicName: "الكافرون" },
+            { id: 110, name: "An-Nasr", arabicName: "النصر" },
+            { id: 111, name: "Al-Masadd", arabicName: "المسد" },
+            { id: 112, name: "Al-Ikhlas", arabicName: "الإخلاص" },
+            { id: 113, name: "Al-Falaq", arabicName: "الفلق" },
+            { id: 114, name: "An-Nas", arabicName: "الناس" }
+        ];
+
+        const surahGrid = document.getElementById('surahGrid');
+        const searchInput = document.getElementById('searchInput');
+        let currentlyPlaying = null;
+
+        function createSurahItem(surah) {
+            const item = document.createElement('div');
+            item.className = 'surah-item';
+            item.innerHTML = `
+                <h3>${surah.name}</h3>
+                <p>${surah.arabicName}</p>
+                <audio controls preload="none">
+                    <source src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/${surah.id.toString().padStart(3, '0')}.mp3" type="audio/mpeg">
+                    Votre navigateur ne supporte pas l'élément audio.
+                </audio>
+            `;
+            
+            const audio = item.querySelector('audio');
+            
+            audio.addEventListener('play', function() {
+                if (currentlyPlaying && currentlyPlaying !== audio) {
+                    currentlyPlaying.pause();
+                }
+                currentlyPlaying = audio;
+            });
+
+            return item;
+        }
+
+        function displaySurahs(filter = '') {
+            surahGrid.innerHTML = '';
+            surahs.filter(surah => 
+                surah.name.toLowerCase().includes(filter.toLowerCase()) ||
+                surah.arabicName.includes(filter)
+            ).forEach(surah => {
+                const item = createSurahItem(surah);
+                surahGrid.appendChild(item);
+            });
+        }
+
+        searchInput.addEventListener('input', (e) => displaySurahs(e.target.value));
+
+        displaySurahs();
+        
+        function getTheme() {
+            const now = new Date();
+            const hour = now.getHours();
+            const month = now.getMonth();
+
+            if (hour >= 20 || hour < 6) {
+                return 'night';
+            } else if (month >= 5 && month <= 7) {
+                return 'summer';
+            } else if (month >= 2 && month <= 4) {
+                return 'spring';
+            } else if (month >= 8 && month <= 10) {
+                return 'autumn';
+            } else {
+                return 'winter';
+            }
+        }
+
+        function applyTheme(theme) {
+            const root = document.documentElement;
+            switch (theme) {
+                case 'night':
+                    root.style.setProperty('--bg-color', '#1a1a2e');
+                    root.style.setProperty('--text-color', '#e0e0e0');
+                    root.style.setProperty('--header-color', '#4a5568');
+                    root.style.setProperty('--container-bg', '#2a2a3c');
+                    root.style.setProperty('--item-bg', '#16213e');
+                    root.style.setProperty('--button-bg', '#0f3460');
+                    root.style.setProperty('--button-color', '#e0e0e0');
+                    break;
+                case 'summer':
+                    root.style.setProperty('--bg-color', '#fff4e0');
+                    root.style.setProperty('--text-color', '#333');
+                    root.style.setProperty('--header-color', '#ff6b6b');
+                    root.style.setProperty('--container-bg', '#ffe8d6');
+                    root.style.setProperty('--item-bg', '#ffd5c2');
+                    root.style.setProperty('--button-bg', '#ff8c42');
+                    root.style.setProperty('--button-color', '#fff');
+                    break;
+                case 'spring':
+                    root.style.setProperty('--bg-color', '#e6f3ff');
+                    root.style.setProperty('--text-color', '#333');
+                    root.style.setProperty('--header-color', '#4caf50');
+                    root.style.setProperty('--container-bg', '#f1f8e9');
+                    root.style.setProperty('--item-bg', '#dcedc8');
+                    root.style.setProperty('--button-bg', '#8bc34a');
+                    root.style.setProperty('--button-color', '#fff');
+                    break;
+                case 'autumn':
+                    root.style.setProperty('--bg-color', '#fff8e1');
+                    root.style.setProperty('--text-color', '#4e342e');
+                    root.style.setProperty('--header-color', '#795548');
+                    root.style.setProperty('--container-bg', '#ffecb3');
+                    root.style.setProperty('--item-bg', '#ffe082');
+                    root.style.setProperty('--button-bg', '#ff9800');
+                    root.style.setProperty('--button-color', '#fff');
+                    break;
+                default: // winter
+                    root.style.setProperty('--bg-color', '#f0f8ff');
+                    root.style.setProperty('--text-color', '#333');
+                    root.style.setProperty('--header-color', '#1a237e');
+                    root.style.setProperty('--container-bg', '#fff');
+                    root.style.setProperty('--item-bg', '#e8eaf6');
+                    root.style.setProperty('--button-bg', '#3f51b5');
+                    root.style.setProperty('--button-color', '#fff');
+            }
+        }
+
+        function updateTheme() {
+            const theme = getTheme();
+            applyTheme(theme);
+        }
+
+        updateTheme();
+        setInterval(updateTheme, 3600000);
+    </script>
+</body>
+</html>
