@@ -274,35 +274,24 @@
         const reciterSelect = document.getElementById('reciterSelect');
         let currentlyPlayingAudio = null;
 
-        function getYasserAlDossariAudioUrl(surahId) {
-            const paddedId = surahId.toString().padStart(4, '0');
-            return `https://download.quranicaudio.com/quran/yasser_ad-dossari/${paddedId}.mp3`;
-        }
+        
+
+        
 
         function createSurahItem(surah) {
-            const item = document.createElement('div');
-            item.className = 'surah-item';
-            item.innerHTML = `
-                <h3>${surah.name}</h3>
-                <p>${surah.arabicName}</p>
-                <p>${surah.frenchName}</p>
-                <audio controls>
-                    <source src="" type="audio/mpeg">
-                    Votre navigateur ne supporte pas l'élément audio.
-                </audio>
-            `;
-
-            const audio = item.querySelector('audio');
-            audio.addEventListener('play', function() {
-                if (currentlyPlayingAudio && currentlyPlayingAudio !== this) {
-                    currentlyPlayingAudio.pause();
-                    currentlyPlayingAudio.currentTime = 0;
-                }
-                currentlyPlayingAudio = this;
-            });
-
-            return item;
-        }
+    const item = document.createElement('div');
+    item.className = 'surah-item';
+    item.innerHTML = `
+        <h3>${surah.name}</h3>
+        <p>${surah.arabicName}</p>
+        <p>${surah.frenchName}</p>
+        <audio controls>
+            <source src="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/001.mp3" type="audio/mpeg">
+            Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+    `;
+    return item;
+}
 
         function displaySurahs(filter = '') {
             surahGrid.innerHTML = '';
@@ -316,7 +305,7 @@
                 const source = audio.querySelector('source');
                 const reciter = reciterSelect.value;
                 
-                if (reciter === 'yasser_ad-dossari') {
+                if (reciter === 'Mishary Rashid Al-Afasy') {
                     source.src = getYasserAlDossariAudioUrl(surah.id);
                 } else {
                     const surahId = surah.id.toString().padStart(3, '0');
