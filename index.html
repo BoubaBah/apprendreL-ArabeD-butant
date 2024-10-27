@@ -1,332 +1,251 @@
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Apprenez l'Arabe avec Bah Boubacar | Page d'accueil</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oumma Community</title>
     <style>
-      :root {
-        --primary-color: #1c6e8c;
-        --secondary-color: #274029;
-        --accent-color: #d4af37;
-        --background-color: #f5f5dc;
-        --text-color: #333;
-      }
-
-      body {
-        font-family: "Roboto", sans-serif;
-        background-color: var(--background-color);
-        color: var(--text-color);
-      }
-
-      .navbar {
-        background-color: var(--primary-color);
-      }
-
-      .navbar-brand,
-      .nav-link {
-        color: white !important;
-      }
-
-      .hero {
-        background: linear-gradient(
-            rgba(28, 110, 140, 0.8),
-            rgba(28, 110, 140, 0.8)
-          ),
-          url("https://source.unsplash.com/1600x900/?arabic,calligraphy")
-            no-repeat center center;
-        background-size: cover;
-        color: white;
-        padding: 100px 0;
-        text-align: center;
-      }
-
-      .about-me {
-        background-color: white;
-        border-radius: 10px;
-        padding: 30px;
-        margin-top: -50px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-
-      .features {
-        margin-top: 50px;
-      }
-
-      .feature-card {
-        background-color: white;
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
-      }
-
-      .feature-card:hover {
-        transform: translateY(-5px);
-      }
-
-      .feature-icon {
-        font-size: 2rem;
-        color: var(--primary-color);
-        margin-bottom: 15px;
-      }
-
-      .cta-section {
-        background-color: var(--secondary-color);
-        color: white;
-        padding: 50px 0;
-        text-align: center;
-      }
-
-      .cta-button {
-        background-color: var(--accent-color);
-        color: var(--text-color);
-        border: none;
-        padding: 10px 20px;
-        font-size: 1.2rem;
-        transition: background-color 0.3s ease;
-      }
-
-      .cta-button:hover {
-        background-color: #c19b00;
-      }
-
-      footer {
-        background-color: var(--secondary-color);
-        color: white;
-        padding: 40px 0;
-        margin-top: 50px;
-      }
-
-      .social-icon {
-        color: white;
-        font-size: 1.5rem;
-        margin-right: 15px;
-        transition: color 0.3s ease;
-      }
-
-      .social-icon:hover {
-        color: var(--accent-color);
-      }
-    </style>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <div class="container">
-        <a class="navbar-brand" href="index.html"
-          >Apprendre l'Arabe pour débutant</a
-        >
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link active" href="index.html">Accueil</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="pageCours.html">Cours</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="nomAllah.html">Les nom d'Allah</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="Priere.html">étape de la prière</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="sourate/couleurjournuit.html">Coran</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="LectureCoran.html">Ecoute du Coran</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="Page Dhikr.html">Dhikr</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <header class="hero">
-      <div class="container">
-        <h1 class="display-4">
-          Bienvenue sur Apprendre l'Arabe pour débutant.
-        </h1>
-        <p class="lead">
-          Découvrez la beauté de la langue arabe avec des cours interactifs.
-        </p>
-      </div>
-    </header>
-
-    <main class="container">
-      <section class="about-me">
-        <h2 class="text-center mb-4">À propos de moi</h2>
-        <div class="row align-items-center">
-          <div class="col-md-4 text-center">
-            <img
-              src="Picsart_24-02-28_15-00-03-583.png"
-              alt="Photo de Bah Boubacar"
-              class="img-fluid rounded-circle mb-3"
-            />
-          </div>
-          <div class="col-md-8">
-            <p>
-              Bonjour ! Je m'appelle Bah Boubacar et je suis développeur
-              passionné. J'ai décidé de créer différents sites qui permettront
-              d'aider chaque personne dans son parcours d'apprentissage. Mon
-              objectif est de rendre l'éducation accessible à tous, en
-              particulier dans le domaine des langues.
-            </p>
-            <p>
-              Avec ce site dédié à l'apprentissage de l'arabe, je souhaite
-              offrir une plateforme interactive et conviviale pour tous ceux qui
-              souhaitent découvrir ou approfondir leurs connaissances de cette
-              magnifique langue.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="features">
-        <h2 class="text-center mb-4">Pourquoi choisir ma plateforme ?</h2>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="feature-card">
-              <i class="fas fa-graduation-cap feature-icon"></i>
-              <h3>Cours structurés</h3>
-              <p>
-                Des leçons progressives adaptées à tous les niveaux, du débutant
-                à l'avancé.
-              </p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="feature-card">
-              <i class="fas fa-comments feature-icon"></i>
-              <h3>Réponse rapide</h3>
-              <p>
-                Pour toute question et toute remarque je vous répondrai dans les
-                plus bref delais.
-              </p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="feature-card">
-              <i class="fas fa-book feature-icon"></i>
-              <h3>Ressources riches</h3>
-              <p>
-                Accédez à une vaste bibliothèque de ressources pour enrichir
-                votre apprentissage.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="cta-section mt-5">
-        <h2 class="mb-4">Prêt à commencer votre voyage en arabe ?</h2>
-        <a href="pageCours.html" class="btn cta-button">Commencer maintenant</a>
-      </section>
-    </main>
-
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <h5>À Propos</h5>
-            <p>
-              Apprenez l'arabe est une plateforme créée par Bah Boubacar, dédiée
-              à l'apprentissage de la langue et de la culture arabe.
-            </p>
-          </div>
-          <div class="col-md-4">
-            <h5>Liens Rapides</h5>
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item">
-                <a class="nav-link active" href="index.html">Accueil</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="pageCours.html">Cours</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="nomAllah.html">Les nom d'Allah</a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="Priere.html">étape de la prière</a>
-              </li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <h5>Suivez-nous</h5>
-            <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-          </div>
-        </div>
-        <hr />
-        <div class="text-center">
-          <p>
-            &copy; 2024 Apprenez l'Arabe par Bah Boubacar. Tous droits réservés.
-          </p>
-        </div>
-      </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        function isElementInViewport(el) {
-          const rect = el.getBoundingClientRect();
-          return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <=
-              (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <=
-              (window.innerWidth || document.documentElement.clientWidth)
-          );
+        :root {
+            --primary-color: #134e4a;
+            --secondary-color: #115e59;
+            --accent-color: #14b8a6;
+            --text-color: #ffffff;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Amiri', serif;
+            color: var(--text-color);
+            overflow-x: hidden;
+            background: var(--primary-color);
         }
 
-        function handleScrollAnimation() {
-          const featureCards = document.querySelectorAll(".feature-card");
-          featureCards.forEach((card) => {
-            if (isElementInViewport(card)) {
-              card.style.opacity = "1";
-              card.style.transform = "translateY(0)";
+        .dynamic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            padding: 3rem 0;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: titleFloat 3s ease-in-out infinite;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .menu-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+
+        .menu-item:hover::before {
+            transform: translateX(100%);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .menu-item h3 {
+            font-size: 1.5rem;
+            margin: 0 0 1rem 0;
+            position: relative;
+        }
+
+        .menu-item p {
+            margin: 0;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .menu-link {
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .islamic-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%23ffffff' fill-opacity='0.03' d='M50 0C22.4 0 0 22.4 0 50s22.4 50 50 50 50-22.4 50-50S77.6 0 50 0zm0 80c-16.6 0-30-13.4-30-30s13.4-30 30-30 30 13.4 30 30-13.4 30-30 30z'/%3E%3C/svg%3E");
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes titleFloat {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        .crescent {
+            position: absolute;
+            top: -50px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .mecca-container {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            max-width: 600px;  
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .mecca-image {
+            width: 100%;
+            height: auto;
+            max-width: 600px;  
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.5s ease;
+            object-fit: cover;
+        }
+
+        .mecca-image:hover {
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 768px) {
+            .mecca-container {
+                padding: 0.5rem;
+                margin: 1rem 0;
             }
-          });
+            
+            .mecca-image {
+                max-width: 100%;
+                height: auto;
+            }
         }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dynamic-bg"></div>
+    <div class="islamic-pattern"></div>
+    
+    <div class="content">
+        <header class="header">
+            <svg class="crescent" viewBox="0 0 100 100" fill="none" stroke="#ffffff" stroke-width="2">
+                <path d="M50 10 A40 40 0 1 1 50 90 A30 30 0 1 0 50 10Z"/>
+            </svg>
+            <h1>Oumma Community</h1>
+            <p>Votre guide spirituel au quotidien</p>
+        </header>
 
-        const featureCards = document.querySelectorAll(".feature-card");
-        featureCards.forEach((card) => {
-          card.style.opacity = "0";
-          card.style.transform = "translateY(20px)";
-          card.style.transition = "opacity 0.5s ease, transform 0.5s ease";
-        });
+        <div class="mecca-container">
+            <img class="mecca-image" 
+                 src="https://source.unsplash.com/600x450/?mecca-kaaba" 
+                 alt="La Sainte Mosquée de La Mecque avec la Kaaba au centre, vue nocturne avec les fidèles en prière" 
+                 width="600" 
+                 height="450">
+        </div>
 
-        window.addEventListener("scroll", handleScrollAnimation);
-        handleScrollAnimation();
-      });
-    </script>
-  </body>
+        <div class="menu-grid">
+            <a href="LectureCoran.html" class="menu-link">
+                <div class="menu-item">
+                    <h3>Écouter le Coran</h3>
+                    <p>Écoutez les récitations des sourates du Saint Coran</p>
+                </div>
+            </a>
+            
+            <a href="Page Dhikr.html" class="menu-link">
+                <div class="menu-item">
+                    <h3>Dhikr & Invocations</h3>
+                    <p>Invocations du matin et du soir, après la prière</p>
+                </div>
+            </a>
+            
+            <a href="sourate/couleurjournuit.html" class="menu-link">
+                <div class="menu-item">
+                    <h3>Lecture du Coran</h3>
+                    <p>Lecture du Coran en Arabe et en Français</p>
+                </div>
+            </a>
+            
+            <a href="HomePage.html" class="menu-link">
+                <div class="menu-item">
+                    <h3>A propos</h3>
+                    <p>Page d'accueil</p>
+                </div>
+            </a>
+            <a href="pageCours.html" class="menu-link">
+              <div class="menu-item">
+                  <h3>Apprentissage de l'Arabe</h3>
+                  <p>Dhikr et invocations après les prières obligatoires</p>
+              </div>
+          </a>
+          <a href="nomAllah.html" class="menu-link">
+            <div class="menu-item">
+                <h3>Les noms d'Allah</h3>
+                <p>Découvrez les noms d'Allah</p>
+            </div>
+        </a>
+        </div>
+    </div>
+</body>
 </html>
