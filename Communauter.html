@@ -1,0 +1,588 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Communautaire - Oumma Community</title>
+    <style>
+        :root {
+            --primary-color: #134e4a;
+            --secondary-color: #115e59;
+            --accent-color: #14b8a6;
+            --text-color: #ffffff;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Amiri', serif;
+            color: var(--text-color);
+            background: var(--primary-color);
+        }
+
+        .dynamic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: titleFloat 3s ease-in-out infinite;
+        }
+
+        .posts-container {
+            margin-top: 2rem;
+            display: grid;
+            gap: 2rem;
+        }
+
+        .post {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .post:hover {
+            transform: translateY(-5px);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+
+        .post-meta {
+            flex-grow: 1;
+        }
+
+        .user-name {
+            font-weight: bold;
+            margin-bottom: 0.2rem;
+        }
+
+        .post-date {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .post-content {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1rem;
+        }
+
+        .action-button {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .action-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: none;
+        }
+
+        .delete-post {
+            margin-left: auto; /* Push delete button to right */
+            color: #ff4444 !important;
+        }
+
+        .delete-post:hover {
+            background: rgba(255, 0, 0, 0.1) !important;
+        }
+
+        .create-post {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .create-post:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        #postContent {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: var(--text-color);
+            font-family: 'Amiri', serif;
+            font-size: 1rem;
+            resize: vertical;
+            transition: all 0.3s ease;
+        }
+
+        #postContent:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.2);
+        }
+
+        #postContent::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        #userName {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: var(--text-color);
+            font-family: 'Amiri', serif;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        #userName:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.2);
+        }
+
+        #userName::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        #postForm button[type="submit"] {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin-left: auto;
+            font-family: 'Amiri', serif;
+        }
+
+        #postForm button[type="submit"]:hover {
+            background: #0d9488;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.2);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: var(--accent-color);
+        }
+
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .comments-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comment {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .comment-form {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .comment-input {
+            flex-grow: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .comment-input:focus {
+            outline: 1px solid var(--accent-color);
+        }
+
+        .comment-submit {
+            background: var(--accent-color);
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .comment-submit:hover {
+            opacity: 0.9;
+        }
+
+        .comments-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .comments-toggle:hover {
+            opacity: 1;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes titleFloat {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dynamic-bg"></div>
+    
+    <div class="navbar">
+        <ul class="nav-links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="sourate/couleurjournuit.html">Coran</a></li>
+            <li><a href="LectureCoran.html">Lecture Coran</a></li>
+            <li><a href="Page Dhikr.html">Dhikr</a></li>
+            <li><a href="HomePage.html">À propos</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <header class="header">
+            <h1>Oumma Community Blog</h1>
+            <p>Partagez vos réflexions et suggestions avec la communauté</p>
+        </header>
+
+        <div class="tabs">
+            <div class="tab active">Récents</div>
+            <div class="tab">Populaires</div>
+            <div class="tab">Suggestions</div>
+        </div>
+
+        <div class="create-post">
+            <form id="postForm">
+                <div class="form-group">
+                    <input type="text" id="userName" placeholder="Votre nom..." required>
+                </div>
+                <div class="form-group">
+                    <textarea id="postContent" placeholder="Partagez votre message avec la communauté..." required></textarea>
+                </div>
+                <button type="submit">Publier</button>
+            </form>
+        </div>
+
+        <div class="posts-container">
+        </div>
+    </div>
+
+    <script>
+        // Load posts from localStorage on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPostsFromStorage();
+        });
+
+        // Function to load posts from storage
+        function loadPostsFromStorage() {
+            const posts = JSON.parse(localStorage.getItem('communityPosts') || '[]');
+            const postsContainer = document.querySelector('.posts-container');
+            postsContainer.innerHTML = ''; // Clear existing posts
+            
+            posts.forEach(post => {
+                const newPost = createPostElement(post);
+                postsContainer.appendChild(newPost);
+                initializeCommentFunctionality(newPost);
+            });
+        }
+
+        // Function to save posts to storage
+        function savePostsToStorage() {
+            const posts = [];
+            document.querySelectorAll('.post').forEach(post => {
+                posts.push({
+                    userName: post.querySelector('.user-name').textContent,
+                    content: post.querySelector('.post-content').textContent,
+                    date: post.querySelector('.post-date').textContent,
+                    likes: post.querySelector('.action-button').textContent.includes('(') ? 1 : 0,
+                    comments: Array.from(post.querySelectorAll('.comment')).map(comment => ({
+                        content: comment.querySelector('.post-content').textContent,
+                        userName: comment.querySelector('.user-name').textContent,
+                        date: comment.querySelector('.post-date').textContent
+                    }))
+                });
+            });
+            localStorage.setItem('communityPosts', JSON.stringify(posts));
+        }
+
+        // Function to create post element
+        function createPostElement(postData) {
+            const newPost = document.createElement('div');
+            newPost.className = 'post';
+            newPost.innerHTML = `
+                <div class="post-header">
+                    <div class="user-avatar">${postData.userName.charAt(0).toUpperCase()}</div>
+                    <div class="post-meta">
+                        <div class="user-name">${postData.userName}</div>
+                        <div class="post-date">${postData.date}</div>
+                    </div>
+                </div>
+                <div class="post-content">${postData.content}</div>
+                <div class="post-actions">
+                    <button class="action-button">👍 J'aime${postData.likes ? ' (1)' : ''}</button>
+                    <button class="action-button comment-toggle">💬 Commenter (${postData.comments?.length || 0})</button>
+                    <button class="action-button delete-post">🗑️ Supprimer</button>
+                </div>
+                <div class="comments-section" style="display: none;">
+                    <div class="comments-container">
+                        ${postData.comments?.map(comment => `
+                            <div class="comment">
+                                <div class="post-header">
+                                    <div class="user-avatar">${comment.userName.charAt(0)}</div>
+                                    <div class="post-meta">
+                                        <div class="user-name">${comment.userName}</div>
+                                        <div class="post-date">${comment.date}</div>
+                                    </div>
+                                </div>
+                                <div class="post-content">${comment.content}</div>
+                            </div>
+                        `).join('') || ''}
+                    </div>
+                    <form class="comment-form">
+                        <input type="text" class="comment-input" placeholder="Écrivez un commentaire..." required>
+                        <button type="submit" class="comment-submit">Envoyer</button>
+                    </form>
+                </div>
+            `;
+            return newPost;
+        }
+
+        document.getElementById('postForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const content = document.getElementById('postContent').value;
+            const userName = document.getElementById('userName').value || 'Anonyme';
+            
+            const postData = {
+                userName: userName,
+                content: content,
+                date: 'À l\'instant',
+                likes: 0,
+                comments: []
+            };
+            
+            const newPost = createPostElement(postData);
+            document.querySelector('.posts-container').prepend(newPost);
+            this.reset();
+            initializeCommentFunctionality(newPost);
+            savePostsToStorage();
+        });
+
+        function initializeCommentFunctionality(post) {
+            const commentToggle = post.querySelector('.comment-toggle');
+            const commentsSection = post.querySelector('.comments-section');
+            const commentForm = post.querySelector('.comment-form');
+            const commentsContainer = post.querySelector('.comments-container');
+
+            let commentCount = commentsContainer.children.length;
+            updateCommentCount();
+
+            function updateCommentCount() {
+                commentToggle.textContent = `💬 Commenter (${commentCount})`;
+            }
+
+            commentToggle.addEventListener('click', () => {
+                commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
+            });
+
+            commentForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const input = commentForm.querySelector('.comment-input');
+                const commentContent = input.value;
+
+                const comment = document.createElement('div');
+                comment.className = 'comment';
+                comment.innerHTML = `
+                    <div class="post-header">
+                        <div class="user-avatar">U</div>
+                        <div class="post-meta">
+                            <div class="user-name">Utilisateur</div>
+                            <div class="post-date">À l'instant</div>
+                        </div>
+                    </div>
+                    <div class="post-content">${commentContent}</div>
+                `;
+
+                commentsContainer.appendChild(comment);
+                input.value = '';
+                commentCount++;
+                updateCommentCount();
+                savePostsToStorage();
+            });
+        }
+
+        // Initialize like button functionality
+        document.addEventListener('click', function(e) {
+            if(e.target.classList.contains('action-button') && e.target.textContent.includes('J\'aime')) {
+                e.target.textContent = e.target.textContent.includes('(') ? 
+                    '👍 J\'aime' : 
+                    '👍 J\'aime (1)';
+                savePostsToStorage();
+            }
+        });
+
+        // Initialize delete button functionality
+        document.addEventListener('click', function(e) {
+            if(e.target.classList.contains('delete-post')) {
+                if(confirm('Êtes-vous sûr de vouloir supprimer ce post ?')) {
+                    const post = e.target.closest('.post');
+                    post.remove();
+                    savePostsToStorage();
+                }
+            }
+        });
+
+        // Initialize tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelector('.tab.active').classList.remove('active');
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
