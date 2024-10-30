@@ -414,41 +414,43 @@
     </div>
 
     <script>
-        // Load posts from localStorage on page load
+        // Load posts from API on page load
         document.addEventListener('DOMContentLoaded', function() {
             loadPostsFromStorage();
         });
 
-        // Function to load posts from storage
-        function loadPostsFromStorage() {
-            const posts = JSON.parse(localStorage.getItem('communityPosts') || '[]');
-            const postsContainer = document.querySelector('.posts-container');
-            postsContainer.innerHTML = ''; // Clear existing posts
-            
-            posts.forEach(post => {
-                const newPost = createPostElement(post);
-                postsContainer.appendChild(newPost);
-                initializeCommentFunctionality(newPost);
-            });
+        // Function to load posts from API
+        async function loadPostsFromStorage() {
+            try {
+                const response = await fetch('https://api.example.com/posts');
+                const posts = await response.json();
+                const postsContainer = document.querySelector('.posts-container');
+                postsContainer.innerHTML = '';
+                
+                posts.forEach(post => {
+                    const newPost = createPostElement(post);
+                    postsContainer.appendChild(newPost);
+                    initializeCommentFunctionality(newPost);
+                });
+            } catch (error) {
+                console.error('Error loading posts:', error);
+            }
         }
 
-        // Function to save posts to storage
-        function savePostsToStorage() {
-            const posts = [];
-            document.querySelectorAll('.post').forEach(post => {
-                posts.push({
-                    userName: post.querySelector('.user-name').textContent,
-                    content: post.querySelector('.post-content').textContent,
-                    date: post.querySelector('.post-date').textContent,
-                    likes: post.querySelector('.action-button').textContent.includes('(') ? 1 : 0,
-                    comments: Array.from(post.querySelectorAll('.comment')).map(comment => ({
-                        content: comment.querySelector('.post-content').textContent,
-                        userName: comment.querySelector('.user-name').textContent,
-                        date: comment.querySelector('.post-date').textContent
-                    }))
+        // Function to save posts to API
+        async function savePostsToStorage(postData) {
+            try {
+                const response = await fetch('https://api.example.com/posts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(postData)
                 });
-            });
-            localStorage.setItem('communityPosts', JSON.stringify(posts));
+                return await response.json();
+            } catch (error) {
+                console.error('Error saving post:', error);
+            }
         }
 
         // Function to create post element
@@ -460,7 +462,7 @@
                     <div class="user-avatar">${postData.userName.charAt(0).toUpperCase()}</div>
                     <div class="post-meta">
                         <div class="user-name">${postData.userName}</div>
-                        <div class="post-date">${postData.date}</div>
+                        <div class="post-date">${new Date(postData.date).toLocaleString()}</div>
                     </div>
                 </div>
                 <div class="post-content">${postData.content}</div>
@@ -477,7 +479,7 @@
                                     <div class="user-avatar">${comment.userName.charAt(0)}</div>
                                     <div class="post-meta">
                                         <div class="user-name">${comment.userName}</div>
-                                        <div class="post-date">${comment.date}</div>
+                                        <div class="post-date">${new Date(comment.date).toLocaleString()}</div>
                                     </div>
                                 </div>
                                 <div class="post-content">${comment.content}</div>
@@ -493,7 +495,7 @@
             return newPost;
         }
 
-        document.getElementById('postForm').addEventListener('submit', function(e) {
+        document.getElementById('postForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const content = document.getElementById('postContent').value;
             const userName = document.getElementById('userName').value || 'Anonyme';
@@ -501,16 +503,16 @@
             const postData = {
                 userName: userName,
                 content: content,
-                date: 'À l\'instant',
+                date: new Date().toISOString(),
                 likes: 0,
                 comments: []
             };
             
+            await savePostsToStorage(postData);
             const newPost = createPostElement(postData);
             document.querySelector('.posts-container').prepend(newPost);
             this.reset();
             initializeCommentFunctionality(newPost);
-            savePostsToStorage();
         });
 
         function initializeCommentFunctionality(post) {
@@ -530,7 +532,7 @@
                 commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
             });
 
-            commentForm.addEventListener('submit', (e) => {
+            commentForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const input = commentForm.querySelector('.comment-input');
                 const commentContent = input.value;
@@ -552,7 +554,6 @@
                 input.value = '';
                 commentCount++;
                 updateCommentCount();
-                savePostsToStorage();
             });
         }
 
@@ -562,7 +563,6 @@
                 e.target.textContent = e.target.textContent.includes('(') ? 
                     '👍 J\'aime' : 
                     '👍 J\'aime (1)';
-                savePostsToStorage();
             }
         });
 
@@ -572,7 +572,6 @@
                 if(confirm('Êtes-vous sûr de vouloir supprimer ce post ?')) {
                     const post = e.target.closest('.post');
                     post.remove();
-                    savePostsToStorage();
                 }
             }
         });
